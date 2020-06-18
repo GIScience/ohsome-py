@@ -23,7 +23,7 @@ conda install jupyter matplotlib descartes
 3. Install ohsome-py from GitHub:
 
 ```
-pip install git+https://gitlab.gistools.geog.uni-heidelberg.de/giscience/big-data/ohsome/libs/ohsome-py
+pip install git+https://github.com/GIScience/ohsome-py
 ```
 
 ## Usage 
