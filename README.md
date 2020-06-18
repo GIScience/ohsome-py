@@ -2,6 +2,8 @@
 
 This repository contains a Python client for the Ohsome API. It is implemented as a fluent interface [(see this blog post)](https://sendgrid.com/blog/using-python-to-implement-a-fluent-interface-to-any-rest-api/). Using a fluent interface, API calls are created dynamically without the need to predefine all endpoints. 
 
+__Important Note:__ This project is still __under development__. So please, handle with care. :)
+
 ## Installation 
 
 1. Set up the python environment and activate it. If you are using Anaconda, run:
