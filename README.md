@@ -4,14 +4,21 @@ This repository contains a Python client for the Ohsome API. It is implemented a
 
 ## Installation 
 
-1. Set up the python environment and activate it.
+1. Set up the python environment and activate it. If you are using Anaconda, run:
 
 ``` 
-conda create -n ohsome python=3 geopandas requests aiohttp geojson utm 
+conda create -n ohsome python=3
 conda activate ohsome
+conda install --file requirements
 ```
 
-2. Clone the repo, change into the ohsome-py folder and install the ohsome-py package by running:
+2.  If you want to use the juypter notebooks, additionally install:
+
+```
+conda install jupyter matplotlib descartes 
+```
+
+3. Install ohsome-py from GitHub:
 
 ```
 pip install git+https://gitlab.gistools.geog.uni-heidelberg.de/giscience/big-data/ohsome/libs/ohsome-py
