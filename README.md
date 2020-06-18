@@ -14,7 +14,7 @@ conda activate ohsome
 2. Clone the repo, change into the ohsome-py folder and install the ohsome-py package by running:
 
 ```
-pip install git+https://gitlab.gistools.geog.uni-heidelberg.de/giscience/big-data/ohsome/libs/ohsome-py
+pip install git+https://github.com/GIScience/ohsome-py
 ```
 
 ## Usage 
