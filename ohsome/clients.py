@@ -8,15 +8,15 @@ import geopandas as gpd
 from ohsome import OhsomeException, OhsomeResponse
 from ohsome.utils import format_geodataframe
 
-OHSOME_API_VERSION = '0.9'
-OHSOME_BASE_API_URL = 'https://api.ohsome.org/v0.9/'
+OHSOME_API_VERSION = '1'
+OHSOME_BASE_API_URL = 'https://api.ohsome.org/v1/'
 
 
 class OhsomeClient:
     """
     Client for sending ohsome requests
 
-    Documentation of query parameters: https://api.ohsome.org/v0.9/
+    Documentation of query parameters: https://api.ohsome.org/v1/
     """
     api_version = OHSOME_API_VERSION
     base_api_url = OHSOME_BASE_API_URL
