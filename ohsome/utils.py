@@ -46,5 +46,5 @@ def format_geodataframe(geodataframe):
         UserWarning("Dataframe does not contain an 'id' column. Joining the ohsome query results and the geodataframe will not be possible.")
 
     # Create a json object which holds geometry, id and osmid for ohsome query
-    return geodataframe.loc[:, ["id", "geometry"]].to_json(na="drop")
+    return geodataframe.to_json(na="drop")
 
