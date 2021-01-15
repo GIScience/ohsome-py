@@ -8,7 +8,6 @@ from ohsome import OhsomeException, OhsomeResponse
 import utils
 
 
-OHSOME_API_VERSION = "1"
 OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
 
 
@@ -19,13 +18,13 @@ class OhsomeClient:
     Documentation of query parameters: https://api.ohsome.org/v1/
     """
 
-    api_version = OHSOME_API_VERSION
     base_api_url = OHSOME_BASE_API_URL
 
     def __init__(self, cache=None):
         self._cache = cache or []
-        self.formatted_parameters = None
+        self.parameters = None
         self.url = None
+        self.metadata = None
 
     def add_api_component(self, name):
         """
@@ -40,34 +39,16 @@ class OhsomeClient:
     def post(self, **params):
         """
         Sends an ohsome post request
-        :param
-
-        params: parameters of the request as in ohsome documentation
-
-        bpolys: Geometries as geojson string, GeoDataFrame or geojson.FeatureCollection
-
-        :return:
-        """
-
-        self.url = self.construct_resource_url()
-
-        self.formatted_parameters = self._format_parameters(params)
-
-        try:
-            response = requests.post(self.url, data=self.formatted_parameters)
-        except requests.RequestException as e:
-            raise OhsomeException(
-                message=e, url=self.url, params=self.formatted_parameters
-            )
-        return self.handle_response(response)
-
-    def get(self, **params):
-        """
-        Send ohsome GET request
         :param params: parameters of the request as in ohsome documentation
         :return:
         """
-        pass
+        self.url = self.construct_resource_url()
+        self.parameters = self._format_parameters(params)
+        try:
+            response = requests.post(self.url, data=self.parameters)
+        except requests.RequestException as e:
+            raise OhsomeException(message=e, url=self.url, params=self.parameters)
+        return self.handle_response(response)
 
     @staticmethod
     def _format_parameters(params):
@@ -89,14 +70,12 @@ class OhsomeClient:
         :return:
         """
         if response.status_code == 200:
-            return OhsomeResponse(
-                response, url=self.url, params=self.formatted_parameters
-            )
+            return OhsomeResponse(response, url=self.url, params=self.parameters)
         else:
             raise OhsomeException(
                 response=response,
                 url=self.url,
-                params=self.formatted_parameters,
+                params=self.parameters,
             )
 
     def construct_resource_url(self):
@@ -105,6 +84,49 @@ class OhsomeClient:
         :return:
         """
         return self.base_api_url + "/".join(self._cache)
+
+    @property
+    def start_timestamp(self):
+        """
+        Returns the temporal extent of the current ohsome API
+        :return:
+        """
+        if self.metadata is None:
+            self.get_metadata()
+        return self.metadata["extractRegion"]["temporalExtent"]["fromTimestamp"]
+
+    @property
+    def end_timestamp(self):
+        """
+        Returns the temporal extent of the current ohsome API
+        :return:
+        """
+        if self.metadata is None:
+            self.get_metadata()
+        return self.metadata["extractRegion"]["temporalExtent"]["toTimestamp"]
+
+    @property
+    def api_version(self):
+        """
+        Returns the version of the ohsome API
+        :return:
+        """
+        if self.metadata is None:
+            self.get_metadata()
+        return self.metadata["apiVersion"]
+
+    def get_metadata(self):
+        """
+        Send ohsome GET request
+        :param params: parameters of the request as in ohsome documentation
+        :return:
+        """
+        self.url = self.base_api_url + "/metadata"
+        try:
+            response = requests.get(self.url)
+        except requests.RequestException as e:
+            raise OhsomeException(message=e, url=self.url, params=self.parameters)
+        self.metadata = self.handle_response(response).data
 
     def __getattr__(self, name):
         """
