@@ -85,6 +85,7 @@ class OhsomeClient:
         :return:
         """
         utils.check_boundary_parameter(input_params)
+        utils.check_time_parameter(input_params)
         params = {}
         for k, v in list(input_params.items()):
             if isinstance(v, bool):

@@ -5,8 +5,34 @@
 
 import ohsome
 import geopandas as gpd
-import utils
 import pandas as pd
+
+
+def test_check_time_parameter():
+    """
+    Checks whether time provided as pandas.Series is converted correctly
+    :return:
+    """
+    # Setup
+    time = pd.date_range("2018-01-01", periods=3, freq="D")
+    time.strftime("%Y-%m-%dT%H:%M:%S").tolist()
+    bcircles = pd.DataFrame(
+        {
+            "id": [1, 2],
+            "lon": [8.695, 8.696],
+            "lat": [49.41, 49.41],
+            "radius": [500, 500],
+        }
+    )
+    fltr = "amenity=restaurant and type:way"
+
+    # Run ohsome query
+    client = ohsome.OhsomeClient()
+    response = client.elements.count.post(
+        bcircles=bcircles, time=time, filter=fltr
+    )
+    response.as_dataframe()
+    del client
 
 
 def test_format_bcircles():
@@ -25,12 +51,8 @@ def test_format_bcircles():
     )
     time = "2018-01-01"
     fltr = "amenity=restaurant and type:way"
-    expected = "id 1:8.695,49.41,500.0|id 2:8.696,49.41,500.0"
 
-    formatted_bcircles = utils.format_bcircles(bcircles)
-
-    assert formatted_bcircles == expected
-
+    # Run ohsome query
     client = ohsome.OhsomeClient()
     response = client.elements.count.groupBy.boundary.post(
         bcircles=bcircles, time=time, filter=fltr

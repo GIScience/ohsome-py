@@ -17,6 +17,20 @@ def check_parameters(params):
     pass
 
 
+def check_time_parameter(params):
+    """
+    Checks time parameter and converts it if necessary
+    :param params:
+    :return:
+    """
+
+    if "time" not in params.keys():
+        return params
+    if isinstance(params["time"], pd.DatetimeIndex):
+        params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S").tolist()
+    return params
+
+
 def check_boundary_parameter(params):
     """
     Checks whether a valid boundary parameter is given
