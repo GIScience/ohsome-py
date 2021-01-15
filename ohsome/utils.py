@@ -8,15 +8,6 @@ import geopandas as gpd
 import pandas as pd
 
 
-def check_parameters(params):
-    """
-    Checks whether the parameters of the query are valid
-    :param params:
-    :return:
-    """
-    pass
-
-
 def check_time_parameter(params):
     """
     Checks time parameter and converts it if necessary
@@ -25,10 +16,10 @@ def check_time_parameter(params):
     """
 
     if "time" not in params.keys():
-        return params
+        return False
     if isinstance(params["time"], pd.DatetimeIndex):
         params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S").tolist()
-    return params
+    return True
 
 
 def check_boundary_parameter(params):
@@ -39,17 +30,21 @@ def check_boundary_parameter(params):
     """
 
     if "bboxes" in params.keys():
-        return params
+        if isinstance((params["bboxes"]), list) or isinstance(
+            (params["bboxes"]), tuple
+        ):
+            params["bboxes"] = format_bboxes(params["bboxes"])
+        return True
     elif "bpolys" in params.keys():
         if isinstance((params["bpolys"]), gpd.GeoDataFrame):
             params["bpolys"] = format_bpolys(params["bpolys"])
-        return params
+        return True
     elif "bcircles" in params.keys():
         if isinstance((params["bcircles"]), pd.DataFrame) or isinstance(
             (params["bcircles"]), gpd.GeoDataFrame
         ):
             params["bcircles"] = format_bcircles(params["bcircles"])
-        return params
+        return True
     else:
         OhsomeException(
             message="No valid boundary parameter is given. Specify one of the parameters 'bboxes', "
@@ -85,9 +80,16 @@ def format_bpolys(bpolys):
         UserWarning(
             "Dataframe does not contain an 'id' column. Joining the ohsome query results and the geodataframe will not be possible."
         )
-
-    # Create a json object which holds geometry, id and osmid for ohsome query
     return bpolys.to_json(na="drop")
+
+
+def format_bboxes(bboxes):
+    """
+    Converts a geodataframe to a json object to be passed to an ohsome request
+    :param bpolys:
+    :return:
+    """
+    return ",".join([str(x) for x in bboxes])
 
 
 def find_groupby_names(url):

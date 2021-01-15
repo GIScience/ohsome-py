@@ -4,9 +4,7 @@
 """ ohsome client class """
 
 import requests
-import geopandas as gpd
 from ohsome import OhsomeException, OhsomeResponse
-from ohsome.utils import format_bpolys
 import utils
 
 
@@ -53,7 +51,7 @@ class OhsomeClient:
 
         self.url = self.construct_resource_url()
 
-        self.formatted_parameters = self.format_parameters(params)
+        self.formatted_parameters = self._format_parameters(params)
 
         try:
             response = requests.post(self.url, data=self.formatted_parameters)
@@ -65,43 +63,23 @@ class OhsomeClient:
 
     def get(self, **params):
         """
-        Send ohsome get request
+        Send ohsome GET request
         :param params: parameters of the request as in ohsome documentation
         :return:
         """
-        url = self.construct_resource_url()
-        self.formatted_parameters = self.format_parameters(params)
-        try:
-            response = requests.get(url, data=self.formatted_parameters)
-        except requests.RequestException as e:
-            raise OhsomeException(message=e, params=self.formatted_parameters)
-        return self.handle_response(response)
+        pass
 
     @staticmethod
-    def format_parameters(input_params):
+    def _format_parameters(params):
         """
-        Reformat parameters for post request and store them in dictionary
+        Check and if necessary format parameters
         :param input_params:
         :return:
         """
-        utils.check_boundary_parameter(input_params)
-        utils.check_time_parameter(input_params)
-        params = {}
-        for k, v in list(input_params.items()):
-            if isinstance(v, bool):
-                if v:
-                    params[k] = "true"
-                else:
-                    params[k] = "false"
-            elif isinstance(v, list):
-                params[k] = ",".join([str(x) for x in v])
-            elif isinstance(v, tuple):
-                params[k] = ",".join([str(x) for x in v])
-            elif isinstance(v, gpd.geodataframe.GeoDataFrame):
-                params[k] = format_bpolys(v)
-            else:
-                params[k] = v
-        return params
+        formatted_params = params.copy()
+        utils.check_boundary_parameter(formatted_params)
+        utils.check_time_parameter(formatted_params)
+        return formatted_params
 
     def handle_response(self, response):
         """

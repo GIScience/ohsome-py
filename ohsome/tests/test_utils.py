@@ -15,7 +15,7 @@ def test_check_time_parameter():
     """
     # Setup
     time = pd.date_range("2018-01-01", periods=3, freq="D")
-    time.strftime("%Y-%m-%dT%H:%M:%S").tolist()
+    time = tuple(time.strftime("%Y-%m-%dT%H:%M:%S").tolist())
     bcircles = pd.DataFrame(
         {
             "id": [1, 2],
@@ -51,11 +51,12 @@ def test_format_bcircles():
     )
     time = "2018-01-01"
     fltr = "amenity=restaurant and type:way"
+    showMetadata = True
 
     # Run ohsome query
     client = ohsome.OhsomeClient()
     response = client.elements.count.groupBy.boundary.post(
-        bcircles=bcircles, time=time, filter=fltr
+        bcircles=bcircles, time=time, filter=fltr, showMetadata=showMetadata
     )
     result = response.as_dataframe()
     del client
