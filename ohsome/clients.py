@@ -6,10 +6,12 @@
 import requests
 import geopandas as gpd
 from ohsome import OhsomeException, OhsomeResponse
-from ohsome.utils import format_geodataframe
+from ohsome.utils import format_bpolys
+import utils
 
-OHSOME_API_VERSION = '1'
-OHSOME_BASE_API_URL = 'https://api.ohsome.org/v1/'
+
+OHSOME_API_VERSION = "1"
+OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
 
 
 class OhsomeClient:
@@ -18,10 +20,11 @@ class OhsomeClient:
 
     Documentation of query parameters: https://api.ohsome.org/v1/
     """
+
     api_version = OHSOME_API_VERSION
     base_api_url = OHSOME_BASE_API_URL
 
-    def __init__(self, cache=None, ):
+    def __init__(self, cache=None):
         self._cache = cache or []
         self.formatted_parameters = None
         self.url = None
@@ -39,7 +42,12 @@ class OhsomeClient:
     def post(self, **params):
         """
         Sends an ohsome post request
-        :param params: parameters of the request as in ohsome documentation
+        :param
+
+        params: parameters of the request as in ohsome documentation
+
+        bpolys: Geometries as geojson string, GeoDataFrame or geojson.FeatureCollection
+
         :return:
         """
 
@@ -50,7 +58,9 @@ class OhsomeClient:
         try:
             response = requests.post(self.url, data=self.formatted_parameters)
         except requests.RequestException as e:
-            raise OhsomeException(message=e, url=self.url, params=self.formatted_parameters)
+            raise OhsomeException(
+                message=e, url=self.url, params=self.formatted_parameters
+            )
         return self.handle_response(response)
 
     def get(self, **params):
@@ -74,21 +84,20 @@ class OhsomeClient:
         :param input_params:
         :return:
         """
+        utils.check_boundary_parameter(input_params)
         params = {}
         for k, v in list(input_params.items()):
             if isinstance(v, bool):
                 if v:
-                    params[k] = 'true'
+                    params[k] = "true"
                 else:
-                    params[k] = 'false'
+                    params[k] = "false"
             elif isinstance(v, list):
-                params[k] = ','.join([str(x) for x in v])
+                params[k] = ",".join([str(x) for x in v])
             elif isinstance(v, tuple):
-                params[k] = ','.join([str(x) for x in v])
-            #elif isinstance(v, geojson.feature.FeatureCollection):
-            #    params[k] = format_coordinates(v)
+                params[k] = ",".join([str(x) for x in v])
             elif isinstance(v, gpd.geodataframe.GeoDataFrame):
-                params[k] = format_geodataframe(v)
+                params[k] = format_bpolys(v)
             else:
                 params[k] = v
         return params
@@ -101,9 +110,15 @@ class OhsomeClient:
         :return:
         """
         if response.status_code == 200:
-            return OhsomeResponse(response, url=self.url, params=self.formatted_parameters)
+            return OhsomeResponse(
+                response, url=self.url, params=self.formatted_parameters
+            )
         else:
-            raise OhsomeException(response=response, url=self.url, params=self.formatted_parameters)
+            raise OhsomeException(
+                response=response,
+                url=self.url,
+                params=self.formatted_parameters,
+            )
 
     def construct_resource_url(self):
         """
@@ -122,7 +137,7 @@ class OhsomeClient:
         return self.add_api_component(name)
 
     def __repr__(self):
-        return '<OhsomeClient: %s>' % self.construct_resource_url()
+        return "<OhsomeClient: %s>" % self.construct_resource_url()
 
     def __del__(self):
         pass
