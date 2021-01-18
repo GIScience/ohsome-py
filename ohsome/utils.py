@@ -11,7 +11,7 @@ import datetime
 
 def format_time(params):
     """
-    Checks time parameter and converts it if necessary
+    Formats the 'time' parameter given as string, list of dates or pandas.Series or pandas.DateTimeIndex
     :param params:
     :return:
     """
@@ -27,7 +27,7 @@ def format_time(params):
 
 def format_boundary(params):
     """
-    Checks whether a valid boundary parameter is given
+    Formats the boundary parameters 'bboxes', 'bcircles' and 'bpolys'
     :param params:
     :return:
     """
