@@ -38,31 +38,34 @@ class OhsomeClient:
 
     def post(self, **params):
         """
-        Sends an ohsome post request
+        Sends POST request to ohsome API
         :param params: parameters of the request as in ohsome documentation
         :return:
         """
-        self.url = self.construct_resource_url()
-        self.parameters = self._format_parameters(params)
+        self._construct_resource_url()
+        self._format_parameters(params)
         try:
-            response = requests.post(self.url, data=self.parameters)
+            response = requests.post(url=self.url, data=self.parameters)
         except requests.RequestException as e:
             raise OhsomeException(message=e, url=self.url, params=self.parameters)
-        return self.handle_response(response)
+        return self._handle_response(response)
 
-    @staticmethod
-    def _format_parameters(params):
+    def _format_parameters(self, params):
         """
-        Check and if necessary format parameters
+        Check and format parameters of the query
         :param input_params:
         :return:
         """
-        formatted_params = params.copy()
-        utils.check_boundary_parameter(formatted_params)
-        utils.check_time_parameter(formatted_params)
-        return formatted_params
+        self.parameters = params.copy()
+        try:
+            utils.format_boundary(self.parameters)
+        except OhsomeException as e:
+            raise OhsomeException(
+                message=e.message, error_code=300, params=self.parameters, url=self.url
+            )
+        utils.format_time(self.parameters)
 
-    def handle_response(self, response):
+    def _handle_response(self, response):
         """
         Converts the ohsome response to an OhsomeResponse Object if query was successfull.
         Otherwise throws OhsomeException.
@@ -78,12 +81,12 @@ class OhsomeClient:
                 params=self.parameters,
             )
 
-    def construct_resource_url(self):
+    def _construct_resource_url(self):
         """
         Constructs the full url of the ohsome request
         :return:
         """
-        return self.base_api_url + "/".join(self._cache)
+        self.url = self.base_api_url + "/".join(self._cache)
 
     @property
     def start_timestamp(self):
@@ -126,7 +129,7 @@ class OhsomeClient:
             response = requests.get(self.url)
         except requests.RequestException as e:
             raise OhsomeException(message=e, url=self.url, params=self.parameters)
-        self.metadata = self.handle_response(response).data
+        self.metadata = self._handle_response(response).data
 
     def __getattr__(self, name):
         """
@@ -138,7 +141,7 @@ class OhsomeClient:
         return self.add_api_component(name)
 
     def __repr__(self):
-        return "<OhsomeClient: %s>" % self.construct_resource_url()
+        return "<OhsomeClient: %s>" % self._construct_resource_url()
 
     def __del__(self):
         pass

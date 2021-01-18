@@ -1,0 +1,27 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"id": 1, "radius":  100},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.678770065307615,
+          49.414435400453954
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"id": 2, "radius":  150},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.697137832641602,
+          49.41007968889129
+        ]
+      }
+    }
+  ]
+}
