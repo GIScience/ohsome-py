@@ -82,11 +82,7 @@ class OhsomeClient:
             utils.format_boundary(self.parameters)
         except OhsomeException as e:
             raise OhsomeException(
-                message=e.message,
-                status_code=300,
-                params=self.parameters,
-                url=self.url,
-                error="InvalidInputParameter",
+                message=e.message, status_code=300, params=self.parameters, url=self.url
             )
         utils.format_time(self.parameters)
 
@@ -104,7 +100,7 @@ class OhsomeClient:
                 params=self.parameters,
                 status_code=response.status_code,
             )
-        # Check if response is valid json format to catch errors which occured during data transmission
+        # Check if response is valid json format to catch errors which occured during data transmission e.g. time out
         try:
             response.json()
         except json.JSONDecodeError:

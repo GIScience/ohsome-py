@@ -57,13 +57,19 @@ def format_bcircles(bcircles):
     if isinstance(bcircles, str):
         return bcircles
     elif isinstance(bcircles, list) or isinstance(bcircles, tuple):
-        bcircles_str = []
         if isinstance(bcircles[0], list):
-            for b in bcircles:
-                bcircles_str.append("{}:{},{},{}".format(*b))
-            return "|".join(bcircles_str)
+            return "|".join([",".join([str(x) for x in box]) for box in bcircles])
+        elif isinstance(bcircles[1], float) or isinstance(bcircles[1], int):
+            return ",".join([str(x) for x in bcircles])
+        elif isinstance(bcircles[0], str) and (bcircles[0].find(",") != -1):
+            return "|".join([str(c) for c in bcircles])
         else:
-            return "{}:{},{},{}".format(*bcircles)
+            raise OhsomeException("'bboxes' parameter has invalid format.")
+    elif isinstance(bcircles, dict):
+        return [
+            "{}:".format(id) + ",".join([str(c) for c in coords])
+            for id, coords in bcircles.items()
+        ]
     elif isinstance(bcircles, gpd.GeoDataFrame):
         if bcircles.geometry.geom_type.unique() != ["Point"]:
             raise OhsomeException(
@@ -102,20 +108,26 @@ def format_bboxes(bboxes):
     Formats bboxes parameter to comply with ohsome API
     :param
     bboxes: Bounding boxes given as
-        string (lon1,lat1,lon2,lat2|lon1,lat1,lon2,lat2|… or id1:lon1,lat1,lon2,lat2|id2:lon1,lat1,lon2,lat2|…),
-        list ([[id1:lon1,lat1,lon2,lat2],[id2:lon1,lat1,lon2,lat2],...] or
-        pandas.DataFrame with columns minx, miny, maxx, maxy. These columns can be created from a GeoDataFrame using the
+        string: lon1,lat1,lon2,lat2|lon1,lat1,lon2,lat2|… or id1:lon1,lat1,lon2,lat2|id2:lon1,lat1,lon2,lat2|…
+        list: [[id1,lon1,lat1,lon2,lat2],[id2,lon1,lat1,lon2,lat2],...] or [lon1,lat1,lon2,lat2] if it's just one box
+        pandas.DataFrame: with columns minx, miny, maxx, maxy. These columns can be created from a GeoDataFrame using the
         'GeoDataFrame.bounds' method.
     :return: Bounding boxes formatted as a string compliant with ohsome API
     """
     if isinstance(bboxes, list) or isinstance(bboxes, tuple):
-        bboxes_str = []
         if isinstance(bboxes[0], list):
-            for b in bboxes:
-                bboxes_str.append(",".join([str(c) for c in b]))
-            return "|".join(bboxes_str)
+            return "|".join([",".join([str(x) for x in box]) for box in bboxes])
+        elif isinstance(bboxes[1], float) or isinstance(bboxes[1], int):
+            return ",".join([str(x) for x in bboxes])
+        elif isinstance(bboxes[0], str) and (bboxes[0].find(",") != -1):
+            return "|".join([str(c) for c in bboxes])
         else:
-            return ",".join([str(c) for c in bboxes])
+            raise OhsomeException("'bboxes' parameter has invalid format.")
+    elif isinstance(bboxes, dict):
+        return [
+            "{}:".format(id) + ",".join([str(c) for c in coords])
+            for id, coords in bboxes.items()
+        ]
     elif isinstance(bboxes, str):
         return bboxes
     elif isinstance(bboxes, gpd.GeoDataFrame):
@@ -156,19 +168,16 @@ def format_bpolys(bpolys):
         return bpolys
 
 
-def list2string(list_param):
+def list2string(param):
     """
     Convert bcircles or bboxes given as lists to a string
-    :param list_param:
+    :param param:
     :return:
     """
-    bboxes_str = []
-    if isinstance(list_param[0], list):
-        for b in list_param:
-            bboxes_str.append(",".join([str(c) for c in b]))
-        return "|".join(bboxes_str)
+    if len(param) == 4:  # no id included
+        return ",".join([str(x) for x in param])
     else:
-        return ",".join([str(c) for c in list_param])
+        raise OhsomeException(message="Invalid format of bboxes or bcircles parameter.")
 
 
 def find_groupby_names(url):

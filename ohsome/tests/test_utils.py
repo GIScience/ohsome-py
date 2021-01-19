@@ -102,15 +102,21 @@ def test_format_bcircles_list():
     Test whether a DataFrame object given as 'bcircles' is formatted correctly.
     :return:
     """
-    bcircles = [[1, 8.695, 49.41, 200], [2, 8.696, 49.41, 200]]
     time = "2018-01-01"
     fltr = "amenity=restaurant and type:node"
-
-    # Run ohsome query
     client = ohsome.OhsomeClient()
-    client.elements.count.groupBy.boundary.post(
-        bcircles=bcircles, time=time, filter=fltr
-    )
+
+    bcircles = [[8.695, 49.41, 200], [8.696, 49.41, 200]]
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
+
+    bcircles = {1: [8.695, 49.41, 200], 2: [8.696, 49.41, 200]}
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
+
+    bcircles = ["1:8.695, 49.41, 200", "2:8.696, 49.41, 200"]
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
+
+    bcircles = "1:8.695, 49.41, 200"
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
 def test_format_bcircles_geodataframe():
@@ -221,21 +227,33 @@ def test_format_bboxes_list():
     Tests whether parameter bboxes given as a list is formatted correctly
     :return:
     """
-    bboxes = [
-        [8.67066, 49.41423, 8.68177, 49.4204],
-        [8.67066, 49.41423, 8.68177, 49.4204],
-    ]
     time = "2010-01-01"
     fltr = "amenity=restaurant and type:node"
 
     client = ohsome.OhsomeClient()
-    client.elements.count.groupBy.boundary.post(bboxes=bboxes, time=time, filter=fltr)
+
+    bboxes = [
+        [8.67066, 49.41423, 8.68177, 49.4204],
+        [8.67066, 49.41423, 8.68177, 49.4204],
+    ]
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
+
+    bboxes = {
+        "1": [8.67066, 49.41423, 8.68177, 49.4204],
+        "2": [8.67066, 49.41423, 8.68177, 49.4204],
+    }
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
     bboxes = [8.67066, 49.41423, 8.68177, 49.4204]
-    time = "2010-01-01/2011-01-01/P1Y"
-    fltr = "amenity=restaurant and type:node"
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
-    client = ohsome.OhsomeClient()
+    bboxes = [
+        "8.67066, 49.41423, 8.68177, 49.4204",
+        "8.67066, 49.41423, 8.68177, 49.4204",
+    ]
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
+
+    bboxes = "8.67066, 49.41423, 8.68177, 49.4204"
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
 
