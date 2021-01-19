@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" Classes to handles error codes of ohsome API """
+""" Class to handle error codes of ohsome API """
 
 
 class OhsomeException(Exception):
     """
-    Exception that is called whenever ohsome API returns an error code
+    Exception to handle ohsome API errors
     """
 
     def __init__(self, message=None, url=None, params=None, status_code=None):

@@ -64,7 +64,7 @@ def format_bcircles(bcircles):
         elif isinstance(bcircles[0], str) and (bcircles[0].find(",") != -1):
             return "|".join([str(c) for c in bcircles])
         else:
-            raise OhsomeException("'bboxes' parameter has invalid format.")
+            raise OhsomeException("'bcircles' parameter has invalid format.")
     elif isinstance(bcircles, dict):
         return [
             "{}:".format(id) + ",".join([str(c) for c in coords])
@@ -98,9 +98,7 @@ def format_bcircles(bcircles):
                 )
             )
     else:
-        raise OhsomeException(
-            message="'bcircles' must be given as string, list, pandas.DataFrame or geopandas.GeoDataFrame."
-        )
+        raise OhsomeException(message="'bcircles' parameter has invalid format.")
 
 
 def format_bboxes(bboxes):
@@ -166,18 +164,6 @@ def format_bpolys(bpolys):
         return bpolys.to_json(na="drop")
     else:
         return bpolys
-
-
-def list2string(param):
-    """
-    Convert bcircles or bboxes given as lists to a string
-    :param param:
-    :return:
-    """
-    if len(param) == 4:  # no id included
-        return ",".join([str(x) for x in param])
-    else:
-        raise OhsomeException(message="Invalid format of bboxes or bcircles parameter.")
 
 
 def find_groupby_names(url):

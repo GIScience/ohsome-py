@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" ohsome response class"""
+"""Class for ohsome API response"""
 
 import geopandas as gpd
 import pandas as pd
@@ -11,7 +11,7 @@ from ohsome.utils import find_groupby_names
 
 class OhsomeResponse:
     """
-    Parses the response of an Ohsome request
+    COntains the response of the request to the ohsome API
     """
 
     def __init__(self, response, url=None, params=None):
@@ -20,114 +20,43 @@ class OhsomeResponse:
         self.params = params
         self.data = response.json()
 
-    def as_dataframe(self):
+    def as_dataframe(self, multiindex=True):
         """
-        Converts the result to a Pandas DataFrame
+        Converts the ohsome response to a pandas.DataFrame
         :return: pandas dataframe
         """
         assert (
             "features" not in self.data.keys()
         ), "GeoJSON object cannot be converted to a pandas.Dataframe. Use response.as_geodataframe() instead."
 
+        groupby_names = []
         if "result" in self.data.keys():
             result_df = pd.DataFrame().from_records(self.data["result"])
-            if "timestamp" in result_df.columns:
-                result_df["timestamp"] = pd.to_datetime(
-                    result_df["timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
-                )
-                result_df.set_index("timestamp", inplace=True)
-            else:
-                result_df["fromTimestamp"] = pd.to_datetime(
-                    result_df["fromTimestamp"], format="%Y-%m-%dT%H:%M:%SZ"
-                )
-                result_df["toTimestamp"] = pd.to_datetime(
-                    result_df["toTimestamp"], format="%Y-%m-%dT%H:%M:%SZ"
-                )
-                result_df.set_index(["fromTimestamp", "toTimestamp"])
-            return result_df
-        elif "groupByResult" in self.data.keys():
-            groupby_names = find_groupby_names(self.url)
-            record_dfs = []
-            if len(groupby_names) == 1:
-                for record in self.data["groupByResult"]:
-                    record_dict = {groupby_names[0]: record["groupByObject"]}
-                    record_result = [{**record_dict, **x} for x in record["result"]]
-                    record_dfs.extend(record_result)
-            elif len(groupby_names) == 2:
-                for record in self.data["groupByResult"]:
-                    record_dict = {
-                        groupby_names[0]: record["groupByObject"][0],
-                        groupby_names[1]: record["groupByObject"][1],
-                    }
-                    record_result = [{**record_dict, **x} for x in record["result"]]
-                    record_dfs.extend(record_result)
-            df_all = pd.DataFrame().from_records(record_dfs)
-
-            if df_all.empty:
-                return df_all
-
-            # Convert timestamps to date format and create Multi-Index
-            if "timestamp" in df_all.columns:
-                if len(groupby_names) == 2:
-                    df_all["timestamp"] = pd.to_datetime(
-                        df_all["timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
-                    )
-                    df_all.set_index(
-                        [groupby_names[0], groupby_names[1], "timestamp"], inplace=True
-                    )
-                else:
-                    df_all["timestamp"] = pd.to_datetime(
-                        df_all["timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
-                    )
-                    df_all.set_index([groupby_names[0], "timestamp"], inplace=True)
-            else:
-                df_all["fromTimestamp"] = pd.to_datetime(
-                    df_all["fromTimestamp"], format="%Y-%m-%dT%H:%M:%SZ"
-                )
-                df_all["toTimestamp"] = pd.to_datetime(
-                    df_all["toTimestamp"], format="%Y-%m-%dT%H:%M:%SZ"
-                )
-                if len(groupby_names) == 2:
-                    df_all.set_index(
-                        [
-                            groupby_names[0],
-                            groupby_names[1],
-                            "fromTimestamp",
-                            "toTimestamp",
-                        ],
-                        inplace=True,
-                    )
-                else:
-                    df_all.set_index(
-                        [groupby_names[0], "fromTimestamp", "toTimestamp"], inplace=True
-                    )
-
-            return df_all
-
-        elif "shareResult" in self.data.keys():
-            result_df = pd.DataFrame().from_records(self.data["shareResult"])
-            if "timestamp" in result_df.columns:
-                result_df["timestamp"] = pd.to_datetime(
-                    result_df["timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
-                )
-                result_df.set_index("timestamp", inplace=True)
-            return result_df
         elif "ratioResult" in self.data.keys():
             result_df = pd.DataFrame().from_records(self.data["ratioResult"])
-            if "timestamp" in result_df.columns:
-                result_df["timestamp"] = pd.to_datetime(
-                    result_df["timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
-                )
-                result_df.set_index("timestamp", inplace=True)
-            return result_df
-        else:
-            raise TypeError(
-                "This result type cannot be converted to a Pandas dataframe."
+        elif "groupByResult" in self.data.keys():
+            groupby_names = find_groupby_names(self.url)
+            result_df = create_groupby_dataframe(
+                self.data["groupByResult"],
+                groupby_names,
             )
+        elif "groupByBoundaryResult" in self.data.keys():
+            groupby_names = find_groupby_names(self.url)
+            result_df = create_groupby_dataframe(
+                self.data["groupByBoundaryResult"],
+                groupby_names,
+            )
+        else:
+            raise TypeError("This result type is not implemented.")
+
+        format_time(result_df)
+        if multiindex:
+            set_index(result_df, groupby_names)
+        return result_df
 
     def as_geodataframe(self):
         """
-        Returns the result as a GeoPandas dataframe
+        Converts the ohsome response to a geopandas.GeoDataFrame
         :return:
         """
 
@@ -171,7 +100,7 @@ class OhsomeResponse:
 
             return features
 
-    def to_file(self, outfile):
+    def to_json(self, outfile):
         """
         Write response to file
         :return:
@@ -179,3 +108,62 @@ class OhsomeResponse:
         assert outfile.endswith("json"), "Output file must be json or geojson"
         with open(outfile, "w") as dst:
             json.dump(self.data, dst, indent=2)
+
+
+def set_index(result_df, groupby_names):
+    """
+    Set multi-index based on groupby names and time
+    :param result_df:
+    :param groupby_names:
+    :return:
+    """
+    if "timestamp" in result_df.columns:
+        result_df.set_index([*groupby_names, "timestamp"], inplace=True)
+    else:
+        result_df.set_index(
+            [*groupby_names, "fromTimestamp", "toTimestamp"], inplace=True
+        )
+
+
+def create_groupby_dataframe(data, groupby_names):
+    """
+    Formats groupby results
+    :param result_df:
+    :return:
+    """
+    keys = list(data[0].keys())
+    keys.remove("groupByObject")
+    record_dfs = []
+    if len(groupby_names) == 1:
+        for record in data:
+            record_dict = {groupby_names[0]: record["groupByObject"]}
+            record_result = [{**record_dict, **x} for x in record[keys[0]]]
+            record_dfs.extend(record_result)
+    elif len(groupby_names) == 2:
+        for record in data:
+            record_dict = {
+                groupby_names[0]: record["groupByObject"][0],
+                groupby_names[1]: record["groupByObject"][1],
+            }
+            record_result = [{**record_dict, **x} for x in record[keys[0]]]
+            record_dfs.extend(record_result)
+    return pd.DataFrame().from_records(record_dfs)
+
+
+def format_time(result_df):
+    """
+    Format timestamp as datetime
+    :param dresult_dff:
+    :return:
+    """
+    if "timestamp" in result_df.columns:
+        result_df["timestamp"] = pd.to_datetime(
+            result_df["timestamp"], format="%Y-%m-%dT%H:%M:%S"
+        )
+    else:
+        result_df["fromTimestamp"] = pd.to_datetime(
+            result_df["fromTimestamp"], format="%Y-%m-%dT%H:%M:%S"
+        )
+        result_df["toTimestamp"] = pd.to_datetime(
+            result_df["toTimestamp"], format="%Y-%m-%dT%H:%M:%S"
+        )
