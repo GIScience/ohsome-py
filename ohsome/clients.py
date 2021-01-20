@@ -4,8 +4,7 @@
 """ ohsome client class """
 
 import requests
-from ohsome import OhsomeException, OhsomeResponse
-import utils
+from ohsome import OhsomeException, OhsomeResponse, utils
 import json
 
 OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
@@ -170,6 +169,74 @@ class OhsomeClient:
         except requests.RequestException as e:
             raise OhsomeException(message=e, url=self.url, params=self.parameters)
         self.metadata = self._handle_response(response).data
+
+    @property
+    def elements(self):
+        return self.add_api_component("elements")
+
+    @property
+    def elementsFullHistory(self):
+        return self.add_api_component("elementsFullHistory")
+
+    @property
+    def users(self):
+        return self.add_api_component("users")
+
+    @property
+    def area(self):
+        return self.add_api_component("area")
+
+    @property
+    def count(self):
+        return self.add_api_component("count")
+
+    @property
+    def length(self):
+        return self.add_api_component("length")
+
+    @property
+    def perimeter(self):
+        return self.add_api_component("perimeter")
+
+    @property
+    def density(self):
+        return self.add_api_component("density")
+
+    @property
+    def ratio(self):
+        return self.add_api_component("ratio")
+
+    @property
+    def groupBy(self):
+        return self.add_api_component("groupBy")
+
+    @property
+    def tag(self):
+        return self.add_api_component("tag")
+
+    @property
+    def type(self):
+        return self.add_api_component("type")
+
+    @property
+    def key(self):
+        return self.add_api_component("key")
+
+    @property
+    def boundary(self):
+        return self.add_api_component("boundary")
+
+    @property
+    def bbox(self):
+        return self.add_api_component("bbox")
+
+    @property
+    def centroid(self):
+        return self.add_api_component("centroid")
+
+    @property
+    def geometry(self):
+        return self.add_api_component("geometry")
 
     def __getattr__(self, name):
         """
