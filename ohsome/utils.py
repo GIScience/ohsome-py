@@ -66,10 +66,12 @@ def format_bcircles(bcircles):
         else:
             raise OhsomeException("'bcircles' parameter has invalid format.")
     elif isinstance(bcircles, dict):
-        return [
-            "{}:".format(id) + ",".join([str(c) for c in coords])
-            for id, coords in bcircles.items()
-        ]
+        return "|".join(
+            [
+                "{}:".format(id) + ",".join([str(c) for c in coords])
+                for id, coords in bcircles.items()
+            ]
+        )
     elif isinstance(bcircles, gpd.GeoDataFrame):
         if bcircles.geometry.geom_type.unique() != ["Point"]:
             raise OhsomeException(
@@ -122,10 +124,12 @@ def format_bboxes(bboxes):
         else:
             raise OhsomeException("'bboxes' parameter has invalid format.")
     elif isinstance(bboxes, dict):
-        return [
-            "{}:".format(id) + ",".join([str(c) for c in coords])
-            for id, coords in bboxes.items()
-        ]
+        return "|".join(
+            [
+                "{}:".format(id) + ",".join([str(c) for c in coords])
+                for id, coords in bboxes.items()
+            ]
+        )
     elif isinstance(bboxes, str):
         return bboxes
     elif isinstance(bboxes, gpd.GeoDataFrame):

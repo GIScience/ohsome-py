@@ -118,7 +118,7 @@ def test_elements_count_groupby_boundary():
 
 def test_elements_count_groupby_boundary_groupby_tag():
     """
-    Tests whether the result of elements.count.groupBy.boundary is formatted correctly as a pandas.DataFrame
+    Tests whether the result of elements.count.groupBy.boundary.groupBy.tag is formatted correctly as a pandas.DataFrame
     :return:
     """
     bboxes = "8.6933,49.40893,8.69797,49.41106|8.6887,49.41325,8.69462,49.4166"
@@ -154,7 +154,7 @@ def test_elements_count_ratio():
 
 def test_elements_count_ratio_groupby_boundary():
     """
-    Tests whether the result of elements.count.ratio is formatted correctly as a pandas.DataFrame
+    Tests whether the result of elements.count.ratio.groupBy.boundary is formatted correctly as a pandas.DataFrame
     :return:
     """
     bboxes = "A:8.6933,49.40893,8.69797,49.41106|B:8.6887,49.41325,8.69462,49.4166"
@@ -189,3 +189,39 @@ def test_timeout_error():
         e_info.value.message
         == "The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser time period."
     )
+
+
+def test_elements_geometry():
+    """
+    Tests whether the result of elements.geometry is converted to a geopandas.GeoDataFrame
+    :return:
+    """
+    bboxes = "8.67066,49.41423,8.68177,49.4204"
+    time = "2010-01-01"
+    filter = "landuse=grass and type:way"
+
+    client = ohsome.OhsomeClient()
+    response = client.elements.geometry.post(bboxes=bboxes, time=time, filter=filter)
+    result = response.as_geodataframe()
+    del client
+
+    assert len(result.geometry) == 9
+
+
+def test_elementsFullHistory_geometry():
+    """
+    Tests whether the result of elementsFullHistory.centroid is converted to a geopandas.GeoDataFrame
+    :return:
+    """
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2008-01-01,2016-01-01"
+    filter = "name=Krautturm and type:way"
+
+    client = ohsome.OhsomeClient()
+    response = client.elementsFullHistory.centroid.post(
+        bboxes=bboxes, time=time, filter=filter
+    )
+    result = response.as_geodataframe()
+    del client
+
+    assert len(result.geometry) == 9
