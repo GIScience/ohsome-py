@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""__description__
+"""Test OhsomeExceptions
 """
 
 __author__ = "Christina Ludwig, GIScience Research Group, Heidelberg University"
@@ -40,5 +40,4 @@ def test_handle_multiple_responses_throw_timeouterror():
     # WHEN
     client = ohsome.OhsomeClient()
     with pytest.raises(ohsome.OhsomeException):
-        client.elements.count.post(bboxes=bboxes, time=time, filter=filter, timeout=2)
-    del client
+        client.elements.count.post(bboxes=bboxes, time=time, filter=filter, timeout=1)

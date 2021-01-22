@@ -17,7 +17,7 @@ class OhsomeResponse:
     def __init__(self, response, url=None, params=None):
 
         self.url = url
-        self.params = params
+        self.parameters = params
         self.data = response.json()
 
     def as_dataframe(self, multiindex=True):

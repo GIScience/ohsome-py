@@ -16,13 +16,15 @@ class OhsomeClient:
 
     """
 
-    base_api_url = OHSOME_BASE_API_URL
-
-    def __init__(self, cache=None):
+    def __init__(self, cache=None, base_api_url=None):
         self._cache = cache or []
         self.parameters = None
-        self.url = None
         self.metadata = None
+        self.url = None
+        if base_api_url is not None:
+            self.base_api_url = base_api_url
+        else:
+            self.base_api_url = OHSOME_BASE_API_URL
 
     def add_api_component(self, name):
         """
@@ -81,7 +83,7 @@ class OhsomeClient:
             utils.format_boundary(self.parameters)
         except OhsomeException as e:
             raise OhsomeException(
-                message=e.message, status_code=300, params=self.parameters, url=self.url
+                message=e.message, status=300, params=self.parameters, url=self.url
             )
         utils.format_time(self.parameters)
 
@@ -97,7 +99,7 @@ class OhsomeClient:
                 message=json.loads(response.text)["message"],
                 url=self.url,
                 params=self.parameters,
-                status_code=response.status_code,
+                status=response.status_code,
             )
         # Check if response is valid json format to catch errors which occured during data transmission e.g. time out
         try:
@@ -115,7 +117,7 @@ class OhsomeClient:
                 message=message,
                 url=self.url,
                 params=self.parameters,
-                status_code=status_code,
+                status=status_code,
             )
         else:
             return OhsomeResponse(response, url=self.url, params=self.parameters)
@@ -168,6 +170,13 @@ class OhsomeClient:
             response = requests.get(self.url)
         except requests.RequestException as e:
             raise OhsomeException(message=e, url=self.url, params=self.parameters)
+        if not response.ok:
+            raise OhsomeException(
+                message="Forbidden",
+                status=response.status_code,
+                url=self.url,
+                params=self.parameters,
+            )
         self.metadata = self._handle_response(response).data
 
     @property

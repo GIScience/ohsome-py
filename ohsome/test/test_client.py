@@ -10,6 +10,21 @@ import pytest
 import datetime as dt
 
 
+def test_different_url():
+    """
+    Test whether request can be sent to alternative url
+    :return:
+    """
+    base_api_url = "https://docs.ohsome.org/ohsome-api/v0.9"
+    time = "2018-01-01"
+    fltr = "amenity=restaurant and type:node"
+    bcircles = [[8.695, 49.41, 200], [8.696, 49.41, 200]]
+
+    client = ohsome.OhsomeClient(base_api_url=base_api_url)
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
+    assert client.base_api_url == base_api_url
+
+
 def test_start_and_end_timestamp():
     """
     Get start timestamp
@@ -151,7 +166,7 @@ def test_bcircles_groupby():
         "V": [-123.1139529, 49.2608724, radius],
         "Berlin": [13.3888599, 52.5170365, radius],
     }
-    cities = "1:139.7594549, 35.6828387,100|2:13.3888599, 52.5170365,100"
+    cities = "1:139.7594549,35.6828387,100|2:13.3888599,52.5170365,100"
     time = pd.date_range("2010-01-01", periods=1, freq="Y")
     fltr = "leisure=park and type:way"
 
