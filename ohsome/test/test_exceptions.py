@@ -46,3 +46,11 @@ def test_timeout_error():
         e_info.value.message
         == "The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser time period."
     )
+
+
+def test_catch_incomplete_response_error():
+    """
+    Tests whether a AssertionError is raised if the result cannot be converted to a geodataframe object
+    :return:
+    """
+    # todo: find suitable test case
