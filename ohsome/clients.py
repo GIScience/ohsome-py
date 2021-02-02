@@ -36,7 +36,7 @@ class OhsomeClient:
         # Enables method chaining
         return OhsomeClient(self._cache + [name])
 
-    def post(self, **params):
+    def post(self, endpoint=None, **params):
         """
         Sends POST request to ohsome API
         :param Parameters of the request to the ohsome API. See https://docs.ohsome.org/ohsome-api/v1/ for details
@@ -64,7 +64,7 @@ class OhsomeClient:
 
         :return:
         """
-        self._construct_resource_url()
+        self._construct_resource_url(endpoint)
         self._format_parameters(params)
         try:
             response = requests.post(url=self.url, data=self.parameters)
@@ -122,12 +122,15 @@ class OhsomeClient:
         else:
             return OhsomeResponse(response, url=self.url, params=self.parameters)
 
-    def _construct_resource_url(self):
+    def _construct_resource_url(self, endpoint=None):
         """
         Constructs the full url of the ohsome request
         :return:
         """
-        self.url = self.base_api_url + "/".join(self._cache)
+        if endpoint:
+            self.url = self.base_api_url + endpoint.strip("/")
+        else:
+            self.url = self.base_api_url + "/".join(self._cache)
 
     @property
     def start_timestamp(self):

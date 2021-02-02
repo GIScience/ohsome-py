@@ -314,3 +314,29 @@ def test_format_bboxes_list():
 
     bboxes = "8.67066, 49.41423, 8.68177, 49.4204"
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
+
+
+def test_post_with_endpoint_string():
+    """
+    Tests whether a request can be sent of by providing the endpoint url as a string to post()
+    :return:
+    """
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2008-01-01,2016-01-01"
+    filter = "name=Krautturm and type:way"
+
+    endpoint = "contributions/latest/bbox"
+    client = ohsome.OhsomeClient()
+    response = client.post(endpoint=endpoint, bboxes=bboxes, time=time, filter=filter)
+    result = response.as_geodataframe()
+    assert isinstance(result, gpd.GeoDataFrame)
+    assert len(result) == 1
+
+    # Test query with leading and ending slashes
+    endpoint = "/contributions/latest/bbox/"
+    client = ohsome.OhsomeClient()
+    response = client.post(endpoint=endpoint, bboxes=bboxes, time=time, filter=filter)
+    result = response.as_geodataframe()
+
+    assert isinstance(result, gpd.GeoDataFrame)
+    assert len(result) == 1
