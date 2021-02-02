@@ -27,17 +27,22 @@ def test_elements_count_exception():
         response.as_geodataframe()
 
 
-def test_handle_multiple_responses_throw_timeouterror():
+def test_timeout_error():
     """
-    Tests whether a OhsomeException is thrown if time out occurs
+    Test whether an OhsomeException is raised, if the ohsome API contains a JSONDecodeError
     :return:
     """
-    # GIVEN
-    bboxes = [8.67066, 49.41423, 8.68177, 49.4204]
-    time = "2010-01-01/2011-01-01/P1Y"
-    filter = "building=*"
+    bboxes = "13.7,50.9,13.75,50.95"
+    time = "2019-12-10"
+    fltr = "leisure=park and type:way"
+    timeout = 1
 
-    # WHEN
     client = ohsome.OhsomeClient()
-    with pytest.raises(ohsome.OhsomeException):
-        client.elements.count.post(bboxes=bboxes, time=time, filter=filter, timeout=1)
+    with pytest.raises(ohsome.OhsomeException) as e_info:
+        client.elements.geometry.post(
+            bboxes=bboxes, time=time, filter=fltr, timeout=timeout
+        )
+    assert (
+        e_info.value.message
+        == "The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser time period."
+    )

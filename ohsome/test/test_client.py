@@ -10,7 +10,7 @@ import pytest
 import datetime as dt
 
 
-def test_different_url():
+def test_userdefined_url():
     """
     Test whether request can be sent to alternative url
     :return:
