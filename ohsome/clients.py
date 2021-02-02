@@ -188,6 +188,10 @@ class OhsomeClient:
         return self.add_api_component("elementsFullHistory")
 
     @property
+    def contributions(self):
+        return self.add_api_component("contributions")
+
+    @property
     def users(self):
         return self.add_api_component("users")
 

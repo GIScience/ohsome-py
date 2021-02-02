@@ -6,7 +6,8 @@ __author__ = "Christina Ludwig, GIScience Research Group, Heidelberg University"
 __email__ = "christina.ludwig@uni-heidelberg.de"
 
 import ohsome
-import pytest
+import geopandas as gpd
+import pandas as pd
 
 
 def test_elements_count():
@@ -15,15 +16,17 @@ def test_elements_count():
     .area, .length and .permiter should work as well.
     :return:
     """
-
     bboxes = "8.6933,49.40893,8.69797,49.41106"
     time = "2019-12-10"
     fltr = "amenity=cafe and type:node"
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
-    data = response.as_dataframe()
-    print(data)
+    result = response.as_dataframe()
+
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 1
+    assert list(result.index.names) == ["timestamp"]
 
 
 def test_elements_density():
@@ -37,8 +40,11 @@ def test_elements_density():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.density.post(bboxes=bboxes, time=time, filter=fltr)
-    data = response.as_dataframe()
-    print(data)
+    result = response.as_dataframe()
+
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 1
+    assert list(result.index.names) == ["timestamp"]
 
 
 # todo: sort keys alphabetically?
@@ -56,8 +62,11 @@ def test_elements_count_groupby_key():
     response = client.elements.count.groupBy.key.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKeys=groupByKeys
     )
-    data = response.as_dataframe()
-    print(data)
+    result = response.as_dataframe()
+
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 6
+    assert list(result.index.names) == ["key", "timestamp"]
 
 
 def test_elements_count_groupby_tag():
@@ -74,8 +83,11 @@ def test_elements_count_groupby_tag():
     response = client.elements.count.groupBy.tag.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
     )
-    data = response.as_dataframe()
-    print(data)
+    result = response.as_dataframe()
+
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 58
+    assert list(result.index.names) == ["tag", "timestamp"]
 
 
 def test_elements_count_groupby_type():
@@ -83,7 +95,6 @@ def test_elements_count_groupby_type():
     Tests whether the result of elements.count.groupBy.type is formatted correctly as a pandas.DataFrame
     :return:
     """
-
     bboxes = "8.6933,49.40893,8.69797,49.41106"
     time = "2019-12-10,2019-12-11"
     fltr = "amenity=* and (type:way or type:node)"
@@ -92,8 +103,11 @@ def test_elements_count_groupby_type():
     response = client.elements.count.groupBy.type.post(
         bboxes=bboxes, time=time, filter=fltr
     )
-    data = response.as_dataframe()
-    print(data)
+    result = response.as_dataframe()
+
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 6
+    assert list(result.index.names) == ["type", "timestamp"]
 
 
 def test_elements_count_groupby_boundary():
@@ -112,8 +126,11 @@ def test_elements_count_groupby_boundary():
     response = client.elements.count.groupBy.boundary.post(
         bboxes=bboxes, time=time, filter=fltr
     )
-    data = response.as_dataframe()
-    print(data)
+    result = response.as_dataframe()
+
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 2
+    assert list(result.index.names) == ["boundary", "timestamp"]
 
 
 def test_elements_count_groupby_boundary_groupby_tag():
@@ -130,8 +147,11 @@ def test_elements_count_groupby_boundary_groupby_tag():
     response = client.elements.count.groupBy.boundary.groupBy.tag.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
     )
-    data = response.as_dataframe()
-    print(data)
+    result = response.as_dataframe()
+
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 2
+    assert list(result.index.names) == ["boundary", "tag", "timestamp"]
 
 
 def test_elements_count_ratio():
@@ -148,8 +168,11 @@ def test_elements_count_ratio():
     response = client.elements.count.ratio.post(
         bboxes=bboxes, time=time, filter=fltr, filter2=fltr2
     )
-    data = response.as_dataframe()
-    print(data)
+    result = response.as_dataframe()
+
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 1
+    assert list(result.index.names) == ["timestamp"]
 
 
 def test_elements_count_ratio_groupby_boundary():
@@ -166,29 +189,11 @@ def test_elements_count_ratio_groupby_boundary():
     response = client.elements.count.ratio.groupBy.boundary.post(
         bboxes=bboxes, time=time, filter=fltr, filter2=fltr2
     )
-    data = response.as_dataframe()
-    print(data)
+    result = response.as_dataframe()
 
-
-def test_timeout_error():
-    """
-    Test whether an OhsomeException is raised, if the ohsome API contains a JSONDecodeError
-    :return:
-    """
-    bboxes = "13.7,50.9,13.75,50.95"
-    time = "2019-12-10"
-    fltr = "leisure=park and type:way"
-    timeout = 1
-
-    client = ohsome.OhsomeClient()
-    with pytest.raises(ohsome.OhsomeException) as e_info:
-        client.elements.geometry.post(
-            bboxes=bboxes, time=time, filter=fltr, timeout=timeout
-        )
-    assert (
-        e_info.value.message
-        == "The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser time period."
-    )
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 4
+    assert list(result.index.names) == ["boundary", "timestamp"]
 
 
 def test_elements_geometry():
@@ -196,16 +201,17 @@ def test_elements_geometry():
     Tests whether the result of elements.geometry is converted to a geopandas.GeoDataFrame
     :return:
     """
-    bboxes = "8.67066,49.41423,8.68177,49.4204"
-    time = "2010-01-01"
-    filter = "landuse=grass and type:way"
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2016-01-01"
+    flter = "name=Krautturm and type:way"
 
     client = ohsome.OhsomeClient()
-    response = client.elements.geometry.post(bboxes=bboxes, time=time, filter=filter)
+    response = client.elements.geometry.post(bboxes=bboxes, time=time, filter=flter)
     result = response.as_geodataframe()
     del client
 
-    assert len(result.geometry) == 9
+    assert isinstance(result, gpd.GeoDataFrame)
+    assert len(result) == 1
 
 
 def test_elementsFullHistory_geometry():
@@ -215,13 +221,51 @@ def test_elementsFullHistory_geometry():
     """
     bboxes = "8.7137,49.4096,8.717,49.4119"
     time = "2008-01-01,2016-01-01"
-    filter = "name=Krautturm and type:way"
+    flter = "name=Krautturm and type:way"
 
     client = ohsome.OhsomeClient()
     response = client.elementsFullHistory.centroid.post(
+        bboxes=bboxes, time=time, filter=flter
+    )
+    result = response.as_geodataframe()
+
+    assert isinstance(result, gpd.GeoDataFrame)
+    assert len(result) == 5
+
+
+def test_contributions_centroid():
+    """
+    Test whether the result of conributions.centroid is converted to a geopandas.GeoDataFrame
+    :return:
+    """
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2008-01-01,2016-01-01"
+    filter = "name=Krautturm and type:way"
+
+    client = ohsome.OhsomeClient()
+    response = client.contributions.centroid.post(
         bboxes=bboxes, time=time, filter=filter
     )
     result = response.as_geodataframe()
-    del client
 
-    assert len(result.geometry) == 9
+    assert isinstance(result, gpd.GeoDataFrame)
+    assert len(result) == 5
+
+
+def test_contributions_latest():
+    """
+    Test whether the result of conributions.latest.bbox is converted to a geopandas.GeoDataFrame
+    :return:
+    """
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2008-01-01,2016-01-01"
+    filter = "name=Krautturm and type:way"
+
+    client = ohsome.OhsomeClient()
+    response = client.contributions.latest.bbox.post(
+        bboxes=bboxes, time=time, filter=filter
+    )
+    result = response.as_geodataframe()
+
+    assert isinstance(result, gpd.GeoDataFrame)
+    assert len(result) == 1

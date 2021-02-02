@@ -72,9 +72,6 @@ class OhsomeResponse:
                 "This result type cannot be converted to a GeoPandas dataframe."
             )
 
-        if features.empty:
-            return features
-
         if "@validFrom" in features.columns:
             features["@validFrom"] = pd.to_datetime(
                 features["@validFrom"], format="%Y-%m-%dT%H:%M:%SZ"
@@ -83,22 +80,25 @@ class OhsomeResponse:
                 features["@validTo"], format="%Y-%m-%dT%H:%M:%SZ"
             )
             features = features.set_index(["@osmId", "@validFrom", "@validTo"])
-            return features
-
-        if "@snapshotTimestamp" in features.columns:
+        elif "@snapshotTimestamp" in features.columns:
             features["@snapshotTimestamp"] = pd.to_datetime(
                 features["@snapshotTimestamp"], format="%Y-%m-%dT%H:%M:%SZ"
             )
             features = features.set_index(["@osmId", "@snapshotTimestamp"])
-            return features
-
-        if "timestamp" in features.columns and "groupByBoundaryId" in features.columns:
+        elif (
+            "timestamp" in features.columns and "groupByBoundaryId" in features.columns
+        ):
             features["timestamp"] = pd.to_datetime(
                 features["timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
             )
             features = features.set_index(["groupByBoundaryId", "timestamp"])
+        elif "@timestamp" in features.columns:
+            features["@timestamp"] = pd.to_datetime(
+                features["@timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
+            )
+            features = features.set_index(["@timestamp"])
 
-            return features
+        return features
 
     def to_json(self, outfile):
         """
