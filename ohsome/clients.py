@@ -10,11 +10,7 @@ import json
 OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
 
 
-class OhsomeClient:
-    """
-    Client for sending requests to ohsome API
-    """
-
+class _OhsomeInit:
     def __init__(self, cache=None, base_api_url=None):
         self._cache = cache or []
         self.parameters = None
@@ -25,15 +21,126 @@ class OhsomeClient:
         else:
             self.base_api_url = OHSOME_BASE_API_URL
 
-    def add_api_component(self, name):
+
+class _OhsomeInfo(_OhsomeInit):
+    """
+    Client for sending requests to ohsome API
+    """
+
+    @property
+    def start_timestamp(self):
+        """
+        Returns the temporal extent of the current ohsome API
+        :return:
+        """
+        if self.metadata is None:
+            self.get_metadata()
+        return self.metadata["extractRegion"]["temporalExtent"]["fromTimestamp"]
+
+    @property
+    def end_timestamp(self):
+        """
+        Returns the temporal extent of the current ohsome API
+        :return:
+        """
+        if self.metadata is None:
+            self.get_metadata()
+        return self.metadata["extractRegion"]["temporalExtent"]["toTimestamp"]
+
+    @property
+    def api_version(self):
+        """
+        Returns the version of the ohsome API
+        :return:
+        """
+        if self.metadata is None:
+            self.get_metadata()
+        return self.metadata["apiVersion"]
+
+    def get_metadata(self):
+        """
+        Send ohsome GET request
+        :param params: parameters of the request as in ohsome documentation
+        :return:
+        """
+        self.url = self.base_api_url + "/metadata"
+        try:
+            response = requests.get(self.url)
+        except requests.RequestException as e:
+            raise OhsomeException(message=e, url=self.url, params=self.parameters)
+        if not response.ok:
+            raise OhsomeException(
+                message="Forbidden",
+                status=response.status_code,
+                url=self.url,
+                params=self.parameters,
+            )
+        self.metadata = self._handle_response(response).data
+
+    def _handle_response(self, response):
+        """
+        Converts the ohsome response to an OhsomeResponse object, if the response is valid.
+        Otherwise throws OhsomeException.
+        :param response:
+        :return:
+        """
+        if response.status_code != 200:
+            raise OhsomeException(
+                message=json.loads(response.text)["message"],
+                url=self.url,
+                params=self.parameters,
+                status=response.status_code,
+            )
+        # Check if response is valid json format to catch errors which occured during data transmission e.g. time out
+        try:
+            response.json()
+        except json.JSONDecodeError:
+            message = response.text[
+                response.text.find("message")
+                + 12 : response.text.find("requestUrl")
+                - 6
+            ]
+            status_code = response.text[
+                response.text.find("status") + 10 : response.text.find("message") - 5
+            ]
+            raise OhsomeException(
+                message=message,
+                url=self.url,
+                params=self.parameters,
+                status=status_code,
+            )
+        else:
+            return OhsomeResponse(response, url=self.url, params=self.parameters)
+
+    def _add_api_component(self, name):
         """
         Builds the cache and handles special cases. Each part of the url is appended to the url components stored in
         the cache e.g. [elements, area]
         :param name: name of the method as string
         :return:
         """
-        # Enables method chaining
-        return OhsomeClient(self._cache + [name])
+        return _OhsomeInfo(self._cache + [name])
+
+    def __getattr__(self, name):
+        """
+        This function is called whenever a method of OhsomeClient is called that does not exist.
+        The name of the method is forwarded to add_api_component() and stored in the cache of api components.
+        :param name:
+        :return:
+        """
+        return self._add_api_component(name)
+
+    def __repr__(self):
+        return "<OhsomeClient: %s>" % self._construct_resource_url()
+
+    def __del__(self):
+        pass
+
+
+class _OhsomePost(_OhsomeInit):
+    """
+    Client for sending requests to ohsome API
+    """
 
     def post(self, endpoint=None, **params):
         """
@@ -132,139 +239,194 @@ class OhsomeClient:
         else:
             self.url = self.base_api_url + "/".join(self._cache)
 
-    @property
-    def start_timestamp(self):
-        """
-        Returns the temporal extent of the current ohsome API
-        :return:
-        """
-        if self.metadata is None:
-            self.get_metadata()
-        return self.metadata["extractRegion"]["temporalExtent"]["fromTimestamp"]
 
-    @property
-    def end_timestamp(self):
-        """
-        Returns the temporal extent of the current ohsome API
-        :return:
-        """
-        if self.metadata is None:
-            self.get_metadata()
-        return self.metadata["extractRegion"]["temporalExtent"]["toTimestamp"]
-
-    @property
-    def api_version(self):
-        """
-        Returns the version of the ohsome API
-        :return:
-        """
-        if self.metadata is None:
-            self.get_metadata()
-        return self.metadata["apiVersion"]
-
-    def get_metadata(self):
-        """
-        Send ohsome GET request
-        :param params: parameters of the request as in ohsome documentation
-        :return:
-        """
-        self.url = self.base_api_url + "/metadata"
-        try:
-            response = requests.get(self.url)
-        except requests.RequestException as e:
-            raise OhsomeException(message=e, url=self.url, params=self.parameters)
-        if not response.ok:
-            raise OhsomeException(
-                message="Forbidden",
-                status=response.status_code,
-                url=self.url,
-                params=self.parameters,
-            )
-        self.metadata = self._handle_response(response).data
-
+class OhsomeClient(_OhsomeInfo, _OhsomePost):
     @property
     def elements(self):
-        return self.add_api_component("elements")
+        return _OhsomeClientElements(self._cache + ["elements"])
 
     @property
     def elementsFullHistory(self):
-        return self.add_api_component("elementsFullHistory")
+        return _OhsomeClientElementsFullHistory(self._cache + ["elementsFullHistory"])
 
     @property
     def contributions(self):
-        return self.add_api_component("contributions")
+        return _OhsomeClientContributions(self._cache + ["contributions"])
 
     @property
     def users(self):
-        return self.add_api_component("users")
+        return _OhsomeClientUsers(self._cache + ["users"])
 
+
+class _OhsomeClientElements(_OhsomeInit):
     @property
     def area(self):
-        return self.add_api_component("area")
+        return _OhsomeClientElementsAggregated(self._cache + ["area"])
 
     @property
     def count(self):
-        return self.add_api_component("count")
+        return _OhsomeClientElementsAggregated(self._cache + ["count"])
 
     @property
     def length(self):
-        return self.add_api_component("length")
+        return _OhsomeClientElementsAggregated(self._cache + ["length"])
 
     @property
     def perimeter(self):
-        return self.add_api_component("perimeter")
-
-    @property
-    def density(self):
-        return self.add_api_component("density")
-
-    @property
-    def ratio(self):
-        return self.add_api_component("ratio")
-
-    @property
-    def groupBy(self):
-        return self.add_api_component("groupBy")
-
-    @property
-    def tag(self):
-        return self.add_api_component("tag")
-
-    @property
-    def type(self):
-        return self.add_api_component("type")
-
-    @property
-    def key(self):
-        return self.add_api_component("key")
-
-    @property
-    def boundary(self):
-        return self.add_api_component("boundary")
+        return _OhsomeClientElementsAggregated(self._cache + ["perimeter"])
 
     @property
     def bbox(self):
-        return self.add_api_component("bbox")
+        return _OhsomePost(self._cache + ["bbox"])
 
     @property
     def centroid(self):
-        return self.add_api_component("centroid")
+        return _OhsomePost(self._cache + ["centroid"])
 
     @property
     def geometry(self):
-        return self.add_api_component("geometry")
+        return _OhsomePost(self._cache + ["geometry"])
 
-    def __getattr__(self, name):
-        """
-        This function is called whenever a method of OhsomeClient is called that does not exist.
-        The name of the method is forwarded to add_api_component() and stored in the cache of api components.
-        :param name:
-        :return:
-        """
-        return self.add_api_component(name)
 
-    def __repr__(self):
-        return "<OhsomeClient: %s>" % self._construct_resource_url()
+class _OhsomeClientElementsFullHistory(_OhsomeInit):
+    @property
+    def bbox(self):
+        return OhsomeClient(self._cache + ["bbox"])
 
-    def __del__(self):
-        pass
+    @property
+    def centroid(self):
+        return OhsomeClient(self._cache + ["centroid"])
+
+    @property
+    def geometry(self):
+        return OhsomeClient(self._cache + ["geometry"])
+
+
+class _OhsomeClientContributions(_OhsomeInit):
+    @property
+    def bbox(self):
+        return OhsomeClient(self._cache + ["bbox"])
+
+    @property
+    def centroid(self):
+        return OhsomeClient(self._cache + ["centroid"])
+
+    @property
+    def geometry(self):
+        return OhsomeClient(self._cache + ["geometry"])
+
+    @property
+    def latest(self):
+        return _OhsomeClientContributionsLatest(self._cache + ["latest"])
+
+
+class _OhsomeClientUsers(_OhsomeInit):
+    @property
+    def count(self):
+        return _OhsomeClientUsersAggregated(self._cache + ["count"])
+
+
+class _OhsomeClientUsersAggregated(_OhsomePost):
+    @property
+    def density(self):
+        return _OhsomeClientUsersDensity(self._cache + ["density"])
+
+    @property
+    def groupByBoundary(self):
+        return OhsomeClient(self._cache + ["groupBy", "boundary"])
+
+    @property
+    def groupByTag(self):
+        return OhsomeClient(self._cache + ["groupBy", "tag"])
+
+    @property
+    def groupByType(self):
+        return OhsomeClient(self._cache + ["groupBy", "type"])
+
+    @property
+    def groupByKey(self):
+        return OhsomeClient(self._cache + ["groupBy", "key"])
+
+
+class _OhsomeClientUsersDensity(_OhsomePost):
+    @property
+    def groupByBoundary(self):
+        return OhsomeClient(self._cache + ["groupBy", "boundary"])
+
+    @property
+    def groupByTag(self):
+        return OhsomeClient(self._cache + ["groupBy", "tag"])
+
+    @property
+    def groupByType(self):
+        return OhsomeClient(self._cache + ["groupBy", "type"])
+
+
+class _OhsomeClientContributionsLatest(_OhsomePost):
+    @property
+    def bbox(self):
+        return OhsomeClient(self._cache + ["bbox"])
+
+    @property
+    def centroid(self):
+        return OhsomeClient(self._cache + ["centroid"])
+
+    @property
+    def geometry(self):
+        return OhsomeClient(self._cache + ["geometry"])
+
+
+class _OhsomeClientElementsAggregated(_OhsomePost):
+    @property
+    def density(self):
+        return _OhsomeClientDensity(self._cache + ["density"])
+
+    @property
+    def groupByBoundary(self):
+        return _OhsomeClientElementsGroupByBoundary(
+            self._cache + ["groupBy", "boundary"]
+        )
+
+    @property
+    def ratio(self):
+        return _OhsomeClientElementsRatio(self._cache + ["ratio"])
+
+    @property
+    def groupByTag(self):
+        return OhsomeClient(self._cache + ["groupBy", "tag"])
+
+    @property
+    def groupByType(self):
+        return OhsomeClient(self._cache + ["groupBy", "type"])
+
+    @property
+    def groupByKey(self):
+        return OhsomeClient(self._cache + ["groupBy", "key"])
+
+
+class _OhsomeClientDensity(_OhsomePost):
+    @property
+    def groupByBoundary(self):
+        return _OhsomeClientElementsGroupByBoundary(
+            self._cache + ["groupBy", "boundary"]
+        )
+
+    @property
+    def groupByTag(self):
+        return OhsomeClient(self._cache + ["groupBy", "tag"])
+
+    @property
+    def groupByType(self):
+        return OhsomeClient(self._cache + ["groupBy", "type"])
+
+
+class _OhsomeClientElementsGroupByBoundary(_OhsomePost):
+    @property
+    def groupByTag(self):
+        return OhsomeClient(self._cache + ["groupBy", "tag"])
+
+
+class _OhsomeClientElementsRatio(_OhsomePost):
+    @property
+    def groupByBoundary(self):
+        return OhsomeClient(self._cache + ["groupBy", "boundary"])
