@@ -12,8 +12,7 @@ OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
 
 class OhsomeClient:
     """
-    Client for sending ohsome requests
-
+    Client for sending requests to ohsome API
     """
 
     def __init__(self, cache=None, base_api_url=None):
@@ -22,7 +21,7 @@ class OhsomeClient:
         self.metadata = None
         self.url = None
         if base_api_url is not None:
-            self.base_api_url = base_api_url
+            self.base_api_url = base_api_url.strip("/") + "/"
         else:
             self.base_api_url = OHSOME_BASE_API_URL
 
@@ -41,6 +40,7 @@ class OhsomeClient:
         Sends POST request to ohsome API
         :param Parameters of the request to the ohsome API. See https://docs.ohsome.org/ohsome-api/v1/ for details
 
+        endpoint: Url of the endpoint as a string if post is called directly e.g. OhsomeClient().post("elements/count")
         Boundary parameters: Specifies the spatial boundary of the query
         bboxes: Bounding boxes given as
         - string (lon1,lat1,lon2,lat2|lon1,lat1,lon2,lat2|… or id1:lon1,lat1,lon2,lat2|id2:lon1,lat1,lon2,lat2|…),
@@ -128,7 +128,7 @@ class OhsomeClient:
         :return:
         """
         if endpoint:
-            self.url = self.base_api_url + endpoint.strip("/")
+            self.url = self.base_api_url + "/" + endpoint.strip("/")
         else:
             self.url = self.base_api_url + "/".join(self._cache)
 

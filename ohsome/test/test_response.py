@@ -233,6 +233,23 @@ def test_elementsFullHistory_geometry():
     assert len(result) == 5
 
 
+def test_users_timestamp():
+    """
+    Tests whether the result of elementsFullHistory.centroid is converted to a geopandas.GeoDataFrame
+    :return:
+    """
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2008-01-01/2016-01-01/P1Y"
+    flter = "name=Krautturm and type:way"
+
+    client = ohsome.OhsomeClient()
+    response = client.users.count.post(bboxes=bboxes, time=time, filter=flter)
+    result = response.as_dataframe()
+
+    assert isinstance(result, gpd.GeoDataFrame)
+    assert len(result) == 5
+
+
 def test_contributions_centroid():
     """
     Test whether the result of conributions.centroid is converted to a geopandas.GeoDataFrame
