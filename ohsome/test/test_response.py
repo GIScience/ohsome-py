@@ -59,7 +59,7 @@ def test_elements_count_groupby_key():
     groupByKeys = ["amenity", "shop"]
 
     client = ohsome.OhsomeClient()
-    response = client.elements.count.groupBy.key.post(
+    response = client.elements.count.groupByKey.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKeys=groupByKeys
     )
     result = response.as_dataframe()
@@ -80,7 +80,7 @@ def test_elements_count_groupby_tag():
     groupByKey = "amenity"
 
     client = ohsome.OhsomeClient()
-    response = client.elements.count.groupBy.tag.post(
+    response = client.elements.count.groupByTag.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
     )
     result = response.as_dataframe()
@@ -100,7 +100,7 @@ def test_elements_count_groupby_type():
     fltr = "amenity=* and (type:way or type:node)"
 
     client = ohsome.OhsomeClient()
-    response = client.elements.count.groupBy.type.post(
+    response = client.elements.count.groupByType.post(
         bboxes=bboxes, time=time, filter=fltr
     )
     result = response.as_dataframe()
@@ -123,7 +123,7 @@ def test_elements_count_groupby_boundary():
     fltr = "amenity=cafe and type:node"
 
     client = ohsome.OhsomeClient()
-    response = client.elements.count.groupBy.boundary.post(
+    response = client.elements.count.groupByBoundary.post(
         bboxes=bboxes, time=time, filter=fltr
     )
     result = response.as_dataframe()
@@ -144,7 +144,7 @@ def test_elements_count_groupby_boundary_groupby_tag():
     groupByKey = "amenity"
 
     client = ohsome.OhsomeClient()
-    response = client.elements.count.groupBy.boundary.groupBy.tag.post(
+    response = client.elements.count.groupByBoundary.groupByTag.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
     )
     result = response.as_dataframe()
@@ -186,7 +186,7 @@ def test_elements_count_ratio_groupby_boundary():
     fltr2 = "amenity=cafe and type:node"
 
     client = ohsome.OhsomeClient()
-    response = client.elements.count.ratio.groupBy.boundary.post(
+    response = client.elements.count.ratio.groupByBoundary.post(
         bboxes=bboxes, time=time, filter=fltr, filter2=fltr2
     )
     result = response.as_dataframe()
@@ -235,7 +235,7 @@ def test_elementsFullHistory_geometry():
 
 def test_users_timestamp():
     """
-    Tests whether the result of elementsFullHistory.centroid is converted to a geopandas.GeoDataFrame
+    Tests whether the result of users.count is converted to a pandas.DataFrame
     :return:
     """
     bboxes = "8.7137,49.4096,8.717,49.4119"
@@ -246,8 +246,8 @@ def test_users_timestamp():
     response = client.users.count.post(bboxes=bboxes, time=time, filter=flter)
     result = response.as_dataframe()
 
-    assert isinstance(result, gpd.GeoDataFrame)
-    assert len(result) == 5
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 8
 
 
 def test_contributions_centroid():

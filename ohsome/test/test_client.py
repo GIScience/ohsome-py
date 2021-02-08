@@ -27,6 +27,13 @@ def test_userdefined_url():
     assert isinstance(result, pd.DataFrame)
 
 
+def test_get_metadata():
+    res = ohsome.OhsomeClient().metadata
+    print(res)
+    res = ohsome.OhsomeClient().base_api_url
+    print(res)
+
+
 def test_start_and_end_timestamp():
     """
     Get start timestamp
@@ -117,7 +124,7 @@ def test_format_bcircles_dataframe():
     fltr = "amenity=restaurant and type:way"
 
     client = ohsome.OhsomeClient()
-    client.elements.count.groupBy.boundary.post(
+    client.elements.count.groupByBoundary.post(
         bcircles=bcircles, time=time, filter=fltr
     )
 
@@ -135,7 +142,7 @@ def test_format_bcircles_list():
     client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
     bcircles = {1: [8.695, 49.41, 200], 2: [8.696, 49.41, 200]}
-    client.elements.count.groupBy.boundary.post(
+    client.elements.count.groupByBoundary.post(
         bcircles=bcircles, time=time, filter=fltr
     )
 
@@ -156,7 +163,7 @@ def test_format_bcircles_geodataframe():
     fltr = "amenity=restaurant and type:way"
 
     client = ohsome.OhsomeClient()
-    client.elements.count.groupBy.boundary.post(
+    client.elements.count.groupByBoundary.post(
         bcircles=bcircles, time=time, filter=fltr
     )
 
@@ -172,7 +179,7 @@ def test_format_bcircles_geodataframe_geometry_error():
 
     client = ohsome.OhsomeClient()
     with pytest.raises(ohsome.OhsomeException) as e_info:
-        client.elements.count.groupBy.boundary.post(
+        client.elements.count.groupByBoundary.post(
             bcircles=bcircles, time=time, filter=fltr
         )
     assert (
