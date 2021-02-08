@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" ohsome client class """
+"""OhsomeClient classes to build and handle requests to ohsome API """
 
 import requests
 from ohsome import OhsomeException, OhsomeResponse, utils
@@ -10,22 +10,20 @@ import json
 OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
 
 
-class _OhsomeInit:
+class _OhsomeMetadataClient:
+    """
+    Client for querying and handling metadata of ohsome API
+    """
+
     def __init__(self, cache=None, base_api_url=None):
         self._cache = cache or []
-        self.parameters = None
-        self.metadata = None
-        self.url = None
+        self._parameters = None
+        self._metadata = None
+        self._url = None
         if base_api_url is not None:
-            self.base_api_url = base_api_url.strip("/") + "/"
+            self._base_api_url = base_api_url.strip("/") + "/"
         else:
-            self.base_api_url = OHSOME_BASE_API_URL
-
-
-class _OhsomeInfo(_OhsomeInit):
-    """
-    Client for sending requests to ohsome API
-    """
+            self._base_api_url = OHSOME_BASE_API_URL
 
     @property
     def start_timestamp(self):
@@ -33,9 +31,9 @@ class _OhsomeInfo(_OhsomeInit):
         Returns the temporal extent of the current ohsome API
         :return:
         """
-        if self.metadata is None:
-            self.get_metadata()
-        return self.metadata["extractRegion"]["temporalExtent"]["fromTimestamp"]
+        if self._metadata is None:
+            self._get_metadata()
+        return self._metadata["extractRegion"]["temporalExtent"]["fromTimestamp"]
 
     @property
     def end_timestamp(self):
@@ -43,9 +41,9 @@ class _OhsomeInfo(_OhsomeInit):
         Returns the temporal extent of the current ohsome API
         :return:
         """
-        if self.metadata is None:
-            self.get_metadata()
-        return self.metadata["extractRegion"]["temporalExtent"]["toTimestamp"]
+        if self._metadata is None:
+            self._get_metadata()
+        return self._metadata["extractRegion"]["temporalExtent"]["toTimestamp"]
 
     @property
     def api_version(self):
@@ -53,29 +51,39 @@ class _OhsomeInfo(_OhsomeInit):
         Returns the version of the ohsome API
         :return:
         """
-        if self.metadata is None:
-            self.get_metadata()
-        return self.metadata["apiVersion"]
+        if self._metadata is None:
+            self._get_metadata()
+        return self._metadata["apiVersion"]
 
-    def get_metadata(self):
+    @property
+    def metadata(self):
+        if self._metadata is None:
+            self._get_metadata()
+        return self._metadata
+
+    @property
+    def base_api_url(self):
+        return self._base_api_url
+
+    def _get_metadata(self):
         """
         Send ohsome GET request
         :param params: parameters of the request as in ohsome documentation
         :return:
         """
-        self.url = self.base_api_url + "/metadata"
+        self._url = self._base_api_url + "/metadata"
         try:
-            response = requests.get(self.url)
+            response = requests.get(self._url)
         except requests.RequestException as e:
-            raise OhsomeException(message=e, url=self.url, params=self.parameters)
+            raise OhsomeException(message=e, url=self._url, params=self._parameters)
         if not response.ok:
             raise OhsomeException(
                 message="Forbidden",
                 status=response.status_code,
-                url=self.url,
-                params=self.parameters,
+                url=self._url,
+                params=self._parameters,
             )
-        self.metadata = self._handle_response(response).data
+        self._metadata = self._handle_response(response).data
 
     def _handle_response(self, response):
         """
@@ -87,8 +95,8 @@ class _OhsomeInfo(_OhsomeInit):
         if response.status_code != 200:
             raise OhsomeException(
                 message=json.loads(response.text)["message"],
-                url=self.url,
-                params=self.parameters,
+                url=self._url,
+                params=self._parameters,
                 status=response.status_code,
             )
         # Check if response is valid json format to catch errors which occured during data transmission e.g. time out
@@ -105,42 +113,28 @@ class _OhsomeInfo(_OhsomeInit):
             ]
             raise OhsomeException(
                 message=message,
-                url=self.url,
-                params=self.parameters,
+                url=self._url,
+                params=self._parameters,
                 status=status_code,
             )
         else:
-            return OhsomeResponse(response, url=self.url, params=self.parameters)
-
-    def _add_api_component(self, name):
-        """
-        Builds the cache and handles special cases. Each part of the url is appended to the url components stored in
-        the cache e.g. [elements, area]
-        :param name: name of the method as string
-        :return:
-        """
-        return _OhsomeInfo(self._cache + [name])
-
-    def __getattr__(self, name):
-        """
-        This function is called whenever a method of OhsomeClient is called that does not exist.
-        The name of the method is forwarded to add_api_component() and stored in the cache of api components.
-        :param name:
-        :return:
-        """
-        return self._add_api_component(name)
-
-    def __repr__(self):
-        return "<OhsomeClient: %s>" % self._construct_resource_url()
-
-    def __del__(self):
-        pass
+            return OhsomeResponse(response, url=self._url, params=self._parameters)
 
 
-class _OhsomePost(_OhsomeInit):
+class _OhsomePostClient:
     """
     Client for sending requests to ohsome API
     """
+
+    def __init__(self, cache=None, base_api_url=None):
+        self._cache = cache or []
+        self._parameters = None
+        self._metadata = None
+        self._url = None
+        if base_api_url is not None:
+            self._base_api_url = base_api_url.strip("/") + "/"
+        else:
+            self._base_api_url = OHSOME_BASE_API_URL
 
     def post(self, endpoint=None, **params):
         """
@@ -174,9 +168,9 @@ class _OhsomePost(_OhsomeInit):
         self._construct_resource_url(endpoint)
         self._format_parameters(params)
         try:
-            response = requests.post(url=self.url, data=self.parameters)
+            response = requests.post(url=self._url, data=self._parameters)
         except requests.RequestException as e:
-            raise OhsomeException(message=e, url=self.url, params=self.parameters)
+            raise OhsomeException(message=e, url=self._url, params=self._parameters)
         return self._handle_response(response)
 
     def _format_parameters(self, params):
@@ -185,14 +179,14 @@ class _OhsomePost(_OhsomeInit):
         :param input_params:
         :return:
         """
-        self.parameters = params.copy()
+        self._parameters = params.copy()
         try:
-            utils.format_boundary(self.parameters)
+            utils.format_boundary(self._parameters)
         except OhsomeException as e:
             raise OhsomeException(
-                message=e.message, status=300, params=self.parameters, url=self.url
+                message=e.message, status=300, params=self._parameters, url=self._url
             )
-        utils.format_time(self.parameters)
+        utils.format_time(self._parameters)
 
     def _handle_response(self, response):
         """
@@ -204,8 +198,8 @@ class _OhsomePost(_OhsomeInit):
         if response.status_code != 200:
             raise OhsomeException(
                 message=json.loads(response.text)["message"],
-                url=self.url,
-                params=self.parameters,
+                url=self._url,
+                params=self._parameters,
                 status=response.status_code,
             )
         # Check if response is valid json format to catch errors which occured during data transmission e.g. time out
@@ -222,12 +216,12 @@ class _OhsomePost(_OhsomeInit):
             ]
             raise OhsomeException(
                 message=message,
-                url=self.url,
-                params=self.parameters,
+                url=self._url,
+                params=self._parameters,
                 status=status_code,
             )
         else:
-            return OhsomeResponse(response, url=self.url, params=self.parameters)
+            return OhsomeResponse(response, url=self._url, params=self._parameters)
 
     def _construct_resource_url(self, endpoint=None):
         """
@@ -235,198 +229,294 @@ class _OhsomePost(_OhsomeInit):
         :return:
         """
         if endpoint:
-            self.url = self.base_api_url + "/" + endpoint.strip("/")
+            self._url = self._base_api_url + "/" + endpoint.strip("/")
         else:
-            self.url = self.base_api_url + "/".join(self._cache)
+            self._url = self._base_api_url + "/".join(self._cache)
 
 
-class OhsomeClient(_OhsomeInfo, _OhsomePost):
+class OhsomeClient(_OhsomeMetadataClient, _OhsomePostClient):
+    """
+    Main class to build and handle requests to ohsome API
+    """
+
     @property
     def elements(self):
-        return _OhsomeClientElements(self._cache + ["elements"])
+        return _OhsomeClientElements(self._cache + ["elements"], self._base_api_url)
 
     @property
     def elementsFullHistory(self):
-        return _OhsomeClientElementsFullHistory(self._cache + ["elementsFullHistory"])
+        return _OhsomeClientElementsFullHistory(
+            self._cache + ["elementsFullHistory"], self._base_api_url
+        )
 
     @property
     def contributions(self):
-        return _OhsomeClientContributions(self._cache + ["contributions"])
+        return _OhsomeClientContributions(
+            self._cache + ["contributions"], self._base_api_url
+        )
 
     @property
     def users(self):
-        return _OhsomeClientUsers(self._cache + ["users"])
+        return _OhsomeClientUsers(self._cache + ["users"], self._base_api_url)
 
 
-class _OhsomeClientElements(_OhsomeInit):
+class _OhsomeClientElements:
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
+    def __init__(self, cache=None, base_api_url=None):
+        self._cache = cache or []
+        if base_api_url is not None:
+            self._base_api_url = base_api_url.strip("/") + "/"
+        else:
+            self._base_api_url = OHSOME_BASE_API_URL
+
     @property
     def area(self):
-        return _OhsomeClientElementsAggregated(self._cache + ["area"])
+        return _OhsomeClientElementsAggregated(
+            self._cache + ["area"], self._base_api_url
+        )
 
     @property
     def count(self):
-        return _OhsomeClientElementsAggregated(self._cache + ["count"])
+        return _OhsomeClientElementsAggregated(
+            self._cache + ["count"], self._base_api_url
+        )
 
     @property
     def length(self):
-        return _OhsomeClientElementsAggregated(self._cache + ["length"])
+        return _OhsomeClientElementsAggregated(
+            self._cache + ["length"], self._base_api_url
+        )
 
     @property
     def perimeter(self):
-        return _OhsomeClientElementsAggregated(self._cache + ["perimeter"])
+        return _OhsomeClientElementsAggregated(
+            self._cache + ["perimeter"], self._base_api_url
+        )
 
     @property
     def bbox(self):
-        return _OhsomePost(self._cache + ["bbox"])
+        return _OhsomePostClient(self._cache + ["bbox"], self._base_api_url)
 
     @property
     def centroid(self):
-        return _OhsomePost(self._cache + ["centroid"])
+        return _OhsomePostClient(self._cache + ["centroid"], self._base_api_url)
 
     @property
     def geometry(self):
-        return _OhsomePost(self._cache + ["geometry"])
+        return _OhsomePostClient(self._cache + ["geometry"], self._base_api_url)
 
 
-class _OhsomeClientElementsFullHistory(_OhsomeInit):
+class _OhsomeClientElementsFullHistory:
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
+    def __init__(self, cache=None, base_api_url=None):
+        self._cache = cache or []
+        if base_api_url is not None:
+            self._base_api_url = base_api_url.strip("/") + "/"
+        else:
+            self._base_api_url = OHSOME_BASE_API_URL
+
     @property
     def bbox(self):
-        return OhsomeClient(self._cache + ["bbox"])
+        return _OhsomePostClient(self._cache + ["bbox"], self._base_api_url)
 
     @property
     def centroid(self):
-        return OhsomeClient(self._cache + ["centroid"])
+        return _OhsomePostClient(self._cache + ["centroid"], self._base_api_url)
 
     @property
     def geometry(self):
-        return OhsomeClient(self._cache + ["geometry"])
+        return _OhsomePostClient(self._cache + ["geometry"], self._base_api_url)
 
 
-class _OhsomeClientContributions(_OhsomeInit):
+class _OhsomeClientContributions:
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
+    def __init__(self, cache=None, base_api_url=None):
+        self._cache = cache or []
+        if base_api_url is not None:
+            self._base_api_url = base_api_url.strip("/") + "/"
+        else:
+            self._base_api_url = OHSOME_BASE_API_URL
+
     @property
     def bbox(self):
-        return OhsomeClient(self._cache + ["bbox"])
+        return _OhsomePostClient(self._cache + ["bbox"], self._base_api_url)
 
     @property
     def centroid(self):
-        return OhsomeClient(self._cache + ["centroid"])
+        return _OhsomePostClient(self._cache + ["centroid"], self._base_api_url)
 
     @property
     def geometry(self):
-        return OhsomeClient(self._cache + ["geometry"])
+        return _OhsomePostClient(self._cache + ["geometry"], self._base_api_url)
 
     @property
     def latest(self):
-        return _OhsomeClientContributionsLatest(self._cache + ["latest"])
+        return _OhsomeClientContributionsLatest(
+            self._cache + ["latest"], self._base_api_url
+        )
 
 
-class _OhsomeClientUsers(_OhsomeInit):
+class _OhsomeClientUsers:
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
+    def __init__(self, cache=None, base_api_url=None):
+        self._cache = cache or []
+        if base_api_url is not None:
+            self._base_api_url = base_api_url.strip("/") + "/"
+        else:
+            self._base_api_url = OHSOME_BASE_API_URL
+
     @property
     def count(self):
-        return _OhsomeClientUsersAggregated(self._cache + ["count"])
+        return _OhsomeClientUsersAggregated(self._cache + ["count"], self._base_api_url)
 
 
-class _OhsomeClientUsersAggregated(_OhsomePost):
+class _OhsomeClientUsersAggregated(_OhsomePostClient):
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
     @property
     def density(self):
-        return _OhsomeClientUsersDensity(self._cache + ["density"])
+        return _OhsomeClientUsersDensity(self._cache + ["density"], self._base_api_url)
 
     @property
     def groupByBoundary(self):
-        return OhsomeClient(self._cache + ["groupBy", "boundary"])
+        return _OhsomePostClient(
+            self._cache + ["groupBy", "boundary"], self._base_api_url
+        )
 
     @property
     def groupByTag(self):
-        return OhsomeClient(self._cache + ["groupBy", "tag"])
+        return _OhsomePostClient(self._cache + ["groupBy", "tag"], self._base_api_url)
 
     @property
     def groupByType(self):
-        return OhsomeClient(self._cache + ["groupBy", "type"])
+        return _OhsomePostClient(self._cache + ["groupBy", "type"], self._base_api_url)
 
     @property
     def groupByKey(self):
-        return OhsomeClient(self._cache + ["groupBy", "key"])
+        return _OhsomePostClient(self._cache + ["groupBy", "key"], self._base_api_url)
 
 
-class _OhsomeClientUsersDensity(_OhsomePost):
+class _OhsomeClientUsersDensity(_OhsomePostClient):
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
     @property
     def groupByBoundary(self):
-        return OhsomeClient(self._cache + ["groupBy", "boundary"])
+        return _OhsomePostClient(
+            self._cache + ["groupBy", "boundary"], self._base_api_url
+        )
 
     @property
     def groupByTag(self):
-        return OhsomeClient(self._cache + ["groupBy", "tag"])
+        return _OhsomePostClient(self._cache + ["groupBy", "tag"], self._base_api_url)
 
     @property
     def groupByType(self):
-        return OhsomeClient(self._cache + ["groupBy", "type"])
+        return _OhsomePostClient(self._cache + ["groupBy", "type"], self._base_api_url)
 
 
-class _OhsomeClientContributionsLatest(_OhsomePost):
+class _OhsomeClientContributionsLatest(_OhsomePostClient):
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
     @property
     def bbox(self):
-        return OhsomeClient(self._cache + ["bbox"])
+        return _OhsomePostClient(self._cache + ["bbox"], self._base_api_url)
 
     @property
     def centroid(self):
-        return OhsomeClient(self._cache + ["centroid"])
+        return _OhsomePostClient(self._cache + ["centroid"], self._base_api_url)
 
     @property
     def geometry(self):
-        return OhsomeClient(self._cache + ["geometry"])
+        return _OhsomePostClient(self._cache + ["geometry"], self._base_api_url)
 
 
-class _OhsomeClientElementsAggregated(_OhsomePost):
+class _OhsomeClientElementsAggregated(_OhsomePostClient):
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
     @property
     def density(self):
-        return _OhsomeClientDensity(self._cache + ["density"])
+        return _OhsomeClientDensity(self._cache + ["density"], self._base_api_url)
 
     @property
     def groupByBoundary(self):
         return _OhsomeClientElementsGroupByBoundary(
-            self._cache + ["groupBy", "boundary"]
+            self._cache + ["groupBy", "boundary"], self._base_api_url
         )
 
     @property
     def ratio(self):
-        return _OhsomeClientElementsRatio(self._cache + ["ratio"])
+        return _OhsomeClientElementsRatio(self._cache + ["ratio"], self._base_api_url)
 
     @property
     def groupByTag(self):
-        return OhsomeClient(self._cache + ["groupBy", "tag"])
+        return _OhsomePostClient(self._cache + ["groupBy", "tag"], self._base_api_url)
 
     @property
     def groupByType(self):
-        return OhsomeClient(self._cache + ["groupBy", "type"])
+        return _OhsomePostClient(self._cache + ["groupBy", "type"], self._base_api_url)
 
     @property
     def groupByKey(self):
-        return OhsomeClient(self._cache + ["groupBy", "key"])
+        return _OhsomePostClient(self._cache + ["groupBy", "key"], self._base_api_url)
 
 
-class _OhsomeClientDensity(_OhsomePost):
+class _OhsomeClientDensity(_OhsomePostClient):
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
     @property
     def groupByBoundary(self):
         return _OhsomeClientElementsGroupByBoundary(
-            self._cache + ["groupBy", "boundary"]
+            self._cache + ["groupBy", "boundary"], self._base_api_url
         )
 
     @property
     def groupByTag(self):
-        return OhsomeClient(self._cache + ["groupBy", "tag"])
+        return _OhsomePostClient(self._cache + ["groupBy", "tag"], self._base_api_url)
 
     @property
     def groupByType(self):
-        return OhsomeClient(self._cache + ["groupBy", "type"])
+        return _OhsomePostClient(self._cache + ["groupBy", "type"], self._base_api_url)
 
 
-class _OhsomeClientElementsGroupByBoundary(_OhsomePost):
+class _OhsomeClientElementsGroupByBoundary(_OhsomePostClient):
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
     @property
     def groupByTag(self):
-        return OhsomeClient(self._cache + ["groupBy", "tag"])
+        return _OhsomePostClient(self._cache + ["groupBy", "tag"], self._base_api_url)
 
 
-class _OhsomeClientElementsRatio(_OhsomePost):
+class _OhsomeClientElementsRatio(_OhsomePostClient):
+    """
+    Subclass of _OhsomePostClient to define endpoints of ohsome API
+    """
+
     @property
     def groupByBoundary(self):
-        return OhsomeClient(self._cache + ["groupBy", "boundary"])
+        return _OhsomePostClient(
+            self._cache + ["groupBy", "boundary"], self._base_api_url
+        )

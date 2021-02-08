@@ -3,7 +3,7 @@
 
 """ tests for utility functions """
 
-import ohsome
+from ohsome.utils import find_groupby_names
 
 
 def test_find_groupby_names_one_group():
@@ -13,7 +13,7 @@ def test_find_groupby_names_one_group():
     """
     url = "https://api.ohsome.org/v0.9/elements/count/groupBy/boundary"
     expected = ["boundary"]
-    result = ohsome.find_groupby_names(url)
+    result = find_groupby_names(url)
     assert expected == result
 
 
@@ -24,5 +24,5 @@ def test_find_groupby_names_two_groups():
     """
     url = "https://api.ohsome.org/v0.9/elements/count/groupBy/boundary/groupBy/tag"
     expected = ["boundary", "tag"]
-    result = ohsome.find_groupby_names(url)
+    result = find_groupby_names(url)
     assert expected == result
