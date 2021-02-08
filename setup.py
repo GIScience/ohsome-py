@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ohsome",
-    version="0.9.2",
+    version="0.9.0",
     author="Christina Ludwig",
     author_email="christina.ludwig@uni-heidelberg.de",
     description="Python client for the ohsome API",
