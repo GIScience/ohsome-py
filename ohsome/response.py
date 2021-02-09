@@ -20,7 +20,7 @@ class OhsomeResponse:
         self.parameters = params
         self.data = response.json()
 
-    def as_dataframe(self, multiindex=True):
+    def as_dataframe(self, multi_index=True):
         """
         Converts the ohsome response to a pandas.DataFrame
         :return: pandas dataframe
@@ -50,12 +50,12 @@ class OhsomeResponse:
             raise TypeError("This result type is not implemented.")
 
         format_time(result_df)
-        if multiindex:
+        if multi_index:
             set_index(result_df, groupby_names)
 
         return result_df.sort_index()
 
-    def as_geodataframe(self):
+    def as_geodataframe(self, multi_index=True):
         """
         Converts the ohsome response to a geopandas.GeoDataFrame
         :return:
@@ -80,24 +80,28 @@ class OhsomeResponse:
             features["@validTo"] = pd.to_datetime(
                 features["@validTo"], format="%Y-%m-%dT%H:%M:%SZ"
             )
-            features = features.set_index(["@osmId", "@validFrom", "@validTo"])
+            if multi_index:
+                features = features.set_index(["@osmId", "@validFrom", "@validTo"])
         elif "@snapshotTimestamp" in features.columns:
             features["@snapshotTimestamp"] = pd.to_datetime(
                 features["@snapshotTimestamp"], format="%Y-%m-%dT%H:%M:%SZ"
             )
-            features = features.set_index(["@osmId", "@snapshotTimestamp"])
+            if multi_index:
+                features = features.set_index(["@osmId", "@snapshotTimestamp"])
         elif (
             "timestamp" in features.columns and "groupByBoundaryId" in features.columns
         ):
             features["timestamp"] = pd.to_datetime(
                 features["timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
             )
-            features = features.set_index(["groupByBoundaryId", "timestamp"])
+            if multi_index:
+                features = features.set_index(["groupByBoundaryId", "timestamp"])
         elif "@timestamp" in features.columns:
             features["@timestamp"] = pd.to_datetime(
                 features["@timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
             )
-            features = features.set_index(["@timestamp"])
+            if multi_index:
+                features = features.set_index(["@timestamp"])
 
         return features.sort_index()
 
