@@ -39,8 +39,8 @@ def test_start_and_end_timestamp():
     Get start timestamp
     :return:
     """
-    assert isinstance(ohsome.OhsomeClient().start_timestamp, str)
-    assert isinstance(ohsome.OhsomeClient().end_timestamp, str)
+    assert isinstance(ohsome.OhsomeClient().start_timestamp, dt.datetime)
+    assert isinstance(ohsome.OhsomeClient().end_timestamp, dt.datetime)
 
 
 def test_api_version():
@@ -96,15 +96,32 @@ def test_check_time_parameter_datetime():
     Checks whether time provided as pandas.Series is converted correctly
     :return:
     """
+    bcircles = gpd.read_file("./data/points.geojson")
+    fltr = "amenity=restaurant and type:way"
+    client = ohsome.OhsomeClient()
+
     time = [
         dt.datetime.strptime("2018-01-01", "%Y-%m-%d"),
         dt.datetime.strptime("2018-01-02", "%Y-%m-%d"),
     ]
+    response = client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
+    result = response.as_dataframe()
+    assert len(result) == 2
+
+
+def test_end_timestamp_as_time_input():
+    """
+    Test whether the end_timestamp value can be used as input to a query as time
+    :return:
+    """
     bcircles = gpd.read_file("./data/points.geojson")
     fltr = "amenity=restaurant and type:way"
-
     client = ohsome.OhsomeClient()
-    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
+
+    time = client.end_timestamp
+    response = client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
+    result = response.as_dataframe()
+    assert len(result) == 1
 
 
 def test_format_bcircles_dataframe():

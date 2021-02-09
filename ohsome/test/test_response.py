@@ -47,7 +47,6 @@ def test_elements_density():
     assert list(result.index.names) == ["timestamp"]
 
 
-# todo: sort keys alphabetically?
 def test_elements_count_groupby_key():
     """
     Tests whether the result of elements.count.groupBy.key is formatted correctly as a pandas.DataFrame

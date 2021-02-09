@@ -66,8 +66,7 @@ class OhsomeResponse:
         ), "Response is not in geojson format. Use .as_dataframe() instead."
 
         try:
-            features = gpd.GeoDataFrame().from_features(self.data)
-            features.crs = {"init": "epsg:4326"}
+            features = gpd.GeoDataFrame().from_features(self.data, crs="epsg:4326")
         except TypeError():
             raise TypeError(
                 "This result type cannot be converted to a GeoPandas dataframe."
@@ -107,10 +106,10 @@ class OhsomeResponse:
 
     def to_json(self, outfile):
         """
-        Write response to file
+        Write response to json file
         :return:
         """
-        assert outfile.endswith("json"), "Output file must be json or geojson"
+        assert outfile.endswith("json"), "Output file must be json"
         with open(outfile, "w") as dst:
             json.dump(self.data, dst, indent=2)
 
