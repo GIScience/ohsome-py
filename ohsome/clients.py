@@ -6,6 +6,7 @@
 import requests
 from ohsome import OhsomeException, OhsomeResponse, utils
 import json
+import datetime as dt
 
 OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
 
@@ -33,7 +34,10 @@ class _OhsomeMetadataClient:
         """
         if self._metadata is None:
             self._get_metadata()
-        return self._metadata["extractRegion"]["temporalExtent"]["fromTimestamp"]
+        start_timestamp = self._metadata["extractRegion"]["temporalExtent"][
+            "fromTimestamp"
+        ]
+        return dt.datetime.fromisoformat(start_timestamp.strip("Z"))
 
     @property
     def end_timestamp(self):
@@ -43,7 +47,8 @@ class _OhsomeMetadataClient:
         """
         if self._metadata is None:
             self._get_metadata()
-        return self._metadata["extractRegion"]["temporalExtent"]["toTimestamp"]
+        end_timestamp = self._metadata["extractRegion"]["temporalExtent"]["toTimestamp"]
+        return dt.datetime.fromisoformat(end_timestamp.strip("Z"))
 
     @property
     def api_version(self):

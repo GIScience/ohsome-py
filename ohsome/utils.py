@@ -21,8 +21,11 @@ def format_time(params):
         params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S").tolist()
     elif isinstance(params["time"], pd.Series):
         params["time"] = params["time"].tolist()
-    elif isinstance((params["time"])[0], datetime.datetime):
-        params["time"] = [x.strftime("%Y-%m-%dT%H:%M:%S") for x in params["time"]]
+    elif isinstance((params["time"]), list):
+        if isinstance((params["time"])[0], datetime.datetime):
+            params["time"] = [x.strftime("%Y-%m-%dT%H:%M:%S") for x in params["time"]]
+    elif isinstance(params["time"], datetime.datetime):
+        params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S")
 
 
 def format_boundary(params):
