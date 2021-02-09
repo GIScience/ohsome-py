@@ -141,35 +141,78 @@ class _OhsomePostClient:
         else:
             self._base_api_url = OHSOME_BASE_API_URL
 
-    def post(self, endpoint=None, **params):
+    def post(
+        self,
+        bboxes=None,
+        bcircles=None,
+        bpolys=None,
+        time=None,
+        filter=None,
+        filter2=None,
+        format=None,
+        showMetadata=None,
+        timeout=None,
+        groupByKey=None,
+        groupByKeys=None,
+        groupByValues=None,
+        properties=None,
+        clipGeometry=None,
+        endpoint=None,
+    ):
         """
-        Sends POST request to ohsome API
-        :param Parameters of the request to the ohsome API. See https://docs.ohsome.org/ohsome-api/v1/ for details
+        Sends request to ohsome API
 
-        endpoint: Url of the endpoint as a string if post is called directly e.g. OhsomeClient().post("elements/count")
-        Boundary parameters: Specifies the spatial boundary of the query
-        bboxes: Bounding boxes given as
-        - string (lon1,lat1,lon2,lat2|lon1,lat1,lon2,lat2|… or id1:lon1,lat1,lon2,lat2|id2:lon1,lat1,lon2,lat2|…),
-        - list ([[id1:lon1,lat1,lon2,lat2],[id2:lon1,lat1,lon2,lat2],...] or
+        :param bboxes: Bounding boxes given as
+        - str e.g. "lon1,lat1,lon2,lat2|lon1,lat1,lon2,lat2|… or id1:lon1,lat1,lon2,lat2|id2:lon1,lat1,lon2,lat2|…
+        - list e.g. [[id1:lon1,lat1,lon2,lat2],[id2:lon1,lat1,lon2,lat2],...]
         - pandas.DataFrame with columns minx, miny, maxx, maxy. These columns can be created from a GeoDataFrame using the
         'GeoDataFrame.bounds' method.
-        bcircles: Centroids and radius of the circles given as
-        - string (lon,lat,radius|lon,lat,radius|… or id1:lon,lat,radius|id2:lon,lat,radius|…)
-        - list ([[id1:lon1,lat1,radius],[id2:lon1,lat1,radius],...]
-        - pandas.DataFrame with columns 'lon', 'lat' and 'radius' or
+
+        :param bcircles: Coordinate pair and radius in meters to define a circular polygon given as
+        - str e.g. lon,lat,radius|lon,lat,radius|… or id1:lon,lat,radius|id2:lon,lat,radius|…
+        - list e.g. [[lon1,lat1,radius],[lon1,lat1,radius],...]
+        - dict e.g. {"A": [lon1,lat1,radius], "B": [lon1,lat1,radius]}
+        - pandas.DataFrame with columns 'lon', 'lat' and 'radius'
         - geopandas.GeoDataFrame with geometry column with Point geometries only and a column 'radius'.
-        bpolys: Polygons given as
-        - geopandas.GeoDataFrame or
-        - string formatted as GeoJSON FeatureCollection.
 
-        Time: One or more ISO-8601 conform timestring(s) given as
-        - string ('2014-01-01T00:00:00,2015-07-01T00:00:00,2018-10-10T00:00:00,...')
-        - list of dates
-        - pandas.Series or
-        - pandas.DateTimeIndex
+        :param bpolys: Polygons given as geopandas.GeoDataFrame, GeoJSON FeatureCollection or str
+        e.g. "8.65821,49.41129,8.65821,49.41825,8.70053,8.65821|8.67817,49.42147,8.67817,49.4342,8.67817"
 
-        :return:
+        :param time: One or more ISO-8601 conform timestring(s) given as str, list, pandas.Series, pandas.DateTimeIndex,
+        datetime.datetime, e.g. '2014-01-01T00:00:00,2015-07-01T00:00:00,2018-10-10T00:00:00,...'
+
+        :param filter: (str) Combines several attributive filters: OSM type, geometry (simple feature) type, OSM tag
+
+        :param format: (str)  ‘json’ or ‘csv’; default: ‘json’
+
+        :param showMetadata (str, bool) add additional metadata information to the response: ‘true’, ‘false’, ‘yes’,
+        ‘no’; default: ‘false’
+
+        :param timeout (str, int) custom timeout to limit the processing time in seconds; default: dependent on server
+        settings, retrievable via the /metadata request
+
+        :param filter2: (str) Combines several attributive filters. Only for ratio queries.
+
+        :param groupByKey: (str) OSM key, no default value (only one groupByKey can be defined),
+        non matching objects (if any) will be summarised in a ‘remainder’ category. Only for groupByKey queries.
+
+        :param groupByKeys: (str, list) OSM key(s) given as a list and combined with the ‘AND’ operator; default: empty;
+
+        :param groupByValues: (str, list) OSM value(s) for the specified key given as a list and combined with the
+        ‘AND’ operator, default: no value.  Only for groupByKey queries. Only for groupByTag queries.
+
+        :param properties: (str) specifies what properties should be included for each feature representing an OSM
+        element: ‘tags’ and/or ‘metadata’; multiple values can be delimited by commas; default: empty
+
+        :parm clipGeometry: (bool, str) boolean operator to specify whether the returned geometries of the features
+        should be clipped to the query’s spatial boundary (‘true’), or not (‘false’); default: ‘true’
+
+        :param endpoint: (str) Url of the endpoint if post is called directly e.g. OhsomeClient().post("elements/count")
+
+        :return: Response from ohsome API (OhsomeResponse)
         """
+        params = locals().copy()
+        del params["self"], params["endpoint"]
         self._construct_resource_url(endpoint)
         self._format_parameters(params)
         try:

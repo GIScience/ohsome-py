@@ -15,7 +15,7 @@ def format_time(params):
     :param params:
     :return:
     """
-    if "time" not in params.keys():
+    if params["time"] is None:
         return False
     if isinstance(params["time"], pd.DatetimeIndex):
         params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S").tolist()
@@ -26,6 +26,7 @@ def format_time(params):
             params["time"] = [x.strftime("%Y-%m-%dT%H:%M:%S") for x in params["time"]]
     elif isinstance(params["time"], datetime.datetime):
         params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S")
+    return False
 
 
 def format_boundary(params):
@@ -34,11 +35,11 @@ def format_boundary(params):
     :param params:
     :return:
     """
-    if "bboxes" in params.keys():
+    if params["bboxes"] is not None:
         params["bboxes"] = format_bboxes(params["bboxes"])
-    elif "bpolys" in params.keys():
+    elif params["bpolys"] is not None:
         params["bpolys"] = format_bpolys(params["bpolys"])
-    elif "bcircles" in params.keys():
+    elif params["bcircles"] is not None:
         params["bcircles"] = format_bcircles(params["bcircles"])
     else:
         raise OhsomeException(
