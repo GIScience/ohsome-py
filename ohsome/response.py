@@ -52,7 +52,8 @@ class OhsomeResponse:
         format_time(result_df)
         if multiindex:
             set_index(result_df, groupby_names)
-        return result_df
+
+        return result_df.sort_index()
 
     def as_geodataframe(self):
         """
@@ -98,7 +99,7 @@ class OhsomeResponse:
             )
             features = features.set_index(["@timestamp"])
 
-        return features
+        return features.sort_index()
 
     def to_json(self, outfile):
         """
