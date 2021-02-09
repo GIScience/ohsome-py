@@ -90,6 +90,27 @@ def test_elements_count_groupby_tag():
     assert list(result.index.names) == ["tag", "timestamp"]
 
 
+def test_multi_index_false():
+    """
+    Tests whether the response is formatted correctly as a pandas.DataFrame without a multiindex
+    :return:
+    """
+    bboxes = "8.6933,49.40893,8.69797,49.41106"
+    time = "2019-12-10,2019-12-11"
+    fltr = "type:node"
+    groupByKey = "amenity"
+
+    client = ohsome.OhsomeClient()
+    response = client.elements.count.groupByTag.post(
+        bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
+    )
+    result = response.as_dataframe(multi_index=False)
+
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 58
+    assert isinstance(result.index, pd.RangeIndex)
+
+
 def test_elements_count_groupby_type():
     """
     Tests whether the result of elements.count.groupBy.type is formatted correctly as a pandas.DataFrame
