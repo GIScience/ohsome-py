@@ -1,5 +1,8 @@
 # ohsome-py: A Python client for the ohsome API
 
+[![status: experimental](https://github.com/GIScience/badges/raw/master/status/experimental.svg)](https://github.com/GIScience/badges#experimental)
+
+
 `ohsome` helps you query the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) to extract and analyse OpenStreetMap history data in Python. The ohsome API provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions). Take a look at the [documentation](https://docs.ohsome.org/ohsome-api/stable) to learn more or go through the [tutorial](./notebooks/Tutorial.ipynb) to get started.
 
 
