@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ohsome",
-    version="0.9.0",
+    version="0.1.0",
     author="Christina Ludwig",
     author_email="christina.ludwig@uni-heidelberg.de",
     description="Python client for the ohsome API",
@@ -19,9 +19,9 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        "requests",
-        "pandas",
-        "geopandas",
+        "requests>=2.19",
+        "pandas>=1.0",
+        "geopandas>=0.7",
     ],
-    python_requires=">=3",
+    python_requires=">=3.6",
 )
