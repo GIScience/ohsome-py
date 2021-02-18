@@ -1,16 +1,18 @@
 # ohsome-py: A Python client for the ohsome API
 
-`ohsome` helps you query OpenStreetMap (OSM) data using the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and converts its responses to `pandas.DataFrame` and `geopandas.GeoDataFrame` objects. 
-
-The [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) be used for analysing OpenStreetMap history data. It provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions). Take a look at the [documentation](https://docs.ohsome.org/ohsome-api/stable) to learn more about it. 
+`ohsome` helps you query the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) to extract and analyse OpenStreetMap history data in Python. The ohsome API provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions). Take a look at the [documentation](https://docs.ohsome.org/ohsome-api/stable) to learn more or go through the [tutorial](./notebooks/Tutorial.ipynb) to get started.
 
 
 ## Installation 
 
-`ohsome` can be installed using pip: 
-
 ```
 $ pip install ohsome
+```
+
+For the [tutorial](./notebooks/Tutorial.ipynb) you also need:
+
+```
+$ pip install matplotlib seaborn jupyter 
 ```
 
 ## Usage 
@@ -33,6 +35,11 @@ response_df = response.as_dataframe()
 
 The single components of the endpoint URL are appended as method calls to the `OhsomeClient` object. The request is sent off by calling the ```post()``` method containing the query parameters. Responses from the data aggregation or contributions endpoints can be converted to a `pandas.DataFrame` using the `OhsomeResponse.as_dataframe()` method. 
 
+Alternatively, you can define the endpoint using the `endpoint` argument of the `OhsomeClient.post()`:
+
+``` python
+response = client.post(endpoint="elements/count", bboxes=[8.625,49.3711,8.7334,49.4397], time="2014-01-01",  filter="landuse=farmland and type:way")
+```
 
 ### Data Extraction and Contributions
 
@@ -64,7 +71,7 @@ All query parameters such as [boundary](https://docs.ohsome.org/ohsome-api/stabl
 
 ##### Boundary 
 
-The boundary of the query can be defined using the `bpolys`, `bboxes` and `bcircles` parameters. The `bpolys` parameter can be passed as a `geopandas.GeoDataFrame`, while `bboxes` and `bcircles` can be provided as ...
+The [boundary](https://docs.ohsome.org/ohsome-api/stable/boundaries.html) of the query can be defined using the `bpolys`, `bboxes` and `bcircles` parameters. The `bpolys` parameter can be passed as a `geopandas.GeoDataFrame`, while `bboxes` and `bcircles` can be provided as ...
 
 a list containing the coordinates of the bounding box or circle
 
@@ -89,19 +96,12 @@ bcircles = {"C1": [8.695, 49.41, 200], "C2": [8.696, 49.41, 200]}
 
 ##### Time
 
-The [time](https://docs.ohsome.org/ohsome-api/stable/time.html) parameter can be passed as ...
+The [time](https://docs.ohsome.org/ohsome-api/stable/time.html) parameter can be passed as a ...
 
-a list of ISO-8601 conform timestrings
-
-``` python
-time = ['2018-01-01', '2018-01-02', '2018-01-03']
-```
-
-or a `pandas.DateRange`.
-
-``` python
-time = pd.date_range("2018-01-01", periods=3, freq="D")
-```
+* ISO-8601 conform `string` e.g. `time = '2018-01-01/2018-03-01/P1M'`
+* list of ISO-8601 conform dates e.g. `time = ['2018-01-01', '2018-02-01', '2018-03-01']`
+* `datetime.datetime`: `dt.datetime(year=2018, month=3, day=1)`
+* `pandas.DateRange` e.g. `time = pd.date_range("2018-01-01", periods=3, freq="M")`
 
 #### References: 
 
