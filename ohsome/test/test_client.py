@@ -39,8 +39,8 @@ def test_start_and_end_timestamp():
     Get start timestamp
     :return:
     """
-    assert isinstance(ohsome.OhsomeClient().start_timestamp, dt.datetime)
-    assert isinstance(ohsome.OhsomeClient().end_timestamp, dt.datetime)
+    assert ohsome.OhsomeClient().start_timestamp == "2007-10-08T00:00:00Z"
+    assert isinstance(ohsome.OhsomeClient().end_timestamp, str)
 
 
 def test_api_version():

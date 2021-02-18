@@ -34,10 +34,8 @@ class _OhsomeMetadataClient:
         """
         if self._metadata is None:
             self._get_metadata()
-        start_timestamp = self._metadata["extractRegion"]["temporalExtent"][
-            "fromTimestamp"
-        ]
-        return dt.datetime.fromisoformat(start_timestamp.strip("Z"))
+        return self._metadata["extractRegion"]["temporalExtent"]["fromTimestamp"]
+        # return dt.datetime.fromisoformat(start_timestamp.strip("Z"))
 
     @property
     def end_timestamp(self):
@@ -47,8 +45,8 @@ class _OhsomeMetadataClient:
         """
         if self._metadata is None:
             self._get_metadata()
-        end_timestamp = self._metadata["extractRegion"]["temporalExtent"]["toTimestamp"]
-        return dt.datetime.fromisoformat(end_timestamp.strip("Z"))
+        return self._metadata["extractRegion"]["temporalExtent"]["toTimestamp"]
+        # return dt.datetime.fromisoformat(end_timestamp.strip("Z"))
 
     @property
     def api_version(self):
