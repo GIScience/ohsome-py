@@ -67,7 +67,7 @@ def test_check_time_parameter_list():
     fltr = "amenity=restaurant and type:way"
 
     client = ohsome.OhsomeClient()
-    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr, timeout=15)
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
 def test_check_time_parameter_datetimeindex():
