@@ -18,6 +18,11 @@ pytest-cov = ">=2.0.0"
 tox = { version = ">=3.21.4", python = ">=3.6, <4.0" }
 pre-commit = { version = ">=2.1.1", python = ">=3.6, <4.0" }
 dephell = "^0.8.3"
+black = "^20.8b1"
+
+[tool.poetry.extras]
+test = ["tox", "pytest", "pytest-cov"]
+lint = ["pre-commit", "black"]
 
 [tool.dephell.main]
 from = { format = "poetry", path = "pyproject.toml" }
