@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """ tests for ohsome client """
+import os
 
 import ohsome
 import geopandas as gpd
@@ -9,6 +10,7 @@ import pandas as pd
 import pytest
 import datetime as dt
 
+script_path = os.path.dirname(os.path.realpath(__file__))
 
 def test_userdefined_url():
     """
@@ -58,7 +60,7 @@ def test_check_time_parameter_list():
     """
     time = pd.date_range("2018-01-01", periods=3, freq="D")
     time = list(time.strftime("%Y-%m-%dT%H:%M:%S").tolist())
-    bcircles = gpd.read_file("./data/points.geojson")
+    bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
 
     client = ohsome.OhsomeClient()
@@ -71,7 +73,7 @@ def test_check_time_parameter_datetimeindex():
     :return:
     """
     time = pd.date_range("2018-01-01", periods=3, freq="D")
-    bcircles = gpd.read_file("./data/points.geojson")
+    bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
 
     client = ohsome.OhsomeClient()
@@ -84,7 +86,7 @@ def test_check_time_parameter_series():
     :return:
     """
     time = pd.Series(["2018-01-01", "2018-01-02"])
-    bcircles = gpd.read_file("./data/points.geojson")
+    bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
 
     client = ohsome.OhsomeClient()
@@ -96,7 +98,7 @@ def test_check_time_parameter_datetime():
     Checks whether time provided as pandas.Series is converted correctly
     :return:
     """
-    bcircles = gpd.read_file("./data/points.geojson")
+    bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
     client = ohsome.OhsomeClient()
 
@@ -114,7 +116,7 @@ def test_end_timestamp_as_time_input():
     Test whether the end_timestamp value can be used as input to a query as time
     :return:
     """
-    bcircles = gpd.read_file("./data/points.geojson")
+    bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
     client = ohsome.OhsomeClient()
 
@@ -175,7 +177,7 @@ def test_format_bcircles_geodataframe():
     Test whether a GeoDataFrame object given as 'bcircles' is formatted correctly.
     :return:
     """
-    bcircles = gpd.read_file("./data/points.geojson")
+    bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     time = "2018-01-01"
     fltr = "amenity=restaurant and type:way"
 
@@ -190,7 +192,7 @@ def test_format_bcircles_geodataframe_geometry_error():
     Test whether a GeoDataFrame object given as 'bcircles' is formatted correctly.
     :return:
     """
-    bcircles = gpd.read_file("./data/polygons.geojson")
+    bcircles = gpd.read_file(f"{script_path}/data/polygons.geojson")
     time = "2018-01-01"
     fltr = "amenity=restaurant and type:way"
 
@@ -211,7 +213,7 @@ def test_format_bpolys():
     Test whether a GeoDataFrame obejct is formatted correctly for ohsome api.
     :return:
     """
-    bpolys = gpd.read_file("./data/polygons.geojson")
+    bpolys = gpd.read_file(f"{script_path}/data/polygons.geojson")
     time = "2018-01-01"
     fltr = "amenity=restaurant and type:node"
 
@@ -224,7 +226,7 @@ def test_format_bboxes_dataframe():
     Tests whether input parameter given as a pandas.DataFrame is formatted correctly to a string
     :return:
     """
-    data = gpd.read_file("./data/polygons.geojson")
+    data = gpd.read_file(f"{script_path}/data/polygons.geojson")
     bboxes = data.bounds
     time = "2010-01-01"
     fltr = "amenity=restaurant and type:node"
@@ -238,7 +240,7 @@ def test_format_bboxes_dataframe_missing_columns():
     Tests whether input parameter given as a pandas.DataFrame is formatted correctly to a string
     :return:
     """
-    data = gpd.read_file("./data/polygons.geojson")
+    data = gpd.read_file(f"{script_path}/data/polygons.geojson")
     bboxes = data.bounds
     bboxes.drop(columns="minx", inplace=True)
     time = "2010-01-01"
@@ -247,9 +249,10 @@ def test_format_bboxes_dataframe_missing_columns():
     client = ohsome.OhsomeClient()
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
+    print(e_info.value.message)
     assert (
         e_info.value.message
-        == "Column 'minx' is missing in the dataframe provided as 'bboxes'."
+        == "Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
     )
 
 
@@ -258,7 +261,7 @@ def test_format_bboxes_geodataframe():
     Tests whether input parameter given as a pandas.DataFrame is formatted correctly to a string
     :return:
     """
-    data = gpd.read_file("./data/polygons.geojson")
+    data = gpd.read_file(f"{script_path}/data/polygons.geojson")
     time = "2010-01-01/2011-01-01/P1Y"
     fltr = "amenity=restaurant and type:node"
 
