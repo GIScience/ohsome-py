@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 
 """Tests for ohsome client"""
+import datetime as dt
 import os
 
-import ohsome
 import geopandas as gpd
 import pandas as pd
 import pytest
-import datetime as dt
+
+import ohsome
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -205,7 +206,8 @@ def test_format_bcircles_geodataframe_geometry_error():
         )
     assert (
         e_info.value.message
-        == "The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types."
+        == "OhsomeException (None): The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry "
+        "types."
     )
     del client
 
@@ -251,10 +253,10 @@ def test_format_bboxes_dataframe_missing_columns():
     client = ohsome.OhsomeClient()
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
-    print(e_info.value.message)
     assert (
         e_info.value.message
-        == "Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
+        == "OhsomeException (None): Column ('minx', 'occurred at index 0') is missing in the dataframe provided "
+        "as 'bboxes'."
     )
 
 
@@ -272,7 +274,8 @@ def test_format_bboxes_geodataframe():
         client.elements.count.post(bboxes=data, time=time, filter=fltr)
     assert (
         e_info.value.message
-        == "Use the 'bpolys' parameter to specify the boundaries using a geopandas.GeoDataFrame."
+        == "OhsomeException (None): Use the 'bpolys' parameter to specify the boundaries using a "
+        "geopandas.GeoDataFrame."
     )
 
 
