@@ -956,10 +956,14 @@ python-versions = ">=3.6"
 docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
+[extras]
+lint = []
+test = []
+
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6,<4.0"
-content-hash = "08816ae205099194ee5eee888fcea83b5f4691afc3054210a9394d998774feb8"
+content-hash = "a2ab853d43c3dd3f9c7fc695db62c1c3326dd4d3be08c87f7a2aa34960cd5981"
 
 [metadata.files]
 aiohttp = [
