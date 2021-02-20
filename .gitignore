@@ -131,3 +131,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Setup.py as it will be generated on the fly through dephell
+setup.py
