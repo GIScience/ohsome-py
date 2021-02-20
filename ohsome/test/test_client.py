@@ -12,6 +12,7 @@ import datetime as dt
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 
+
 def test_userdefined_url():
     """
     Test whether request can be sent to alternative url

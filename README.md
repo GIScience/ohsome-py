@@ -6,7 +6,7 @@
 `ohsome` helps you query the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) to extract and analyse OpenStreetMap history data in Python. The ohsome API provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions). Take a look at the [documentation](https://docs.ohsome.org/ohsome-api/stable) to learn more or go through the [tutorial](./notebooks/Tutorial.ipynb) to get started.
 
 
-## Installation 
+## Installation
 
 ```
 $ pip install ohsome
@@ -15,10 +15,10 @@ $ pip install ohsome
 For the [tutorial](./notebooks/Tutorial.ipynb) you also need:
 
 ```
-$ pip install matplotlib seaborn jupyter 
+$ pip install matplotlib seaborn jupyter
 ```
 
-## Usage 
+## Usage
 
 The ohsome API provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions). The endpoints and parameters such as [boundaries](https://docs.ohsome.org/ohsome-api/stable/boundaries.html), [grouping](https://docs.ohsome.org/ohsome-api/stable/group-by.html), [time](https://docs.ohsome.org/ohsome-api/stable/time.html) and [filter](https://docs.ohsome.org/ohsome-api/stable/filter.html) are described in the [ohsome API documentation](https://docs.ohsome.org/ohsome-api/stable/index.html).
 
@@ -36,7 +36,7 @@ response_df = response.as_dataframe()
 
 ```
 
-The single components of the endpoint URL are appended as method calls to the `OhsomeClient` object. The request is sent off by calling the ```post()``` method containing the query parameters. Responses from the data aggregation or contributions endpoints can be converted to a `pandas.DataFrame` using the `OhsomeResponse.as_dataframe()` method. 
+The single components of the endpoint URL are appended as method calls to the `OhsomeClient` object. The request is sent off by calling the ```post()``` method containing the query parameters. Responses from the data aggregation or contributions endpoints can be converted to a `pandas.DataFrame` using the `OhsomeResponse.as_dataframe()` method.
 
 Alternatively, you can define the endpoint using the `endpoint` argument of the `OhsomeClient.post()`:
 
@@ -58,7 +58,7 @@ Responses from the data extraction endpoint can be converted to a `geopandas.Geo
 
 ### Metadata
 
-The metadata of the ohsome API are returned using the `OhsomeClient().metadata` property. The `start_timestamp` and `end_timestamp` properties return the earliest and the latest possible dates for the [time](https://docs.ohsome.org/ohsome-api/stable/time.html) parameter of the query. 
+The metadata of the ohsome API are returned using the `OhsomeClient().metadata` property. The `start_timestamp` and `end_timestamp` properties return the earliest and the latest possible dates for the [time](https://docs.ohsome.org/ohsome-api/stable/time.html) parameter of the query.
 
 ``` python
 OhsomeClient().metadata # --> returns metadata
@@ -72,20 +72,20 @@ OhsomeClient().end_timestamp # --> '2021-01-23T03:00Z'
 All query parameters such as [boundary](https://docs.ohsome.org/ohsome-api/stable/boundaries.html), [grouping](https://docs.ohsome.org/ohsome-api/stable/group-by.html), [time](https://docs.ohsome.org/ohsome-api/stable/time.html) and [filter](https://docs.ohsome.org/ohsome-api/stable/filter.html) can be passed as strings as described in the [ohsome API documentation](https://docs.ohsome.org/ohsome-api/stable).
 
 
-##### Boundary 
+##### Boundary
 
 The [boundary](https://docs.ohsome.org/ohsome-api/stable/boundaries.html) of the query can be defined using the `bpolys`, `bboxes` and `bcircles` parameters. The `bpolys` parameter can be passed as a `geopandas.GeoDataFrame`, while `bboxes` and `bcircles` can be provided as ...
 
 a list containing the coordinates of the bounding box or circle
 
-``` python 
+``` python
 bboxes = [8.7137,49.4096,8.717,49.4119]
-bcircles = [8.7137,49.4096, 100] 
+bcircles = [8.7137,49.4096, 100]
 ```
 
 a list containing several bounding boxes or circles
 
-```python 
+```python
 bboxes = [[8.7137,49.4096,8.717,49.4119], [8.7137,49.4096,8.717,49.4119]]
 bcircles = [[8.7137,49.4096, 100], [8.7137,49.4096, 300]]
 ```
@@ -106,7 +106,7 @@ The [time](https://docs.ohsome.org/ohsome-api/stable/time.html) parameter can be
 * `datetime.datetime`: `dt.datetime(year=2018, month=3, day=1)`
 * `pandas.DateRange` e.g. `time = pd.date_range("2018-01-01", periods=3, freq="M")`
 
-#### References: 
+#### References:
 
 The design of this package was inspired by the blog post [Using Python to Implement a Fluent Interface to Any REST API]
 (https://sendgrid.com/blog/using-python-to-implement-a-fluent-interface-to-any-rest-api/) by Elmer Thomas.
