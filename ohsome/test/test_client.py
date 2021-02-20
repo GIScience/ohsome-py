@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" tests for ohsome client """
+"""Tests for ohsome client"""
 import os
 
 import ohsome
@@ -31,6 +31,7 @@ def test_userdefined_url():
 
 
 def test_get_metadata():
+    """Test get metadata."""
     res = ohsome.OhsomeClient().metadata
     print(res)
     res = ohsome.OhsomeClient().base_api_url

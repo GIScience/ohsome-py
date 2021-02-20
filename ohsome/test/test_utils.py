@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" tests for utility functions """
+"""Tests for utility functions"""
 
 from ohsome.utils import find_groupby_names
 
