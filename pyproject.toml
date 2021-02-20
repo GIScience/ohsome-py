@@ -2,7 +2,7 @@
 name = "ohsome"
 version = "0.2.0"
 description = "Python client for the ohsome API."
-authors = ["Christina Ludwig <christina.ludwig@uni-heidelberg.de>", "Julian Psotta <julianpsotta@gmail.com>"]
+authors = ["Christina Ludwig <christina.ludwig@uni-heidelberg.de>"]
 readme = 'README.md'
 license = "GPL-3.0"
 
