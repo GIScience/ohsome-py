@@ -1,3 +1,28 @@
+[tool.poetry]
+name = "ohsome-py"
+version = "2.3.3"
+description = "Python client for requests to the OHSOME API."
+authors = ["Christina Ludwig <christina.ludwig@uni-heidelberg.de>", "Julian Psotta <julianpsotta@gmail.com>"]
+readme = 'README.md'
+license = "GPL-3.0"
+
+[tool.poetry.dependencies]
+python = ">=3.6,<4.0"
+requests = "^2.25.1"
+geopandas = "^0.8.2"
+pyproj = "^3.0.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.2"
+pytest-cov = ">=2.0.0"
+tox = { version = ">=3.21.4", python = ">=3.6, <4.0" }
+pre-commit = { version = ">=2.1.1", python = ">=3.6, <4.0" }
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
 [tool.black]
 line-length = 88
 include = '\.pyi?$'
