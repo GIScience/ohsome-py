@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ohsome-py"
-version = "2.3.3"
+version = "0.2.0"
 description = "Python client for requests to the OHSOME API."
 authors = ["Christina Ludwig <christina.ludwig@uni-heidelberg.de>", "Julian Psotta <julianpsotta@gmail.com>"]
 readme = 'README.md'
