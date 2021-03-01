@@ -62,7 +62,7 @@ jobs:
           sudo apt-get install -y gdal-bin libgdal-dev
           pip install tox
       - name: Run tox
-        run: tox
+        run: tox -p -o
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
