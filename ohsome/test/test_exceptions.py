@@ -34,7 +34,7 @@ def test_timeout_error():
     bboxes = "13.7,50.9,13.75,50.95"
     time = "2019-12-10"
     fltr = "leisure=park and type:way"
-    timeout = 0.1
+    timeout = 0.01
 
     client = ohsome.OhsomeClient()
     with pytest.raises(ohsome.OhsomeException) as e_info:
