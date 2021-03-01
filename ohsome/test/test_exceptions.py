@@ -20,9 +20,7 @@ def test_elements_count_exception():
     fltr = "building=* and type:way"
 
     client = ohsome.OhsomeClient()
-    response = client.elements.count.post(
-        timeout=500, bboxes=bboxes, time=time, filter=fltr
-    )
+    response = client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
     with pytest.raises(AssertionError):
         response.as_geodataframe()

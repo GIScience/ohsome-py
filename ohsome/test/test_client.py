@@ -25,9 +25,7 @@ def test_userdefined_url():
     fltr = "name=Krautturm and type:way"
 
     client = ohsome.OhsomeClient(base_api_url=base_api_url)
-    response = client.elements.count.post(
-        timeout=500, bboxes=bboxes, time=time, filter=fltr
-    )
+    response = client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
     result = response.as_dataframe()
 
     assert isinstance(result, pd.DataFrame)
@@ -69,7 +67,7 @@ def test_check_time_parameter_list():
     fltr = "amenity=restaurant and type:way"
 
     client = ohsome.OhsomeClient()
-    client.elements.count.post(timeout=500, bcircles=bcircles, time=time, filter=fltr)
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
 def test_check_time_parameter_datetimeindex():
@@ -82,7 +80,7 @@ def test_check_time_parameter_datetimeindex():
     fltr = "amenity=restaurant and type:way"
 
     client = ohsome.OhsomeClient()
-    client.elements.count.post(timeout=500, bcircles=bcircles, time=time, filter=fltr)
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
 def test_check_time_parameter_series():
@@ -95,7 +93,7 @@ def test_check_time_parameter_series():
     fltr = "amenity=restaurant and type:way"
 
     client = ohsome.OhsomeClient()
-    client.elements.count.post(timeout=500, bcircles=bcircles, time=time, filter=fltr)
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
 def test_check_time_parameter_datetime():
@@ -111,9 +109,7 @@ def test_check_time_parameter_datetime():
         dt.datetime.strptime("2018-01-01", "%Y-%m-%d"),
         dt.datetime.strptime("2018-01-02", "%Y-%m-%d"),
     ]
-    response = client.elements.count.post(
-        timeout=500, bcircles=bcircles, time=time, filter=fltr
-    )
+    response = client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
     result = response.as_dataframe()
     assert len(result) == 2
 
@@ -128,9 +124,7 @@ def test_end_timestamp_as_time_input():
     client = ohsome.OhsomeClient()
 
     time = client.end_timestamp
-    response = client.elements.count.post(
-        timeout=500, bcircles=bcircles, time=time, filter=fltr
-    )
+    response = client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
     result = response.as_dataframe()
     assert len(result) == 1
 
@@ -153,7 +147,7 @@ def test_format_bcircles_dataframe():
 
     client = ohsome.OhsomeClient()
     client.elements.count.groupByBoundary.post(
-        timeout=500, bcircles=bcircles, time=time, filter=fltr
+        bcircles=bcircles, time=time, filter=fltr
     )
 
 
@@ -167,18 +161,18 @@ def test_format_bcircles_list():
     client = ohsome.OhsomeClient()
 
     bcircles = [[8.695, 49.41, 200], [8.696, 49.41, 200]]
-    client.elements.count.post(timeout=500, bcircles=bcircles, time=time, filter=fltr)
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
     bcircles = {1: [8.695, 49.41, 200], 2: [8.696, 49.41, 200]}
     client.elements.count.groupByBoundary.post(
-        timeout=500, bcircles=bcircles, time=time, filter=fltr
+        bcircles=bcircles, time=time, filter=fltr
     )
 
     bcircles = ["1:8.695, 49.41, 200", "2:8.696, 49.41, 200"]
-    client.elements.count.post(timeout=500, bcircles=bcircles, time=time, filter=fltr)
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
     bcircles = "1:8.695, 49.41, 200"
-    client.elements.count.post(timeout=500, bcircles=bcircles, time=time, filter=fltr)
+    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
 def test_format_bcircles_geodataframe():
@@ -192,7 +186,7 @@ def test_format_bcircles_geodataframe():
 
     client = ohsome.OhsomeClient()
     client.elements.count.groupByBoundary.post(
-        timeout=500, bcircles=bcircles, time=time, filter=fltr
+        bcircles=bcircles, time=time, filter=fltr
     )
 
 
@@ -208,7 +202,7 @@ def test_format_bcircles_geodataframe_geometry_error():
     client = ohsome.OhsomeClient()
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.groupByBoundary.post(
-            timeout=500, bcircles=bcircles, time=time, filter=fltr
+            bcircles=bcircles, time=time, filter=fltr
         )
     assert (
         e_info.value.message
@@ -228,7 +222,7 @@ def test_format_bpolys():
     fltr = "amenity=restaurant and type:node"
 
     client = ohsome.OhsomeClient()
-    client.elements.count.post(timeout=500, bpolys=bpolys, time=time, filter=fltr)
+    client.elements.count.post(bpolys=bpolys, time=time, filter=fltr)
 
 
 def test_format_bboxes_dataframe():
@@ -242,7 +236,7 @@ def test_format_bboxes_dataframe():
     fltr = "amenity=restaurant and type:node"
 
     client = ohsome.OhsomeClient()
-    client.elements.count.post(timeout=500, bboxes=bboxes, time=time, filter=fltr)
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
 
 def test_format_bboxes_dataframe_missing_columns():
@@ -258,7 +252,7 @@ def test_format_bboxes_dataframe_missing_columns():
 
     client = ohsome.OhsomeClient()
     with pytest.raises(ohsome.OhsomeException) as e_info:
-        client.elements.count.post(timeout=500, bboxes=bboxes, time=time, filter=fltr)
+        client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
     assert (
         e_info.value.message
         == "OhsomeException (None): Column ('minx', 'occurred at index 0') is missing in the dataframe provided "
@@ -277,7 +271,7 @@ def test_format_bboxes_geodataframe():
 
     client = ohsome.OhsomeClient()
     with pytest.raises(ohsome.OhsomeException) as e_info:
-        client.elements.count.post(timeout=500, bboxes=data, time=time, filter=fltr)
+        client.elements.count.post(bboxes=data, time=time, filter=fltr)
     assert (
         e_info.value.message
         == "OhsomeException (None): Use the 'bpolys' parameter to specify the boundaries using a "
@@ -299,25 +293,25 @@ def test_format_bboxes_list():
         [8.67066, 49.41423, 8.68177, 49.4204],
         [8.67066, 49.41423, 8.68177, 49.4204],
     ]
-    client.elements.count.post(timeout=500, bboxes=bboxes, time=time, filter=fltr)
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
     bboxes = {
         "1": [8.67066, 49.41423, 8.68177, 49.4204],
         "2": [8.67066, 49.41423, 8.68177, 49.4204],
     }
-    client.elements.count.post(timeout=500, bboxes=bboxes, time=time, filter=fltr)
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
     bboxes = [8.67066, 49.41423, 8.68177, 49.4204]
-    client.elements.count.post(timeout=500, bboxes=bboxes, time=time, filter=fltr)
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
     bboxes = [
         "8.67066, 49.41423, 8.68177, 49.4204",
         "8.67066, 49.41423, 8.68177, 49.4204",
     ]
-    client.elements.count.post(timeout=500, bboxes=bboxes, time=time, filter=fltr)
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
     bboxes = "8.67066, 49.41423, 8.68177, 49.4204"
-    client.elements.count.post(timeout=500, bboxes=bboxes, time=time, filter=fltr)
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
 
 def test_post_with_endpoint_string():
@@ -331,9 +325,7 @@ def test_post_with_endpoint_string():
 
     endpoint = "contributions/latest/bbox"
     client = ohsome.OhsomeClient()
-    response = client.post(
-        timeout=500, endpoint=endpoint, bboxes=bboxes, time=time, filter=filter
-    )
+    response = client.post(endpoint=endpoint, bboxes=bboxes, time=time, filter=filter)
     result = response.as_geodataframe()
     assert isinstance(result, gpd.GeoDataFrame)
     assert len(result) == 1
@@ -341,9 +333,7 @@ def test_post_with_endpoint_string():
     # Test query with leading and ending slashes
     endpoint = "/contributions/latest/bbox/"
     client = ohsome.OhsomeClient()
-    response = client.post(
-        timeout=500, endpoint=endpoint, bboxes=bboxes, time=time, filter=filter
-    )
+    response = client.post(endpoint=endpoint, bboxes=bboxes, time=time, filter=filter)
     result = response.as_geodataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
