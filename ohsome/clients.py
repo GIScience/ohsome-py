@@ -146,7 +146,7 @@ class _OhsomePostClient:
         filter2=None,
         format=None,
         showMetadata=None,
-        timeout=60,
+        timeout=180,
         groupByKey=None,
         groupByKeys=None,
         groupByValues=None,
