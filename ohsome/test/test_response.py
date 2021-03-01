@@ -21,7 +21,9 @@ def test_elements_count():
     fltr = "amenity=cafe and type:node"
 
     client = ohsome.OhsomeClient()
-    response = client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
+    response = client.elements.count.post(
+        timeout=500, bboxes=bboxes, time=time, filter=fltr
+    )
     result = response.as_dataframe()
 
     assert isinstance(result, pd.DataFrame)
@@ -39,7 +41,9 @@ def test_elements_density():
     fltr = "amenity=cafe and type:node"
 
     client = ohsome.OhsomeClient()
-    response = client.elements.count.density.post(bboxes=bboxes, time=time, filter=fltr)
+    response = client.elements.count.density.post(
+        timeout=500, bboxes=bboxes, time=time, filter=fltr
+    )
     result = response.as_dataframe()
 
     assert isinstance(result, pd.DataFrame)
@@ -59,7 +63,7 @@ def test_elements_count_groupby_key():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.groupByKey.post(
-        bboxes=bboxes, time=time, filter=fltr, groupByKeys=groupByKeys
+        timeout=500, bboxes=bboxes, time=time, filter=fltr, groupByKeys=groupByKeys
     )
     result = response.as_dataframe()
 
@@ -80,7 +84,7 @@ def test_elements_count_groupby_tag():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.groupByTag.post(
-        bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
+        timeout=500, bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
     )
     result = response.as_dataframe()
 
@@ -101,7 +105,7 @@ def test_multi_index_false():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.groupByTag.post(
-        bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
+        timeout=500, bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
     )
     result = response.as_dataframe(multi_index=False)
 
@@ -121,7 +125,7 @@ def test_elements_count_groupby_type():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.groupByType.post(
-        bboxes=bboxes, time=time, filter=fltr, timeout=600
+        timeout=600, bboxes=bboxes, time=time, filter=fltr
     )
     result = response.as_dataframe()
 
@@ -144,7 +148,7 @@ def test_elements_count_groupby_boundary():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.groupByBoundary.post(
-        bboxes=bboxes, time=time, filter=fltr
+        timeout=500, bboxes=bboxes, time=time, filter=fltr
     )
     result = response.as_dataframe()
 
@@ -165,7 +169,7 @@ def test_elements_count_groupby_boundary_groupby_tag():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.groupByBoundary.groupByTag.post(
-        bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
+        timeout=500, bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
     )
     result = response.as_dataframe()
 
@@ -186,7 +190,7 @@ def test_elements_count_ratio():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.ratio.post(
-        bboxes=bboxes, time=time, filter=fltr, filter2=fltr2
+        timeout=500, bboxes=bboxes, time=time, filter=fltr, filter2=fltr2
     )
     result = response.as_dataframe()
 
@@ -207,7 +211,7 @@ def test_elements_count_ratio_groupby_boundary():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.ratio.groupByBoundary.post(
-        bboxes=bboxes, time=time, filter=fltr, filter2=fltr2
+        timeout=500, bboxes=bboxes, time=time, filter=fltr, filter2=fltr2
     )
     result = response.as_dataframe()
 
@@ -226,7 +230,9 @@ def test_elements_geometry():
     flter = "name=Krautturm and type:way"
 
     client = ohsome.OhsomeClient()
-    response = client.elements.geometry.post(bboxes=bboxes, time=time, filter=flter)
+    response = client.elements.geometry.post(
+        timeout=500, bboxes=bboxes, time=time, filter=flter
+    )
     result = response.as_geodataframe()
     del client
 
@@ -245,7 +251,7 @@ def test_elementsFullHistory_geometry():
 
     client = ohsome.OhsomeClient()
     response = client.elementsFullHistory.centroid.post(
-        bboxes=bboxes, time=time, filter=flter
+        timeout=500, bboxes=bboxes, time=time, filter=flter
     )
     result = response.as_geodataframe()
 
@@ -263,7 +269,9 @@ def test_users_timestamp():
     flter = "name=Krautturm and type:way"
 
     client = ohsome.OhsomeClient()
-    response = client.users.count.post(bboxes=bboxes, time=time, filter=flter)
+    response = client.users.count.post(
+        timeout=500, bboxes=bboxes, time=time, filter=flter
+    )
     result = response.as_dataframe()
 
     assert isinstance(result, pd.DataFrame)
@@ -281,7 +289,7 @@ def test_contributions_centroid():
 
     client = ohsome.OhsomeClient()
     response = client.contributions.centroid.post(
-        bboxes=bboxes, time=time, filter=filter
+        timeout=500, bboxes=bboxes, time=time, filter=filter
     )
     result = response.as_geodataframe()
 
@@ -300,7 +308,7 @@ def test_contributions_latest():
 
     client = ohsome.OhsomeClient()
     response = client.contributions.latest.bbox.post(
-        bboxes=bboxes, time=time, filter=filter
+        timeout=500, bboxes=bboxes, time=time, filter=filter
     )
     result = response.as_geodataframe()
 
