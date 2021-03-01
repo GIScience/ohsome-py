@@ -20,7 +20,6 @@ pre-commit = { version = ">=2.1.1", python = ">=3.6, <4.0" }
 dephell = "^0.8.3"
 black = "^20.8b1"
 pytest-random-order = "^1.0.4"
-yaspin = "^1.4.1"
 
 [tool.dephell.main]
 from = { format = "poetry", path = "pyproject.toml" }
