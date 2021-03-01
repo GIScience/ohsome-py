@@ -9,7 +9,8 @@ license = "GPL-3.0"
 [tool.poetry.dependencies]
 python = ">=3.6,<4.0"
 requests = "^2.25.1"
-geopandas = "^0.8.2"
+pandas = ">=0.25.3"
+geopandas = "^0.9.0"
 pyproj = "^3.0.0"
 
 [tool.poetry.dev-dependencies]
