@@ -320,7 +320,7 @@ def test_post_with_endpoint_string():
     :return:
     """
     bboxes = "8.7137,49.4096,8.717,49.4119"
-    time = "2008-01-01,2016-01-01"
+    time = "2015-01-01,2016-01-01"
     filter = "name=Krautturm and type:way"
 
     endpoint = "contributions/latest/bbox"

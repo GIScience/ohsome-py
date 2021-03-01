@@ -121,7 +121,7 @@ def test_elements_count_groupby_type():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.groupByType.post(
-        bboxes=bboxes, time=time, filter=fltr, timeout=600
+        bboxes=bboxes, time=time, filter=fltr
     )
     result = response.as_dataframe()
 
@@ -202,7 +202,7 @@ def test_elements_count_ratio_groupby_boundary():
     """
     bboxes = "A:8.6933,49.40893,8.69797,49.41106|B:8.6887,49.41325,8.69462,49.4166"
     time = "2019-12-10, 2020-12-10"
-    fltr = "amenity=* and type:node"
+    fltr = "amenity=hotel and type:node"
     fltr2 = "amenity=cafe and type:node"
 
     client = ohsome.OhsomeClient()
@@ -240,7 +240,7 @@ def test_elementsFullHistory_geometry():
     :return:
     """
     bboxes = "8.7137,49.4096,8.717,49.4119"
-    time = "2008-01-01,2016-01-01"
+    time = "2015-01-01,2016-01-01"
     flter = "name=Krautturm and type:way"
 
     client = ohsome.OhsomeClient()
@@ -250,7 +250,7 @@ def test_elementsFullHistory_geometry():
     result = response.as_geodataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
-    assert len(result) == 5
+    assert len(result) == 2
 
 
 def test_users_timestamp():
@@ -259,7 +259,7 @@ def test_users_timestamp():
     :return:
     """
     bboxes = "8.7137,49.4096,8.717,49.4119"
-    time = "2008-01-01/2016-01-01/P1Y"
+    time = "2015-01-01/2016-01-01/P1Y"
     flter = "name=Krautturm and type:way"
 
     client = ohsome.OhsomeClient()
@@ -267,7 +267,7 @@ def test_users_timestamp():
     result = response.as_dataframe()
 
     assert isinstance(result, pd.DataFrame)
-    assert len(result) == 8
+    assert len(result) == 1
 
 
 def test_contributions_centroid():
@@ -276,7 +276,7 @@ def test_contributions_centroid():
     :return:
     """
     bboxes = "8.7137,49.4096,8.717,49.4119"
-    time = "2008-01-01,2016-01-01"
+    time = "2015-01-01,2016-01-01"
     filter = "name=Krautturm and type:way"
 
     client = ohsome.OhsomeClient()
@@ -286,7 +286,7 @@ def test_contributions_centroid():
     result = response.as_geodataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
-    assert len(result) == 5
+    assert len(result) == 1
 
 
 def test_contributions_latest():
@@ -295,7 +295,7 @@ def test_contributions_latest():
     :return:
     """
     bboxes = "8.7137,49.4096,8.717,49.4119"
-    time = "2008-01-01,2016-01-01"
+    time = "2015-01-01,2016-01-01"
     filter = "name=Krautturm and type:way"
 
     client = ohsome.OhsomeClient()
