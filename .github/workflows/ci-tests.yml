@@ -30,26 +30,10 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - name: Set up testing Python ${{ matrix.config.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.config.python-version }}
       - name: Set up base Python 3.9
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - name: Set up base Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Set up base Python 3.7
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-      - name: Set up base Python 3.6
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.6
       - name: Python Poetry Action
         uses: abatilo/actions-poetry@v2.1.0
         with:
@@ -60,9 +44,13 @@ jobs:
           sudo add-apt-repository -y ppa:ubuntugis/ppa && sudo apt-get update
           sudo apt-get install -y build-essential
           sudo apt-get install -y gdal-bin libgdal-dev
-          pip install tox
-      - name: Run tox
-        run: tox -p -o
+          python -m venv .venv
+          source .venv/bin/activate
+          poetry install -vv
+      - name: Run pytest
+        run: |
+          source .venv/bin/activate
+          pytest -x --cov=ohsome --cov-report=xml --random-order
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
