@@ -424,7 +424,7 @@ shapely = "*"
 
 [[package]]
 name = "identify"
-version = "1.6.1"
+version = "1.6.2"
 description = "File identification library for Python"
 category = "dev"
 optional = false
@@ -949,7 +949,7 @@ typing-extensions = {version = ">=3.7.4", markers = "python_version < \"3.8\""}
 
 [[package]]
 name = "yaspin"
-version = "1.4.1"
+version = "1.4.0"
 description = "Yet Another Terminal Spinner"
 category = "dev"
 optional = false
@@ -970,7 +970,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6,<4.0"
-content-hash = "52548ad2cfc346ee8b05ddc7b904a4e807108ca7fd6e98cdd7c8797097d0a07d"
+content-hash = "5f0a048820cd4a44453d15da3865451ab1149068f4dd0b2457df3f9db44d22e9"
 
 [metadata.files]
 aiohttp = [
@@ -1188,8 +1188,8 @@ geopandas = [
     {file = "geopandas-0.8.2.tar.gz", hash = "sha256:aa9ae82e4e6b52efa244bd4b8bd2363d66693e5592ad1a0f52b6afa8c36348cb"},
 ]
 identify = [
-    {file = "identify-1.6.1-py2.py3-none-any.whl", hash = "sha256:ec4698722b9a8a6f2aa5f9ff9cc687956494f0ba734941659ad7f018cf457e44"},
-    {file = "identify-1.6.1.tar.gz", hash = "sha256:7b435803dc79a0f0ce887887a62ad360f3a9e8162ac0db9ee649d5d24085bf30"},
+    {file = "identify-1.6.2-py2.py3-none-any.whl", hash = "sha256:8f9879b5b7cca553878d31548a419ec2f227d3328da92fe8202bc5e546d5cbc3"},
+    {file = "identify-1.6.2.tar.gz", hash = "sha256:1c2014f6985ed02e62b2e6955578acf069cb2c54859e17853be474bfe7e13bed"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
@@ -1700,8 +1700,8 @@ yarl = [
     {file = "yarl-1.6.3.tar.gz", hash = "sha256:8a9066529240171b68893d60dca86a763eae2139dd42f42106b03cf4b426bf10"},
 ]
 yaspin = [
-    {file = "yaspin-1.4.1-py2.py3-none-any.whl", hash = "sha256:5b98d7620b8d9b7c74106fa1200c76b261664951a212fc443154c3b6823888a4"},
-    {file = "yaspin-1.4.1.tar.gz", hash = "sha256:53f398eeeff430d9b686ce2f104f6b0fa0e2d165bafc7b7e4aa4432ec8d23582"},
+    {file = "yaspin-1.4.0-py2.py3-none-any.whl", hash = "sha256:faefab3e7c29d8de5be0561105aaaf41eaa9824932151d7b4c94cb0c46a70926"},
+    {file = "yaspin-1.4.0.tar.gz", hash = "sha256:681654848e5cd463e4c1f896ff03165979773a34789cc787276d9d8d0151ae1d"},
 ]
 zipp = [
     {file = "zipp-3.4.0-py3-none-any.whl", hash = "sha256:102c24ef8f171fd729d46599845e95c7ab894a4cf45f5de11a44cc7444fb1108"},
