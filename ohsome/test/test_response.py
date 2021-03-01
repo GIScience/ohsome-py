@@ -121,7 +121,7 @@ def test_elements_count_groupby_type():
 
     client = ohsome.OhsomeClient()
     response = client.elements.count.groupByType.post(
-        bboxes=bboxes, time=time, filter=fltr
+        bboxes=bboxes, time=time, filter=fltr, timeout=600
     )
     result = response.as_dataframe()
 
