@@ -31,7 +31,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - python-version: 3.6
+#          - python-version: 3.6
           - python-version: 3.7
           - python-version: 3.8
 #          - python-version: 3.9
@@ -60,7 +60,7 @@ jobs:
       - name: Run pytest
         run: |
           source .venv/bin/activate
-          pytest -x --cov=ohsome --cov-report=xml --random-order
+          pytest
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:

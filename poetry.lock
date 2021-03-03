@@ -542,7 +542,7 @@ python-versions = "*"
 name = "multidict"
 version = "5.1.0"
 description = "multidict implementation"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -952,7 +952,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6,<4.0"
-content-hash = "b9e4e70753887c859ab037900d8cf41a56289dbb11e227f749f66d02032d14ad"
+content-hash = "6fd258afd224758a35aa0e3ba3f2b289a39c23a12aada1b4183cfdd942591296"
 
 [metadata.files]
 aiohttp = [
