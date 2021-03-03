@@ -13,6 +13,7 @@ pandas = ">=0.25.3"
 geopandas = "^0.9.0"
 pyproj = "^3.0.0"
 multidict = "^5.1.0"
+pip = ">=21.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
