@@ -12,7 +12,7 @@ requests = "^2.25.1"
 pandas = ">=0.25.3"
 geopandas = "^0.9.0"
 pyproj = "^3.0.0"
-multidict = "^5.0.2"
+multidict = "^5.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
