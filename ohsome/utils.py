@@ -84,7 +84,7 @@ def format_bcircles(bcircles):
                 "The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types."
             )
         formatted = bcircles.apply(
-            lambda r: f"{int(r.name)}:{r.geometry.y},{r.geometry.x},{r['radius']}",
+            lambda r: f"{int(r.name)}:{r.geometry.x},{r.geometry.y},{r['radius']}",
             axis=1,
         )
         return "|".join(formatted.to_list())
