@@ -264,8 +264,7 @@ def test_format_bboxes_dataframe_missing_columns(custom_client):
     else:
         assert (
             e_info.value.message
-            == "OhsomeException (None): Use the 'bpolys' parameter to specify the boundaries using a "
-            "geopandas.GeoDataFrame."
+            == "OhsomeException (None): Column 'minx' is missing in the dataframe provided as 'bboxes'."
         )
 
 
