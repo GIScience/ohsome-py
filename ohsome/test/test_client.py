@@ -255,10 +255,18 @@ def test_format_bboxes_dataframe_missing_columns(custom_client):
     client = custom_client
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
-    assert (
-        e_info.value.message
-        == "OhsomeException (None): Column 'minx' is missing in the dataframe provided as 'bboxes'."
-    )
+    if "occurred at index 0" in e_info.value.message:
+        # Python 3.6 does some weird stuff with the output. So it differs a bit.
+        assert (
+            e_info.value.message
+            == "OhsomeException (None): Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
+        )
+    else:
+        assert (
+            e_info.value.message
+            == "OhsomeException (None): Use the 'bpolys' parameter to specify the boundaries using a "
+            "geopandas.GeoDataFrame."
+        )
 
 
 def test_format_bboxes_geodataframe(custom_client):
@@ -273,11 +281,18 @@ def test_format_bboxes_geodataframe(custom_client):
     client = custom_client
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.post(bboxes=data, time=time, filter=fltr)
-    assert (
-        e_info.value.message
-        == "OhsomeException (None): Use the 'bpolys' parameter to specify the boundaries using a "
-        "geopandas.GeoDataFrame."
-    )
+    if "occurred at index 0" in e_info.value.message:
+        # Python 3.6 does some weird stuff with the output. So it differs a bit.
+        assert (
+            e_info.value.message
+            == "OhsomeException (None): Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
+        )
+    else:
+        assert (
+            e_info.value.message
+            == "OhsomeException (None): Use the 'bpolys' parameter to specify the boundaries using a "
+            "geopandas.GeoDataFrame."
+        )
 
 
 def test_format_bboxes_list(custom_client):
