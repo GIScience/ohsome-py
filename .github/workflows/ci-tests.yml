@@ -64,13 +64,13 @@ jobs:
       - name: Install dependencies
         run: |
           sudo add-apt-repository -y ppa:ubuntugis/ppa && sudo apt-get update && sudo apt-get install -y build-essential gdal-bin libgdal-dev
-          python -m pip install --upgrade pip
-          poetry install -vv
+          python -m pip install --upgrade pip tox
       - name: Run tox
         env:
           OHSOME_URL: ohsome-api
           OHSOME_PORT: 8080
-        run: pytest
+          TOX_TESTENV_PASSENV: OHSOME_URL, OHSOME_PORT
+        run: tox -e py${{ matrix.config.tox }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
