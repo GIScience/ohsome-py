@@ -257,8 +257,7 @@ def test_format_bboxes_dataframe_missing_columns(custom_client):
         client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
     assert (
         e_info.value.message
-        == "OhsomeException (None): Column ('minx', 'occurred at index 0') is missing in the dataframe provided "
-        "as 'bboxes'."
+        == "OhsomeException (None): Column 'minx' is missing in the dataframe provided as 'bboxes'."
     )
 
 
