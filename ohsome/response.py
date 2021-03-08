@@ -10,12 +10,10 @@ from ohsome.utils import find_groupby_names
 
 
 class OhsomeResponse:
-    """
-    COntains the response of the request to the ohsome API
-    """
+    """Contains the response of the request to the ohsome API"""
 
     def __init__(self, response, url=None, params=None):
-
+        """Initialize the OhsomeResponse class."""
         self.url = url
         self.parameters = params
         self.data = response.json()

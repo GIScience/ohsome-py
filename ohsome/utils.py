@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" ohsome utility functions """
+"""Ohsome utility functions"""
 
-from ohsome import OhsomeException
+import datetime
+
 import geopandas as gpd
 import pandas as pd
-import datetime
+
+from ohsome import OhsomeException
 
 
 def format_time(params):
@@ -72,7 +74,7 @@ def format_bcircles(bcircles):
     elif isinstance(bcircles, dict):
         return "|".join(
             [
-                "{}:".format(id) + ",".join([str(c) for c in coords])
+                f"{id}:" + ",".join([str(c) for c in coords])
                 for id, coords in bcircles.items()
             ]
         )
@@ -82,26 +84,20 @@ def format_bcircles(bcircles):
                 "The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types."
             )
         formatted = bcircles.apply(
-            lambda r: "{}:{},{},{}".format(
-                int(r.name), r.geometry.y, r.geometry.x, r["radius"]
-            ),
+            lambda r: f"{int(r.name)}:{r.geometry.x},{r.geometry.y},{r['radius']}",
             axis=1,
         )
         return "|".join(formatted.to_list())
     elif isinstance(bcircles, pd.DataFrame):
         try:
             formatted = bcircles.apply(
-                lambda r: "{}:{},{},{}".format(
-                    int(r.name), r["lon"], r["lat"], r["radius"]
-                ),
+                lambda r: f"{int(r.name)}:{r['lon']},{r['lat']},{r['radius']}",
                 axis=1,
             )
             return "|".join(formatted.to_list())
         except KeyError as e:
             raise OhsomeException(
-                message="Column {} is missing in the dataframe provided as 'bboxes'.".format(
-                    e
-                )
+                message=f"Column {e} is missing in the dataframe provided as 'bboxes'."
             )
     else:
         raise OhsomeException(message="'bcircles' parameter has invalid format.")
@@ -130,7 +126,7 @@ def format_bboxes(bboxes):
     elif isinstance(bboxes, dict):
         return "|".join(
             [
-                "{}:".format(id) + ",".join([str(c) for c in coords])
+                f"{id}:" + ",".join([str(c) for c in coords])
                 for id, coords in bboxes.items()
             ]
         )
@@ -143,17 +139,13 @@ def format_bboxes(bboxes):
     elif isinstance(bboxes, pd.DataFrame):
         try:
             formatted = bboxes.apply(
-                lambda r: "{}:{},{},{},{}".format(
-                    r.name, r["minx"], r["miny"], r["maxx"], r["maxy"]
-                ),
+                lambda r: f"{r.name}:{r['minx']},{r['miny']},{r['maxx']},{r['maxy']}",
                 axis=1,
             )
             return "|".join(formatted.to_list())
         except KeyError as e:
             raise OhsomeException(
-                message="Column {} is missing in the dataframe provided as 'bboxes'.".format(
-                    e
-                )
+                message=f"Column {e} is missing in the dataframe provided as 'bboxes'."
             )
     else:
         raise OhsomeException(

@@ -1,20 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""OhsomeClient classes to build and handle requests to ohsome API """
+"""OhsomeClient classes to build and handle requests to ohsome API"""
+
+import json
 
 import requests
+
 from ohsome import OhsomeException, OhsomeResponse, utils
-import json
-import datetime as dt
 
 OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
 
 
 class _OhsomeMetadataClient:
-    """
-    Client for querying and handling metadata of ohsome API
-    """
+    """Client for querying and handling metadata of ohsome API"""
 
     def __init__(self, cache=None, base_api_url=None):
         self._cache = cache or []
@@ -125,9 +124,7 @@ class _OhsomeMetadataClient:
 
 
 class _OhsomePostClient:
-    """
-    Client for sending requests to ohsome API
-    """
+    """Client for sending requests to ohsome API"""
 
     def __init__(self, cache=None, base_api_url=None):
         self._cache = cache or []
@@ -230,7 +227,7 @@ class _OhsomePostClient:
             utils.format_boundary(self._parameters)
         except OhsomeException as e:
             raise OhsomeException(
-                message=e.message, status=300, params=self._parameters, url=self._url
+                message=str(e), status=300, params=self._parameters, url=self._url
             )
         utils.format_time(self._parameters)
 
@@ -281,35 +278,35 @@ class _OhsomePostClient:
 
 
 class OhsomeClient(_OhsomeMetadataClient, _OhsomePostClient):
-    """
-    Main class to build and handle requests to ohsome API
-    """
+    """Main class to build and handle requests to ohsome API"""
 
     @property
     def elements(self):
+        """Return elements objects."""
         return _OhsomeClientElements(self._cache + ["elements"], self._base_api_url)
 
     @property
     def elementsFullHistory(self):
+        """Return full history elements."""
         return _OhsomeClientElementsFullHistory(
             self._cache + ["elementsFullHistory"], self._base_api_url
         )
 
     @property
     def contributions(self):
+        """Return contrubioins object."""
         return _OhsomeClientContributions(
             self._cache + ["contributions"], self._base_api_url
         )
 
     @property
     def users(self):
+        """Return users object."""
         return _OhsomeClientUsers(self._cache + ["users"], self._base_api_url)
 
 
 class _OhsomeClientElements:
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     def __init__(self, cache=None, base_api_url=None):
         self._cache = cache or []
@@ -356,9 +353,7 @@ class _OhsomeClientElements:
 
 
 class _OhsomeClientElementsFullHistory:
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     def __init__(self, cache=None, base_api_url=None):
         self._cache = cache or []
@@ -381,9 +376,7 @@ class _OhsomeClientElementsFullHistory:
 
 
 class _OhsomeClientContributions:
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     def __init__(self, cache=None, base_api_url=None):
         self._cache = cache or []
@@ -412,9 +405,7 @@ class _OhsomeClientContributions:
 
 
 class _OhsomeClientUsers:
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     def __init__(self, cache=None, base_api_url=None):
         self._cache = cache or []
@@ -429,9 +420,7 @@ class _OhsomeClientUsers:
 
 
 class _OhsomeClientUsersAggregated(_OhsomePostClient):
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     @property
     def density(self):
@@ -457,9 +446,7 @@ class _OhsomeClientUsersAggregated(_OhsomePostClient):
 
 
 class _OhsomeClientUsersDensity(_OhsomePostClient):
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     @property
     def groupByBoundary(self):
@@ -477,9 +464,7 @@ class _OhsomeClientUsersDensity(_OhsomePostClient):
 
 
 class _OhsomeClientContributionsLatest(_OhsomePostClient):
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     @property
     def bbox(self):
@@ -495,9 +480,7 @@ class _OhsomeClientContributionsLatest(_OhsomePostClient):
 
 
 class _OhsomeClientElementsAggregated(_OhsomePostClient):
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     @property
     def density(self):
@@ -527,9 +510,7 @@ class _OhsomeClientElementsAggregated(_OhsomePostClient):
 
 
 class _OhsomeClientDensity(_OhsomePostClient):
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     @property
     def groupByBoundary(self):
@@ -547,9 +528,7 @@ class _OhsomeClientDensity(_OhsomePostClient):
 
 
 class _OhsomeClientElementsGroupByBoundary(_OhsomePostClient):
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     @property
     def groupByTag(self):
@@ -557,9 +536,7 @@ class _OhsomeClientElementsGroupByBoundary(_OhsomePostClient):
 
 
 class _OhsomeClientElementsRatio(_OhsomePostClient):
-    """
-    Subclass of _OhsomePostClient to define endpoints of ohsome API
-    """
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     @property
     def groupByBoundary(self):
