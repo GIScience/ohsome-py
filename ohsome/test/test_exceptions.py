@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 """Test OhsomeExceptions"""
 
-__author__ = "Christina Ludwig, GIScience Research Group, Heidelberg University"
-__email__ = "christina.ludwig@uni-heidelberg.de"
-
+import os
 import pytest
 import ohsome
 
@@ -47,9 +45,76 @@ def test_timeout_error(custom_client):
     )
 
 
+def test_invalid_url():
+    """
+    Test whether request can be sent to alternative url
+    :return:
+    """
+    base_api_url = "https://api.ohsme.org/v0.9/"
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2018-01-01"
+    fltr = "name=Krautturm and type:way"
+
+    client = ohsome.OhsomeClient(base_api_url=base_api_url, log=False)
+    with pytest.raises(ohsome.OhsomeException) as e_info:
+        client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
+    assert (
+        e_info.value.message
+        == "Connection Error: Query could not be sent. Make sure there are no network problems and "
+        f"that the ohsome API URL {base_api_url}elements/count is valid."
+    )
+
+
 def test_catch_incomplete_response_error():
     """
     Tests whether a AssertionError is raised if the result cannot be converted to a geodataframe object
     :return:
     """
-    # todo: find suitable test case
+    # todo: Find test case
+    # client = ohsome.OhsomeClient()
+    # bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
+    # fltr = "building=* and type:way"
+    # try:
+    #   client.elements.geometry.post(bboxes=bboxes, filter=fltr)
+    # except ohsome.OhsomeException as e:
+    #    print(e)
+    pass
+
+
+def test_disable_logging():
+    """
+    Tests whether logging is disabled so no new log file if created if an OhsomeException occurs
+    :return:
+    """
+    client = ohsome.OhsomeClient(log=False)
+    bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
+    fltr = "building=* and type:way"
+    timeout = 0.001
+    n_log_files_before = len(os.listdir(client.log_dir))
+
+    with pytest.raises(ohsome.OhsomeException):
+        client.elements.geometry.post(bboxes=bboxes, filter=fltr, timeout=timeout)
+
+    n_log_files_after = len(os.listdir(client.log_dir))
+    assert n_log_files_before == n_log_files_after
+
+
+def test_enable_logging():
+    """
+    Tests whether logging is disabled so no new log file if created if an OhsomeException occurs
+    :return:
+    """
+    client = ohsome.OhsomeClient(log=True)
+    bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
+    fltr = "building=* and type:way"
+    timeout = 0.001
+    n_log_files_before = len(os.listdir(client.log_dir))
+
+    with pytest.raises(ohsome.OhsomeException):
+        client.elements.geometry.post(bboxes=bboxes, filter=fltr, timeout=timeout)
+
+    n_log_files_after = len(os.listdir(client.log_dir))
+    assert n_log_files_before + 1 == n_log_files_after
+
+    logfile = os.path.join(client.log_dir, os.listdir(client.log_dir)[0])
+    os.unlink(logfile)

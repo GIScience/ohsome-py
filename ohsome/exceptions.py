@@ -11,16 +11,18 @@ import os
 class OhsomeException(Exception):
     """Exception to handle ohsome API errors"""
 
-    def __init__(self, message=None, url=None, params=None, status=None):
-        """Initialize the OhsomeException class."""
-        Exception.__init__(self, message)
+    def __init__(self, message=None, url=None, params=None, error_code=None):
+        """Initialize OhsomeException object"""
+        super(Exception, self).__init__(message)
         self.message = message
         self.url = url
-        self.parameters = params
-        self.status = status
+        if params:
+            self.parameters = {k: v for k, v in params.items() if v is not None}
+        self.error_code = error_code
+        self.timestamp = dt.datetime.now().isoformat()
 
     def __str__(self):
-        return f"OhsomeException ({self.status}): {self.message}"
+        return f"OhsomeException ({self.error_code}): {self.message}"
 
     def to_json(self, dir):
         """
@@ -31,12 +33,12 @@ class OhsomeException(Exception):
             dir,
             f"ohsome_exception_{dt.datetime.now().strftime('%Y%m%dT%H%M%S')}.json",
         )
-        print(outfile)
-        out = {
-            "url": self.url,
-            "parameters": self.parameters,
-            "status": self.status,
+        log = {
+            "timestamp": self.timestamp,
+            "status": self.error_code,
             "message": self.message,
+            "requestUrl": self.url,
+            "parameters": self.parameters,
         }
         with open(outfile, "w") as dst:
-            json.dump(obj=out, fp=dst, indent=4)
+            json.dump(obj=log, fp=dst, indent=4)

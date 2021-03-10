@@ -3,7 +3,7 @@
 
 """Tests for utility functions"""
 
-from ohsome.utils import find_groupby_names
+from ohsome.helper import find_groupby_names
 
 
 def test_find_groupby_names_one_group():

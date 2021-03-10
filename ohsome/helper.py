@@ -45,7 +45,7 @@ def format_boundary(params):
         params["bcircles"] = format_bcircles(params["bcircles"])
     else:
         raise OhsomeException(
-            "No valid boundary parameter is given. Specify one of the parameters 'bboxes', 'bpolys' or 'bcircles'."
+            message="No valid boundary parameter is given. Specify one of the parameters 'bboxes', 'bpolys' or 'bcircles'."
         )
 
 
@@ -81,7 +81,7 @@ def format_bcircles(bcircles):
     elif isinstance(bcircles, gpd.GeoDataFrame):
         if bcircles.geometry.geom_type.unique() != ["Point"]:
             raise OhsomeException(
-                "The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types."
+                message="The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types."
             )
         formatted = bcircles.apply(
             lambda r: f"{int(r.name)}:{r.geometry.x},{r.geometry.y},{r['radius']}",
@@ -122,7 +122,7 @@ def format_bboxes(bboxes):
         elif isinstance(bboxes[0], str) and (bboxes[0].find(",") != -1):
             return "|".join([str(c) for c in bboxes])
         else:
-            raise OhsomeException("'bboxes' parameter has invalid format.")
+            raise OhsomeException(message="'bboxes' parameter has invalid format.")
     elif isinstance(bboxes, dict):
         return "|".join(
             [
@@ -172,3 +172,21 @@ def find_groupby_names(url):
     :return:
     """
     return [name.strip("/") for name in url.split("groupBy")[1:]]
+
+
+def extract_error_message_from_invalid_json(response):
+    """
+    Extract error code and error message from invalid json returned from ohsome API
+    Otherwise throws OhsomeException.
+    :param response:
+    :return:
+
+    """
+    start_message = response.text.find("message") + 12
+    end_message = response.text.find("requestUrl") - 6
+    message = response.text[start_message:end_message]
+    start_error_code = response.text.find("status") + 10
+    end_error_code = response.text.find("message") - 5
+    error_code = response.text[start_error_code:end_error_code]
+
+    return error_code, message
