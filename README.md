@@ -2,20 +2,29 @@
 
 [![status: experimental](https://github.com/GIScience/badges/raw/master/status/experimental.svg)](https://github.com/GIScience/badges#experimental)
 
-The `ohsome` package helps you extract and analyse OpenStreetMap history data using the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and Python. It handles queries to the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and converts its responses to [Pandas](https://pandas.pydata.org/) and [GeoPandas](https://geopandas.org/) data frames to facilitate easy data handling and analysis.
+The *ohsome-py* package helps you extract and analyse OpenStreetMap history data using the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and Python. It handles queries to the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and converts its responses to [Pandas](https://pandas.pydata.org/) and [GeoPandas](https://geopandas.org/) data frames to facilitate easy data handling and analysis.
 
 The ohsome API provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions). Take a look at the [documentation of the ohsome API](https://docs.ohsome.org/ohsome-api/stable) to learn more about the endpoints and query parameters or go through the [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) to get started.
 
+
 ## Installation
+
+The easiest way to install *ohsome-py* is using pip:
 
 ```
 $ pip install ohsome
 ```
 
-For the [tutorial](./notebooks/Tutorial.ipynb) you also need:
+To install the latest *ohsome-py* version from GitHub:
 
 ```
-$ pip install matplotlib seaborn jupyter
+$ pip install git+https://github.com/giscience/ohsome-py
+```
+
+If you want to run the Juypter Notebook [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) you also need to install `jupyter` and `matplotlib`:
+
+```
+$ pip install jupyter matplotlib
 ```
 
 ## Usage
@@ -53,7 +62,6 @@ response = client.post(endpoint="elements/count",
 ```
 
 ### Data Extraction Query
-
 
 **Example:** Query all OSM objects mapped as ways with the tag _landuse=farmland_ including their geometry using the [/elements/geometry](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Extraction#/Data%20Extraction/elementsGeometry_1) endpoint:
 
