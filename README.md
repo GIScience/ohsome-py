@@ -6,9 +6,11 @@ __Important Note:__ This project is still __under development__. So please, hand
 
 ## Installation 
 
-All required packages are contained in _requirements.txt_.
+### Using Anaconda
 
-1. Set up the python environment and activate it. If you are using Anaconda, run:
+All required packages are contained in _requirements.txt_. Download or clone the repository and start a new environment inside the repository folder.
+
+1. Set up the python environment and activate it:
 
 ``` 
 conda create -n ohsome python=3
@@ -22,11 +24,15 @@ conda install --file requirements
 conda install jupyter matplotlib descartes 
 ```
 
-3. Install ohsome-py from GitHub:
+### Using PIP
+
+PIP has the ability to install directly from github:
 
 ```
 pip install git+https://github.com/GIScience/ohsome-py
 ```
+
+Of course you can also install using pip in Anaconda.
 
 ## Usage 
 
