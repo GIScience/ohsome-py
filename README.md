@@ -144,5 +144,4 @@ Create a **pull request to the development** branch once it is ready to be merge
 
 ## References
 
-The design of this package was inspired by the blog post [Using Python to Implement a Fluent Interface to Any REST API]
-(https://sendgrid.com/blog/using-python-to-implement-a-fluent-interface-to-any-rest-api/) by Elmer Thomas.
+The design of this package was inspired by the blog post [Using Python to Implement a Fluent Interface to Any REST API](https://sendgrid.com/blog/using-python-to-implement-a-fluent-interface-to-any-rest-api/) by Elmer Thomas.
