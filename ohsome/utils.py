@@ -1,31 +1,169 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" ohsome utility functions """
+"""Ohsome utility functions"""
+
+import datetime
+
+import geopandas as gpd
+import pandas as pd
+
+from ohsome import OhsomeException
 
 
-def format_coordinates(feature_collection):
+def format_time(params):
     """
-    Format coordinates of feature to match ohsome requirements
-    :param feature:
+    Formats the 'time' parameter given as string, list of dates or pandas.Series or pandas.DateTimeIndex
+    :param params:
     :return:
     """
-    features = feature_collection["features"]
+    if params["time"] is None:
+        return False
+    if isinstance(params["time"], pd.DatetimeIndex):
+        params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S").tolist()
+    elif isinstance(params["time"], pd.Series):
+        params["time"] = params["time"].tolist()
+    elif isinstance((params["time"]), list):
+        if isinstance((params["time"])[0], datetime.datetime):
+            params["time"] = [x.strftime("%Y-%m-%dT%H:%M:%S") for x in params["time"]]
+    elif isinstance(params["time"], datetime.datetime):
+        params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S")
+    return False
 
-    geometry_strings = []
-    for feature in features:
 
-        if feature["geometry"]["type"] == "Polygon":
-            outer_ring = feature["geometry"]['coordinates'][0]
-            geometry_strings.append(",".join([str(c[0]) + "," + str(c[1]) for c in outer_ring]))
-        elif feature["geometry"]["type"] == "MultiPolygon":
-            outer_rings = feature["geometry"]['coordinates'][0]
-            for ring in outer_rings:
-                geometry_strings.append(",".join([str(c[0]) + "," + str(c[1]) for c in ring]))
+def format_boundary(params):
+    """
+    Formats the boundary parameters 'bboxes', 'bcircles' and 'bpolys'
+    :param params:
+    :return:
+    """
+    if params["bboxes"] is not None:
+        params["bboxes"] = format_bboxes(params["bboxes"])
+    elif params["bpolys"] is not None:
+        params["bpolys"] = format_bpolys(params["bpolys"])
+    elif params["bcircles"] is not None:
+        params["bcircles"] = format_bcircles(params["bcircles"])
+    else:
+        raise OhsomeException(
+            "No valid boundary parameter is given. Specify one of the parameters 'bboxes', 'bpolys' or 'bcircles'."
+        )
+
+
+def format_bcircles(bcircles):
+    """
+    Formats bcircles parameter to comply with ohsome API
+    :param
+    bcircles: Centroids and radius of the circles given as
+        string (lon,lat,radius|lon,lat,radius|… or id1:lon,lat,radius|id2:lon,lat,radius|…)
+        list ([[id1:lon1,lat1,radius],[id2:lon1,lat1,radius],...]
+        pandas.DataFrame with columns 'lon', 'lat' and 'radius' or
+        geopandas.GeoDataFrame with geometry column with Point geometries only and a column 'radius'.
+    :return:
+    """
+    if isinstance(bcircles, str):
+        return bcircles
+    elif isinstance(bcircles, list) or isinstance(bcircles, tuple):
+        if isinstance(bcircles[0], list):
+            return "|".join([",".join([str(x) for x in box]) for box in bcircles])
+        elif isinstance(bcircles[1], float) or isinstance(bcircles[1], int):
+            return ",".join([str(x) for x in bcircles])
+        elif isinstance(bcircles[0], str) and (bcircles[0].find(",") != -1):
+            return "|".join([str(c) for c in bcircles])
         else:
-            print("Geometry type is not implemented")
+            raise OhsomeException("'bcircles' parameter has invalid format.")
+    elif isinstance(bcircles, dict):
+        return "|".join(
+            [
+                f"{id}:" + ",".join([str(c) for c in coords])
+                for id, coords in bcircles.items()
+            ]
+        )
+    elif isinstance(bcircles, gpd.GeoDataFrame):
+        if bcircles.geometry.geom_type.unique() != ["Point"]:
+            raise OhsomeException(
+                "The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types."
+            )
+        formatted = bcircles.apply(
+            lambda r: f"{int(r.name)}:{r.geometry.x},{r.geometry.y},{r['radius']}",
+            axis=1,
+        )
+        return "|".join(formatted.to_list())
+    elif isinstance(bcircles, pd.DataFrame):
+        try:
+            formatted = bcircles.apply(
+                lambda r: f"{int(r.name)}:{r['lon']},{r['lat']},{r['radius']}",
+                axis=1,
+            )
+            return "|".join(formatted.to_list())
+        except KeyError as e:
+            raise OhsomeException(
+                message=f"Column {e} is missing in the dataframe provided as 'bboxes'."
+            )
+    else:
+        raise OhsomeException(message="'bcircles' parameter has invalid format.")
 
-    return "|".join(geometry_strings)
+
+def format_bboxes(bboxes):
+    """
+    Formats bboxes parameter to comply with ohsome API
+    :param
+    bboxes: Bounding boxes given as
+        string: lon1,lat1,lon2,lat2|lon1,lat1,lon2,lat2|… or id1:lon1,lat1,lon2,lat2|id2:lon1,lat1,lon2,lat2|…
+        list: [[id1,lon1,lat1,lon2,lat2],[id2,lon1,lat1,lon2,lat2],...] or [lon1,lat1,lon2,lat2] if it's just one box
+        pandas.DataFrame: with columns minx, miny, maxx, maxy. These columns can be created from a GeoDataFrame using the
+        'GeoDataFrame.bounds' method.
+    :return: Bounding boxes formatted as a string compliant with ohsome API
+    """
+    if isinstance(bboxes, list) or isinstance(bboxes, tuple):
+        if isinstance(bboxes[0], list):
+            return "|".join([",".join([str(x) for x in box]) for box in bboxes])
+        elif isinstance(bboxes[1], float) or isinstance(bboxes[1], int):
+            return ",".join([str(x) for x in bboxes])
+        elif isinstance(bboxes[0], str) and (bboxes[0].find(",") != -1):
+            return "|".join([str(c) for c in bboxes])
+        else:
+            raise OhsomeException("'bboxes' parameter has invalid format.")
+    elif isinstance(bboxes, dict):
+        return "|".join(
+            [
+                f"{id}:" + ",".join([str(c) for c in coords])
+                for id, coords in bboxes.items()
+            ]
+        )
+    elif isinstance(bboxes, str):
+        return bboxes
+    elif isinstance(bboxes, gpd.GeoDataFrame):
+        raise OhsomeException(
+            message="Use the 'bpolys' parameter to specify the boundaries using a geopandas.GeoDataFrame."
+        )
+    elif isinstance(bboxes, pd.DataFrame):
+        try:
+            formatted = bboxes.apply(
+                lambda r: f"{r.name}:{r['minx']},{r['miny']},{r['maxx']},{r['maxy']}",
+                axis=1,
+            )
+            return "|".join(formatted.to_list())
+        except KeyError as e:
+            raise OhsomeException(
+                message=f"Column {e} is missing in the dataframe provided as 'bboxes'."
+            )
+    else:
+        raise OhsomeException(
+            message="'bboxes' must be given as string, list or pandas.DataFrame."
+        )
+
+
+def format_bpolys(bpolys):
+    """
+    Formats bpolys parameter to comply with ohsome API
+    :param
+    bpolys: Polygons given as geopandas.GeoDataFrame or string formatted as GeoJSON FeatureCollection.
+    :return:
+    """
+    if isinstance(bpolys, gpd.GeoDataFrame):
+        return bpolys.to_json(na="drop")
+    else:
+        return bpolys
 
 
 def find_groupby_names(url):
@@ -34,17 +172,3 @@ def find_groupby_names(url):
     :return:
     """
     return [name.strip("/") for name in url.split("groupBy")[1:]]
-
-
-def format_geodataframe(geodataframe):
-    """
-    Converts a geodataframe to a json object to be passed to an ohsome request
-    :param geodataframe:
-    :return:
-    """
-    if not "id" in geodataframe.columns:
-        UserWarning("Dataframe does not contain an 'id' column. Joining the ohsome query results and the geodataframe will not be possible.")
-
-    # Create a json object which holds geometry, id and osmid for ohsome query
-    return geodataframe.to_json(na="drop")
-

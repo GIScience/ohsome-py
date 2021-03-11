@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-"""
-Ohsome API client for Python
+# -*- coding: utf-8 -*-
 
-"""
+"""Ohsome API client for Python"""
+import logging
 
 from .exceptions import OhsomeException
 from .response import OhsomeResponse
 from .clients import OhsomeClient
-from .utils import *
+
+log_format = "%(asctime)s  %(module)8s  %(levelname)5s:  %(message)s"
+logging.basicConfig(level="INFO", format=log_format)
