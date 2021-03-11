@@ -18,11 +18,18 @@ DEFAULT_LOG_DIR = "./ohsome_log"
 
 
 class _OhsomeInfoClient:
-    """Client for querying and handling metadata of ohsome API"""
+    """Client for metadata of ohsome API"""
 
     def __init__(
-        self, cache=None, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR
+        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
     ):
+        """
+        Initialize _OhsomeInfoClient object
+        :param base_api_url: URL of ohsome API instance
+        :param log: Log failed queries, default:True
+        :param log_dir: Directory for log files, default: ./ohsome_log
+        :param cache: Cache for endpoint components
+        """
         self._cache = cache or []
         self._parameters = None
         self._metadata = None
@@ -111,8 +118,15 @@ class _OhsomePostClient:
     """Client for sending requests to ohsome API"""
 
     def __init__(
-        self, cache=None, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR
+        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
     ):
+        """
+        Initialize _OhsomePostClient object
+        :param base_api_url: URL of ohsome API instance
+        :param log: Log failed queries, default:True
+        :param log_dir: Directory for log files, default: ./ohsome_log
+        :param cache: Cache for endpoint components
+        """
         self._cache = cache or []
         self._parameters = None
         self._metadata = None
@@ -258,7 +272,7 @@ class _OhsomePostClient:
     def _format_parameters(self, params):
         """
         Check and format parameters of the query
-        :param input_params:
+        :param params: Parameters for request
         :return:
         """
         self._parameters = params.copy()
@@ -276,6 +290,7 @@ class _OhsomePostClient:
     def _construct_resource_url(self, endpoint=None):
         """
         Constructs the full url of the ohsome request
+        :param endpoint: Endpoint of ohsome API
         :return:
         """
         if endpoint:
@@ -285,37 +300,40 @@ class _OhsomePostClient:
 
 
 class OhsomeClient(_OhsomeInfoClient, _OhsomePostClient):
-    """Class to build and handle requests to ohsome API"""
+    """Class to handle requests to the ohsome API"""
 
     @property
     def elements(self):
         """Return elements objects."""
         return _OhsomeClientElements(
-            self._cache + ["elements"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url,
+            self.log,
+            self.log_dir,
+            self._cache + ["elements"],
         )
 
     @property
     def elementsFullHistory(self):
         """Return full history elements."""
         return _OhsomeClientElementsFullHistory(
-            self._cache + ["elementsFullHistory"],
             self._base_api_url,
             self.log,
             self.log_dir,
+            self._cache + ["elementsFullHistory"],
         )
 
     @property
     def contributions(self):
         """Return contrubioins object."""
         return _OhsomeClientContributions(
-            self._cache + ["contributions"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["contributions"]
         )
 
     @property
     def users(self):
         """Return users object."""
         return _OhsomeClientUsers(
-            self._cache + ["users"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["users"]
         )
 
 
@@ -323,8 +341,15 @@ class _OhsomeClientElements:
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     def __init__(
-        self, cache=None, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR
+        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
     ):
+        """
+        Initialize _OhsomeClientElements object
+        :param base_api_url: URL of ohsome API instance
+        :param log: Log failed queries, default:True
+        :param log_dir: Directory for log files, default: ./ohsome_log
+        :param cache: Cache for endpoint components
+        """
         self._cache = cache or []
         if base_api_url is not None:
             self._base_api_url = base_api_url.strip("/") + "/"
@@ -336,43 +361,43 @@ class _OhsomeClientElements:
     @property
     def area(self):
         return _OhsomeClientElementsAggregated(
-            self._cache + ["area"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["area"]
         )
 
     @property
     def count(self):
         return _OhsomeClientElementsAggregated(
-            self._cache + ["count"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["count"]
         )
 
     @property
     def length(self):
         return _OhsomeClientElementsAggregated(
-            self._cache + ["length"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["length"]
         )
 
     @property
     def perimeter(self):
         return _OhsomeClientElementsAggregated(
-            self._cache + ["perimeter"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["perimeter"]
         )
 
     @property
     def bbox(self):
         return _OhsomePostClient(
-            self._cache + ["bbox"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["bbox"]
         )
 
     @property
     def centroid(self):
         return _OhsomePostClient(
-            self._cache + ["centroid"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["centroid"]
         )
 
     @property
     def geometry(self):
         return _OhsomePostClient(
-            self._cache + ["geometry"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["geometry"]
         )
 
 
@@ -380,8 +405,15 @@ class _OhsomeClientElementsFullHistory:
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     def __init__(
-        self, cache=None, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR
+        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
     ):
+        """
+        Initialize _OhsomeClientElementsFullHistory object
+        :param base_api_url: URL of ohsome API instance
+        :param log: Log failed queries, default:True
+        :param log_dir: Directory for log files, default: ./ohsome_log
+        :param cache: Cache for endpoint components
+        """
         self._cache = cache or []
         if base_api_url is not None:
             self._base_api_url = base_api_url.strip("/") + "/"
@@ -393,19 +425,19 @@ class _OhsomeClientElementsFullHistory:
     @property
     def bbox(self):
         return _OhsomePostClient(
-            self._cache + ["bbox"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["bbox"]
         )
 
     @property
     def centroid(self):
         return _OhsomePostClient(
-            self._cache + ["centroid"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["centroid"]
         )
 
     @property
     def geometry(self):
         return _OhsomePostClient(
-            self._cache + ["geometry"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["geometry"]
         )
 
 
@@ -413,8 +445,15 @@ class _OhsomeClientContributions:
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     def __init__(
-        self, cache=None, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR
+        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
     ):
+        """
+        Initiazlize _OhsomeClientContributions object
+        :param base_api_url: URL of ohsome API instance
+        :param log: Log failed queries, default:True
+        :param log_dir: Directory for log files, default: ./ohsome_log
+        :param cache: Cache for endpoint components
+        """
         self._cache = cache or []
         if base_api_url is not None:
             self._base_api_url = base_api_url.strip("/") + "/"
@@ -426,25 +465,25 @@ class _OhsomeClientContributions:
     @property
     def bbox(self):
         return _OhsomePostClient(
-            self._cache + ["bbox"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["bbox"]
         )
 
     @property
     def centroid(self):
         return _OhsomePostClient(
-            self._cache + ["centroid"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["centroid"]
         )
 
     @property
     def geometry(self):
         return _OhsomePostClient(
-            self._cache + ["geometry"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["geometry"]
         )
 
     @property
     def latest(self):
         return _OhsomeClientContributionsLatest(
-            self._cache + ["latest"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["latest"]
         )
 
 
@@ -452,8 +491,15 @@ class _OhsomeClientUsers:
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     def __init__(
-        self, cache=None, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR
+        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
     ):
+        """
+        Initialize _OhsomeClientUsers object
+        :param base_api_url: URL of ohsome API instance
+        :param log: Log failed queries, default:True
+        :param log_dir: Directory for log files, default: ./ohsome_log
+        :param cache: Cache for endpoint components
+        """
         self._cache = cache or []
         if base_api_url is not None:
             self._base_api_url = base_api_url.strip("/") + "/"
@@ -465,7 +511,7 @@ class _OhsomeClientUsers:
     @property
     def count(self):
         return _OhsomeClientUsersAggregated(
-            self._cache + ["count"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["count"]
         )
 
 
@@ -475,37 +521,37 @@ class _OhsomeClientUsersAggregated(_OhsomePostClient):
     @property
     def density(self):
         return _OhsomeClientUsersDensity(
-            self._cache + ["density"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["density"]
         )
 
     @property
     def groupByBoundary(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "boundary"],
             self._base_api_url,
             self.log,
             self.log_dir,
+            self._cache + ["groupBy", "boundary"],
         )
 
     @property
     def groupByTag(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "tag"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
         )
 
     @property
     def groupByType(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "type"],
             self._base_api_url,
             self.log,
             self.log_dir,
+            self._cache + ["groupBy", "type"],
         )
 
     @property
     def groupByKey(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "key"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "key"]
         )
 
 
@@ -515,25 +561,25 @@ class _OhsomeClientUsersDensity(_OhsomePostClient):
     @property
     def groupByBoundary(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "boundary"],
             self._base_api_url,
             self.log,
             self.log_dir,
+            self._cache + ["groupBy", "boundary"],
         )
 
     @property
     def groupByTag(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "tag"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
         )
 
     @property
     def groupByType(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "type"],
             self._base_api_url,
             self.log,
             self.log_dir,
+            self._cache + ["groupBy", "type"],
         )
 
 
@@ -543,19 +589,19 @@ class _OhsomeClientContributionsLatest(_OhsomePostClient):
     @property
     def bbox(self):
         return _OhsomePostClient(
-            self._cache + ["bbox"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["bbox"]
         )
 
     @property
     def centroid(self):
         return _OhsomePostClient(
-            self._cache + ["centroid"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["centroid"]
         )
 
     @property
     def geometry(self):
         return _OhsomePostClient(
-            self._cache + ["geometry"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["geometry"]
         )
 
 
@@ -565,43 +611,43 @@ class _OhsomeClientElementsAggregated(_OhsomePostClient):
     @property
     def density(self):
         return _OhsomeClientDensity(
-            self._cache + ["density"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["density"]
         )
 
     @property
     def groupByBoundary(self):
         return _OhsomeClientElementsGroupByBoundary(
-            self._cache + ["groupBy", "boundary"],
             self._base_api_url,
             self.log,
             self.log_dir,
+            self._cache + ["groupBy", "boundary"],
         )
 
     @property
     def ratio(self):
         return _OhsomeClientElementsRatio(
-            self._cache + ["ratio"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["ratio"]
         )
 
     @property
     def groupByTag(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "tag"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
         )
 
     @property
     def groupByType(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "type"],
             self._base_api_url,
             self.log,
             self.log_dir,
+            self._cache + ["groupBy", "type"],
         )
 
     @property
     def groupByKey(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "key"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "key"]
         )
 
 
@@ -611,25 +657,25 @@ class _OhsomeClientDensity(_OhsomePostClient):
     @property
     def groupByBoundary(self):
         return _OhsomeClientElementsGroupByBoundary(
-            self._cache + ["groupBy", "boundary"],
             self._base_api_url,
             self.log,
             self.log_dir,
+            self._cache + ["groupBy", "boundary"],
         )
 
     @property
     def groupByTag(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "tag"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
         )
 
     @property
     def groupByType(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "type"],
             self._base_api_url,
             self.log,
             self.log_dir,
+            self._cache + ["groupBy", "type"],
         )
 
 
@@ -639,7 +685,7 @@ class _OhsomeClientElementsGroupByBoundary(_OhsomePostClient):
     @property
     def groupByTag(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "tag"], self._base_api_url, self.log, self.log_dir
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
         )
 
 
@@ -649,8 +695,8 @@ class _OhsomeClientElementsRatio(_OhsomePostClient):
     @property
     def groupByBoundary(self):
         return _OhsomePostClient(
-            self._cache + ["groupBy", "boundary"],
             self._base_api_url,
             self.log,
             self.log_dir,
+            self._cache + ["groupBy", "boundary"],
         )
