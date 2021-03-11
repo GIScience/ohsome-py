@@ -208,7 +208,7 @@ def test_format_bcircles_geodataframe_geometry_error(custom_client):
         )
     assert (
         e_info.value.message
-        == "The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry "
+        == "OhsomeException (None): The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry "
         "types."
     )
     del client
@@ -259,12 +259,12 @@ def test_format_bboxes_dataframe_missing_columns(custom_client):
         # Python 3.6 does some weird stuff with the output. So it differs a bit.
         assert (
             e_info.value.message
-            == "Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
+            == "OhsomeException (None): Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
         )
     else:
         assert (
             e_info.value.message
-            == "Column 'minx' is missing in the dataframe provided as 'bboxes'."
+            == "OhsomeException (None): Column 'minx' is missing in the dataframe provided as 'bboxes'."
         )
 
 
@@ -284,12 +284,12 @@ def test_format_bboxes_geodataframe(custom_client):
         # Python 3.6 does some weird stuff with the output. So it differs a bit.
         assert (
             e_info.value.message
-            == "Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
+            == "OhsomeException (None): Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
         )
     else:
         assert (
             e_info.value.message
-            == "Use the 'bpolys' parameter to specify the boundaries using a "
+            == "OhsomeException (None): Use the 'bpolys' parameter to specify the boundaries using a "
             "geopandas.GeoDataFrame."
         )
 
