@@ -90,14 +90,14 @@ class _OhsomeInfoClient:
             response = requests.get(self._url)
             response.raise_for_status()
         except requests.exceptions.ConnectionError:
-            OhsomeException(
+            raise OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
                 f"problems and that the ohsome API URL {self._url} is valid.",
                 url=self._url,
                 params=self._parameters,
             )
         except requests.exceptions.HTTPError as e:
-            OhsomeException(
+            raise OhsomeException(
                 message=e.response.json()["message"],
                 url=self._url,
                 params=self._parameters,

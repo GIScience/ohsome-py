@@ -118,3 +118,17 @@ def test_enable_logging():
 
     logfile = os.path.join(client.log_dir, os.listdir(client.log_dir)[0])
     os.unlink(logfile)
+
+
+def test_metadata_invalid_baseurl():
+    """
+    Throw exception if the ohsome API is not available
+    :return:
+    """
+    ohsome_url = os.getenv("OHSOME_URL", "localhot")
+    ohsome_port = os.getenv("OHSOME_PORT", "8080")
+
+    client = ohsome.OhsomeClient(base_api_url=f"http://{ohsome_url}:{ohsome_port}/")
+
+    with pytest.raises(ohsome.OhsomeException):
+        client.metadata
