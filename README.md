@@ -38,38 +38,41 @@ client.start_timestamp # --> '2007-10-08T00:00:00Z'
 client.end_timestamp # --> '2021-01-23T03:00Z'
 ```
 
-### Data Aggregation Query
+### 1. Data Aggregation
 
-**Example:** Query the number of OSM objects mapped as ways with the tag _landuse=farmland_ using the [/elements/count](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation#/Count/count_1) endpoint:
-
+**Example:** The Number of OSM ways tagged as _landuse=farmland_ using the [/elements/count](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation#/Count/count_1) endpoint:
 
 ``` python
 response = client.elements.count.post(bboxes=[8.625,49.3711,8.7334,49.4397],
 				      time="2014-01-01",
 				      filter="landuse=farmland and type:way")
-response_df = response.as_dataframe()
 ```
 
-The single components of the endpoint URL are appended as method calls to the `OhsomeClient` object. The request is sent off by calling the ```post()``` method containing the query parameters. Responses from the data aggregation or contributions endpoints can be converted to a `pandas.DataFrame` using the `OhsomeResponse.as_dataframe()` method.
-
-Alternatively, you can define the endpoint as argument in the `.post()` method.
+The single components of the endpoint URL are appended as method calls to the `OhsomeClient` object. Use automatic code completion to find valid endpoints. Alternatively, you can define the endpoint as argument in the `.post()` method.
 
 ``` python
 response = client.post(endpoint="elements/count",
 		       bboxes=[8.625,49.3711,8.7334,49.4397],
-		       time="2014-01-01",
+		       time="2020-01-01",
 		       filter="landuse=farmland and type:way")
 ```
 
-### Data Extraction Query
+Responses from the data aggregation endpoints can be converted to a `pandas.DataFrame` object using the `OhsomeResponse.as_dataframe()` method.
 
-**Example:** Query all OSM objects mapped as ways with the tag _landuse=farmland_ including their geometry using the [/elements/geometry](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Extraction#/Data%20Extraction/elementsGeometry_1) endpoint:
+```
+response_df = response.as_dataframe()
+```
+
+### 2. Data Extraction
+
+**Example:** OSM ways tagged as _landuse=farmland_ including their geometry and tags using the [/elements/geometry](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Extraction#/Data%20Extraction/elementsGeometry_1) endpoint:
 
 ``` python
 client = OhsomeClient()
 response = client.elements.geometry.post(bboxes=[8.625,49.3711,8.7334,49.4397],
-					 time="2014-01-01",
-					 filter="landuse=farmland and type:way")
+					 time="2020-01-01",
+					 filter="landuse=farmland and type:way",
+					 properties="tags")
 response_gdf = response.as_geodataframe()
 ```
 
@@ -77,7 +80,7 @@ Responses from the data extraction endpoint can be converted to a `geopandas.Geo
 
 ### Query Parameters
 
-All query parameters are described in the [ohsome API documentation](https://docs.ohsome.org/ohsome-api/stable) and can be passed as `string` objects to the `post()` method. In addition, additional Python data types are accespted.
+All query parameters are described in the [ohsome API documentation](https://docs.ohsome.org/ohsome-api/stable) and can be passed as `string` objects to the `post()` method. Other Python data types are accepted as well.
 
 #### Boundary
 
