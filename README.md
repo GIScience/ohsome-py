@@ -36,8 +36,8 @@ client.end_timestamp # --> '2021-01-23T03:00Z'
 
 ``` python
 response = client.elements.count.post(bboxes=[8.625,49.3711,8.7334,49.4397],
-											 time="2014-01-01",
-											 filter="landuse=farmland and type:way")
+				      time="2014-01-01",
+				      filter="landuse=farmland and type:way")
 response_df = response.as_dataframe()
 ```
 
@@ -47,9 +47,9 @@ Alternatively, you can define the endpoint as argument in the `.post()` method.
 
 ``` python
 response = client.post(endpoint="elements/count",
-						   bboxes=[8.625,49.3711,8.7334,49.4397],
-						   time="2014-01-01",
-						   filter="landuse=farmland and type:way")
+		       bboxes=[8.625,49.3711,8.7334,49.4397],
+		       time="2014-01-01",
+		       filter="landuse=farmland and type:way")
 ```
 
 ### Data Extraction Query
@@ -60,8 +60,8 @@ response = client.post(endpoint="elements/count",
 ``` python
 client = OhsomeClient()
 response = client.elements.geometry.post(bboxes=[8.625,49.3711,8.7334,49.4397],
-												 time="2014-01-01",
-												 filter="landuse=farmland and type:way")
+					 time="2014-01-01",
+					 filter="landuse=farmland and type:way")
 response_gdf = response.as_geodataframe()
 ```
 
@@ -92,7 +92,7 @@ The `bboxes` parameter contains the coordinates of one or several bounding boxes
 bboxes = [8.7137,49.4096,8.717,49.4119] # one bounding box
 bboxes = [[8.7137,49.4096,8.717,49.4119], [8.7137,49.4096,8.717,49.4119]]
 bboxes = {"A": [8.67066, 49.41423, 8.68177, 49.4204],
-			"B": [8.67066, 49.41423, 8.68177, 49.4204]}
+	  "B": [8.67066, 49.41423, 8.68177, 49.4204]}
 ```
 
 ##### bcircles
@@ -103,7 +103,7 @@ The `bcircles` parameter contains one or several circles defined through the coo
 bcircles = [8.7137,49.4096, 100]
 bcircles = [[8.7137,49.4096, 100], [8.7137,49.4096, 300]]
 bcircles = {"Circle1": [8.695, 49.41, 200],
-			  "Circle2": [8.696, 49.41, 200]}
+	    "Circle2": [8.696, 49.41, 200]}
 ```
 
 #### Time
