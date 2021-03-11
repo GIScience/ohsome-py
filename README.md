@@ -4,7 +4,7 @@
 
 The `ohsome` package helps you extract and analyse OpenStreetMap history data using the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and Python. It handles queries to the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and converts its responses to [Pandas](https://pandas.pydata.org/) and [GeoPandas](https://geopandas.org/) data frames to facilitate easy data handling and analysis.
 
-The ohsome API provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions). Take a look at the [documentation of the ohsome API](https://docs.ohsome.org/ohsome-api/stable) to learn more about the endpoints and query parameters or go through the [Tutorial](./notebooks/Tutorial.ipynb) to get started.
+The ohsome API provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions). Take a look at the [documentation of the ohsome API](https://docs.ohsome.org/ohsome-api/stable) to learn more about the endpoints and query parameters or go through the [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) to get started.
 
 ## Installation
 
@@ -132,6 +132,13 @@ $ pre-commit install
 ```
 $ poetry run pytest
 ```
+
+Running the tests in a docker container containing an ohsome API instance is faster, but not mandatory. To set up and start such a docker container run the following command before running the tests.
+
+```
+$ docker run -t -i --name ohsome-api -p 8080:8080 julianpsotta/ohsome-api:latest
+```
+
 
 Create a **pull request to the development** branch once it is ready to be merged.
 
