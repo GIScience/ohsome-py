@@ -147,9 +147,8 @@ $ poetry run pytest
 Running the tests in a docker container containing an ohsome API instance is faster, but not mandatory. To set up and start such a docker container run the following command before running the tests.
 
 ```
-$ docker run -t -i --name ohsome-api -p 8080:8080 julianpsotta/ohsome-api:latest
+$ docker run -dt --name ohsome-api -p 8080:8080 julianpsotta/ohsome-api:1.3.2
 ```
-
 
 Create a **pull request to the development** branch once it is ready to be merged.
 
