@@ -95,8 +95,9 @@ def test_disable_logging():
     with pytest.raises(ohsome.OhsomeException):
         client.elements.geometry.post(bboxes=bboxes, filter=fltr, timeout=timeout)
 
-    n_log_files_after = len(os.listdir(client.log_dir))
-    assert n_log_files_before == n_log_files_after
+    if os.path.exists(client.log_dir):
+        n_log_files_after = len(os.listdir(client.log_dir))
+        assert n_log_files_before == n_log_files_after
 
 
 def test_enable_logging():
