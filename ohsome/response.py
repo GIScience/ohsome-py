@@ -6,14 +6,15 @@
 import geopandas as gpd
 import pandas as pd
 import json
-from ohsome.utils import find_groupby_names
+from ohsome.helper import find_groupby_names
 
 
 class OhsomeResponse:
     """Contains the response of the request to the ohsome API"""
 
-    def __init__(self, response, url=None, params=None):
+    def __init__(self, response=None, url=None, params=None):
         """Initialize the OhsomeResponse class."""
+        self.response = response
         self.url = url
         self.parameters = params
         self.data = response.json()
@@ -34,22 +35,22 @@ class OhsomeResponse:
             result_df = pd.DataFrame().from_records(self.data["ratioResult"])
         elif "groupByResult" in self.data.keys():
             groupby_names = find_groupby_names(self.url)
-            result_df = create_groupby_dataframe(
+            result_df = self._create_groupby_dataframe(
                 self.data["groupByResult"],
                 groupby_names,
             )
         elif "groupByBoundaryResult" in self.data.keys():
             groupby_names = find_groupby_names(self.url)
-            result_df = create_groupby_dataframe(
+            result_df = self._create_groupby_dataframe(
                 self.data["groupByBoundaryResult"],
                 groupby_names,
             )
         else:
             raise TypeError("This result type is not implemented.")
 
-        format_time(result_df)
+        self._format_timestamp(result_df)
         if multi_index:
-            set_index(result_df, groupby_names)
+            self._set_index(result_df, groupby_names)
 
         return result_df.sort_index()
 
@@ -99,6 +100,8 @@ class OhsomeResponse:
             )
             if multi_index:
                 features = features.set_index(["@timestamp"])
+        else:
+            raise TypeError("This result type is not implemented.")
 
         return features.sort_index()
 
@@ -111,61 +114,58 @@ class OhsomeResponse:
         with open(outfile, "w") as dst:
             json.dump(self.data, dst, indent=2)
 
+    def _set_index(self, result_df, groupby_names):
+        """
+        Set multi-index based on groupby names and time
+        :param result_df:
+        :param groupby_names:
+        :return:
+        """
+        if "timestamp" in result_df.columns:
+            result_df.set_index([*groupby_names, "timestamp"], inplace=True)
+        else:
+            result_df.set_index(
+                [*groupby_names, "fromTimestamp", "toTimestamp"], inplace=True
+            )
 
-def set_index(result_df, groupby_names):
-    """
-    Set multi-index based on groupby names and time
-    :param result_df:
-    :param groupby_names:
-    :return:
-    """
-    if "timestamp" in result_df.columns:
-        result_df.set_index([*groupby_names, "timestamp"], inplace=True)
-    else:
-        result_df.set_index(
-            [*groupby_names, "fromTimestamp", "toTimestamp"], inplace=True
-        )
+    def _create_groupby_dataframe(self, data, groupby_names):
+        """
+        Formats groupby results
+        :param result_df:
+        :return:
+        """
+        keys = list(data[0].keys())
+        keys.remove("groupByObject")
+        record_dfs = []
+        if len(groupby_names) == 1:
+            for record in data:
+                record_dict = {groupby_names[0]: record["groupByObject"]}
+                record_result = [{**record_dict, **x} for x in record[keys[0]]]
+                record_dfs.extend(record_result)
+        elif len(groupby_names) == 2:
+            for record in data:
+                record_dict = {
+                    groupby_names[0]: record["groupByObject"][0],
+                    groupby_names[1]: record["groupByObject"][1],
+                }
+                record_result = [{**record_dict, **x} for x in record[keys[0]]]
+                record_dfs.extend(record_result)
+        return pd.DataFrame().from_records(record_dfs)
 
-
-def create_groupby_dataframe(data, groupby_names):
-    """
-    Formats groupby results
-    :param result_df:
-    :return:
-    """
-    keys = list(data[0].keys())
-    keys.remove("groupByObject")
-    record_dfs = []
-    if len(groupby_names) == 1:
-        for record in data:
-            record_dict = {groupby_names[0]: record["groupByObject"]}
-            record_result = [{**record_dict, **x} for x in record[keys[0]]]
-            record_dfs.extend(record_result)
-    elif len(groupby_names) == 2:
-        for record in data:
-            record_dict = {
-                groupby_names[0]: record["groupByObject"][0],
-                groupby_names[1]: record["groupByObject"][1],
-            }
-            record_result = [{**record_dict, **x} for x in record[keys[0]]]
-            record_dfs.extend(record_result)
-    return pd.DataFrame().from_records(record_dfs)
-
-
-def format_time(result_df):
-    """
-    Format timestamp as datetime
-    :param dresult_dff:
-    :return:
-    """
-    if "timestamp" in result_df.columns:
-        result_df["timestamp"] = pd.to_datetime(
-            result_df["timestamp"], format="%Y-%m-%dT%H:%M:%S"
-        )
-    else:
-        result_df["fromTimestamp"] = pd.to_datetime(
-            result_df["fromTimestamp"], format="%Y-%m-%dT%H:%M:%S"
-        )
-        result_df["toTimestamp"] = pd.to_datetime(
-            result_df["toTimestamp"], format="%Y-%m-%dT%H:%M:%S"
-        )
+    def _format_timestamp(self, result_df):
+        """
+        Format timestamp column as datetime
+        :param dresult_dff:
+        :return:
+        """
+        if "timestamp" in result_df.columns:
+            result_df["timestamp"] = pd.to_datetime(
+                result_df["timestamp"], format="%Y-%m-%dT%H:%M:%S"
+            )
+        else:
+            result_df["fromTimestamp"] = pd.to_datetime(
+                result_df["fromTimestamp"], format="%Y-%m-%dT%H:%M:%S"
+            )
+            result_df["toTimestamp"] = pd.to_datetime(
+                result_df["toTimestamp"], format="%Y-%m-%dT%H:%M:%S"
+            )
