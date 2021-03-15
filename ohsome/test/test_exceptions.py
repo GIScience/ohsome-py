@@ -83,57 +83,62 @@ def test_catch_incomplete_response_error():
     pass
 
 
-def test_disable_logging():
+def test_disable_logging(custom_client):
     """
     Tests whether logging is disabled so no new log file if created if an OhsomeException occurs
     :return:
     """
-    client = ohsome.OhsomeClient(log=False)
+    custom_client.log = False
     bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
     fltr = "building=* and type:way"
     timeout = 0.001
     try:
-        n_log_files_before = len(os.listdir(client.log_dir))
+        n_log_files_before = len(os.listdir(custom_client.log_dir))
     except FileNotFoundError:
         n_log_files_before = 0
     with pytest.raises(ohsome.OhsomeException):
-        client.elements.geometry.post(bboxes=bboxes, filter=fltr, timeout=timeout)
+        custom_client.elements.geometry.post(
+            bboxes=bboxes, filter=fltr, timeout=timeout
+        )
 
-    if os.path.exists(client.log_dir):
-        n_log_files_after = len(os.listdir(client.log_dir))
+    if os.path.exists(custom_client.log_dir):
+        n_log_files_after = len(os.listdir(custom_client.log_dir))
         assert n_log_files_before == n_log_files_after
 
 
-def test_enable_logging():
+def test_enable_logging(custom_client_without_log, tmpdir):
     """
     Tests whether logging is disabled so no new log file if created if an OhsomeException occurs
     :return:
     """
-    client = ohsome.OhsomeClient(log=True)
+    custom_client_without_log.log = True
+    custom_client_without_log.log_dir = tmpdir.mkdir("logs").strpath
+
     bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
     fltr = "building=* and type:way"
     timeout = 0.001
-    n_log_files_before = len(os.listdir(client.log_dir))
+    n_log_files_before = len(os.listdir(custom_client_without_log.log_dir))
 
     with pytest.raises(ohsome.OhsomeException):
-        client.elements.geometry.post(bboxes=bboxes, filter=fltr, timeout=timeout)
+        custom_client_without_log.elements.geometry.post(
+            bboxes=bboxes, filter=fltr, timeout=timeout
+        )
 
-    n_log_files_after = len(os.listdir(client.log_dir))
-    assert n_log_files_before + n_log_files_after > n_log_files_before
+    n_log_files_after = len(os.listdir(custom_client_without_log.log_dir))
+    assert n_log_files_before + 1 == n_log_files_after
 
-    logfile = os.path.join(client.log_dir, os.listdir(client.log_dir)[0])
+    logfile = os.path.join(
+        custom_client_without_log.log_dir,
+        os.listdir(custom_client_without_log.log_dir)[0],
+    )
     os.unlink(logfile)
 
 
-def test_metadata_invalid_baseurl():
+def test_metadata_invalid_baseurl(custom_client_with_wrong_url):
     """
     Throw exception if the ohsome API is not available
     :return:
     """
-    ohsome_url = os.getenv("OHSOME_URL", "localhot")
-    ohsome_port = os.getenv("OHSOME_PORT", "8080")
-
-    client = ohsome.OhsomeClient(base_api_url=f"http://{ohsome_url}:{ohsome_port}/")
 
     with pytest.raises(ohsome.OhsomeException):
-        client.metadata
+        custom_client_with_wrong_url.metadata
