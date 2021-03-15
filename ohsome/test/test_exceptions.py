@@ -90,8 +90,10 @@ def test_disable_logging():
     bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
     fltr = "building=* and type:way"
     timeout = 0.001
-    n_log_files_before = len(os.listdir(client.log_dir))
-
+    try:
+        n_log_files_before = len(os.listdir(client.log_dir))
+    except FileNotFoundError:
+        n_log_files_before = 0
     with pytest.raises(ohsome.OhsomeException):
         client.elements.geometry.post(bboxes=bboxes, filter=fltr, timeout=timeout)
 
