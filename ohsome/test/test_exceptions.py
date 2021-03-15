@@ -3,7 +3,9 @@
 """Test OhsomeExceptions"""
 
 import os
+
 import pytest
+
 import ohsome
 
 
@@ -117,7 +119,7 @@ def test_enable_logging():
         client.elements.geometry.post(bboxes=bboxes, filter=fltr, timeout=timeout)
 
     n_log_files_after = len(os.listdir(client.log_dir))
-    assert n_log_files_before + 1 == n_log_files_after
+    assert n_log_files_before + n_log_files_after > n_log_files_before
 
     logfile = os.path.join(client.log_dir, os.listdir(client.log_dir)[0])
     os.unlink(logfile)
