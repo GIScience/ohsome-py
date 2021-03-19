@@ -3,10 +3,14 @@
 """Test OhsomeExceptions"""
 
 import os
-
 import pytest
-
+import logging
+import geopandas as gpd
 import ohsome
+
+
+script_path = os.path.dirname(os.path.realpath(__file__))
+logger = logging.getLogger(__name__)
 
 
 def test_elements_count_exception(custom_client):
@@ -82,22 +86,6 @@ def test_invalid_endpoint():
         client.elements.cout.post(bboxes=bboxes, time=time, filter=fltr)
 
 
-def test_catch_incomplete_response_error():
-    """
-    Tests whether a AssertionError is raised if the result cannot be converted to a geodataframe object
-    :return:
-    """
-    # todo: Find test case
-    # client = ohsome.OhsomeClient()
-    # bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
-    # fltr = "building=* and type:way"
-    # try:
-    #   client.elements.geometry.post(bboxes=bboxes, filter=fltr)
-    # except ohsome.OhsomeException as e:
-    #    print(e)
-    pass
-
-
 def test_disable_logging(custom_client):
     """
     Tests whether logging is disabled so no new log file if created if an OhsomeException occurs
@@ -142,11 +130,29 @@ def test_enable_logging(custom_client_without_log, tmpdir):
     n_log_files_after = len(os.listdir(custom_client_without_log.log_dir))
     assert n_log_files_before + 1 == n_log_files_after
 
-    logfile = os.path.join(
-        custom_client_without_log.log_dir,
-        os.listdir(custom_client_without_log.log_dir)[0],
-    )
-    os.unlink(logfile)
+
+def test_log_bpolys(custom_client_without_log, tmpdir):
+    """
+    Test whether a GeoDataFrame obejct is formatted correctly for ohsome api.
+    :return:
+    """
+
+    custom_client_without_log.log = True
+    custom_client_without_log.log_dir = tmpdir.mkdir("logs").strpath
+
+    bpolys = gpd.read_file(f"{script_path}/data/polygons.geojson")
+    time = "2018-01-01"
+    fltr = "amenity=restaurant and type:node"
+    timeout = 0.001
+
+    n_log_files_before = len(os.listdir(custom_client_without_log.log_dir))
+
+    with pytest.raises(ohsome.OhsomeException):
+        custom_client_without_log.elements.count.post(
+            bpolys=bpolys, time=time, filter=fltr, timeout=timeout
+        )
+    n_log_files_after = len(os.listdir(custom_client_without_log.log_dir))
+    assert n_log_files_before + 2 == n_log_files_after
 
 
 def test_metadata_invalid_baseurl(custom_client_with_wrong_url):

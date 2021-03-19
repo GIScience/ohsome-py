@@ -45,7 +45,8 @@ def format_boundary(params):
         params["bcircles"] = format_bcircles(params["bcircles"])
     else:
         raise OhsomeException(
-            message="No valid boundary parameter is given. Specify one of the parameters 'bboxes', 'bpolys' or 'bcircles'."
+            message="No valid boundary parameter is given. Specify one of the parameters 'bboxes', 'bpolys' or 'bcircles'.",
+            error_code=440,
         )
 
 
