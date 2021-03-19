@@ -1,4 +1,0 @@
-geojson
-requests
-pandas
-geopandas
