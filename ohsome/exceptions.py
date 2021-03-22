@@ -11,7 +11,9 @@ import os
 class OhsomeException(Exception):
     """Exception to handle ohsome API errors"""
 
-    def __init__(self, message=None, url=None, params=None, error_code=None):
+    def __init__(
+        self, message=None, url=None, params=None, error_code=None, response=None
+    ):
         """Initialize OhsomeException object"""
         super(Exception, self).__init__(message)
         self.message = message
@@ -19,19 +21,28 @@ class OhsomeException(Exception):
         if params:
             self.parameters = {k: v for k, v in params.items() if v is not None}
         self.error_code = error_code
+        self.response = response
         self.timestamp = dt.datetime.now().isoformat()
 
-    def __str__(self):
-        return f"OhsomeException ({self.error_code}): {self.message}"
-
-    def to_json(self, dir):
+    def log(self, log_dir):
         """
-        Exports the error message, url and parameters to a file.
+        Logs OhsomeException
         :return:
         """
-        outfile = os.path.join(
-            dir,
-            f"ohsome_exception_{dt.datetime.now().strftime('%Y%m%dT%H%M%S')}.json",
+        log_file_name = f"{self.timestamp}"
+        self.log_bpolys(log_dir, log_file_name)
+        self.log_response(log_dir, log_file_name)
+        # self.log_query(log_dir, log_file_name)
+
+    def log_response(self, log_dir, log_file_name):
+        """
+        Log query parameters to file
+        :param log_dir:
+        :return:
+        """
+        log_file = os.path.join(
+            log_dir,
+            f"{log_file_name}.json",
         )
         log = {
             "timestamp": self.timestamp,
@@ -40,5 +51,36 @@ class OhsomeException(Exception):
             "requestUrl": self.url,
             "parameters": self.parameters,
         }
-        with open(outfile, "w") as dst:
+        with open(log_file, "w") as dst:
             json.dump(obj=log, fp=dst, indent=4)
+
+    def log_bpolys(self, log_dir, log_file_name):
+        """
+        Log bpolys parameter to geojson file if it is included in the query
+        :params log_file: Path to geojson file which should contain bpolys parameter
+        :return:
+        """
+        if "bpolys" in self.parameters:
+            log_file_bpolys = os.path.join(
+                log_dir,
+                f"{log_file_name}_bpolys.geojson",
+            )
+            bpolys = self.parameters.pop("bpolys")
+            with open(log_file_bpolys, "w") as dst:
+                json.dump(obj=json.loads(bpolys), fp=dst, indent=4)
+
+    def log_query(self, log_dir, log_file_name):
+        """
+        Log ohsome response to file (not implemented)
+        :param log_file_response:
+        :return:
+        """
+        # log_file_response = os.path.join(
+        #    log_dir,
+        #    f"{log_file_name}_query.json",
+        # )
+        # with open(log_file_response, "w") as dst:
+        # put code here to format and log query to a file so it can be easily reproduced
+
+    def __str__(self):
+        return f"OhsomeException ({self.error_code}): {self.message}"

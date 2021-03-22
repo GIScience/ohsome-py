@@ -12,6 +12,7 @@ from ohsome.helper import (
 )
 import os
 
+
 OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
 DEFAULT_LOG = True
 DEFAULT_LOG_DIR = "./ohsome_log"
@@ -230,31 +231,36 @@ class _OhsomePostClient(_OhsomeBaseClient):
         Handles request to ohsome API
         :return:
         """
-        error = None
+        ohsome_exception = None
         try:
             response = requests.post(url=self._url, data=self._parameters)
             response.raise_for_status()
             response.json()
         except requests.exceptions.HTTPError as e:
-            error = OhsomeException(
+            ohsome_exception = OhsomeException(
                 message=e.response.json()["message"],
                 url=self._url,
                 params=self._parameters,
                 error_code=e.response.status_code,
+                response=e.response,
             )
-        except requests.exceptions.ConnectionError:
-            error = OhsomeException(
+        except requests.exceptions.ConnectionError as e:
+            ohsome_exception = OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
                 f"problems and that the ohsome API URL {self._url} is valid.",
                 url=self._url,
                 params=self._parameters,
+                response=e.response,
             )
         except requests.exceptions.RequestException as e:
-            error = OhsomeException(
-                message=str(e), url=self._url, params=self._parameters
+            ohsome_exception = OhsomeException(
+                message=str(e),
+                url=self._url,
+                params=self._parameters,
+                response=e.response,
             )
         except KeyboardInterrupt:
-            error = OhsomeException(
+            ohsome_exception = OhsomeException(
                 message="Keyboard Interrupt: Query was interrupted by the user.",
                 url=self._url,
                 params=self._parameters,
@@ -262,14 +268,15 @@ class _OhsomePostClient(_OhsomeBaseClient):
             )
         except ValueError:
             error_code, message = extract_error_message_from_invalid_json(response)
-            error = OhsomeException(
+            ohsome_exception = OhsomeException(
                 message=message,
                 url=self._url,
                 error_code=error_code,
                 params=self._parameters,
+                response=response,
             )
         except AttributeError:
-            error = OhsomeException(
+            ohsome_exception = OhsomeException(
                 message=f"Seems like {self._url} is not a valid endpoint.",
                 url=self._url,
                 error_code=404,
@@ -277,10 +284,10 @@ class _OhsomePostClient(_OhsomeBaseClient):
             )
         finally:
             # If there has been an error and logging is enabled, write it to file
-            if error:
+            if ohsome_exception:
                 if self.log:
-                    error.to_json(self.log_dir)
-                raise error
+                    ohsome_exception.log(self.log_dir)
+                raise ohsome_exception
             else:
                 return OhsomeResponse(response, url=self._url, params=self._parameters)
 
@@ -296,7 +303,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         except OhsomeException as e:
             raise OhsomeException(
                 message=str(e),
-                error_code=300,
+                error_code=440,
                 params=self._parameters,
                 url=self._url,
             )
