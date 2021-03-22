@@ -313,6 +313,41 @@ class _OhsomePostClient(_OhsomeBaseClient):
         else:
             self._url = self._base_api_url + "/".join(self._cache)
 
+    def _(self, name):
+        # Enables method chaining
+        return _OhsomePostClient(
+            base_api_url=None,
+            log=DEFAULT_LOG,
+            log_dir=DEFAULT_LOG_DIR,
+            cache=self._cache + [name],
+        )
+
+    def __getattr__(self, name):
+        valid_endpoints = [
+            "elements",
+            "users",
+            "elementsFullHistory",
+            "metadata",
+            "area",
+            "count",
+            "length",
+            "perimeter",
+            "density",
+            "ratio",
+            "groupBy",
+            "boundary",
+            "tag",
+            "type",
+            "key",
+            "bbox",
+            "centroid",
+            "geometry",
+        ]
+        if name not in valid_endpoints:
+            raise AttributeError(f"'OhsomeClient' object has no attribute {name}.")
+        else:
+            return self._(name)
+
 
 class OhsomeClient(_OhsomeInfoClient, _OhsomePostClient):
     """Class to handle requests to the ohsome API"""
