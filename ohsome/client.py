@@ -11,7 +11,7 @@ from ohsome.helper import (
     format_time,
 )
 import os
-import simplejson
+
 
 OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
 DEFAULT_LOG = True
@@ -266,7 +266,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 params=self._parameters,
                 error_code=440,
             )
-        except simplejson.decoder.JSONDecodeError:
+        except ValueError:
             error_code, message = extract_error_message_from_invalid_json(response)
             ohsome_exception = OhsomeException(
                 message=message,
