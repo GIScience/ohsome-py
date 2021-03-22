@@ -17,7 +17,33 @@ DEFAULT_LOG = True
 DEFAULT_LOG_DIR = "./ohsome_log"
 
 
-class _OhsomeInfoClient:
+class _OhsomeBaseClient:
+    def __init__(
+        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
+    ):
+        """
+        Initialize _OhsomeInfoClient object
+        :param base_api_url: URL of ohsome API instance
+        :param log: Log failed queries, default:True
+        :param log_dir: Directory for log files, default: ./ohsome_log
+        :param cache: Cache for endpoint components
+        """
+        self.log = log
+        self.log_dir = log_dir
+        if self.log:
+            if not os.path.exists(self.log_dir):
+                os.mkdir(self.log_dir)
+        if base_api_url is not None:
+            self._base_api_url = base_api_url.strip("/") + "/"
+        else:
+            self._base_api_url = OHSOME_BASE_API_URL
+        self._cache = cache or []
+
+    def __repr__(self):
+        return f"<OhsomeClient: {self._base_api_url}>"
+
+
+class _OhsomeInfoClient(_OhsomeBaseClient):
     """Client for metadata of ohsome API"""
 
     def __init__(
@@ -30,19 +56,14 @@ class _OhsomeInfoClient:
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
         """
-        self._cache = cache or []
+        super(_OhsomeInfoClient, self).__init__(base_api_url, log, log_dir, cache)
         self._parameters = None
         self._metadata = None
         self._url = None
-        self.log = log
-        self.log_dir = log_dir
-        if self.log:
-            if not os.path.exists(self.log_dir):
-                os.mkdir(self.log_dir)
-        if base_api_url is not None:
-            self._base_api_url = base_api_url.strip("/") + "/"
-        else:
-            self._base_api_url = OHSOME_BASE_API_URL
+
+    @property
+    def base_api_url(self):
+        return self._base_api_url
 
     @property
     def start_timestamp(self):
@@ -82,10 +103,6 @@ class _OhsomeInfoClient:
             self._query_metadata()
         return self._metadata
 
-    @property
-    def base_api_url(self):
-        return self._base_api_url
-
     def _query_metadata(self):
         """
         Send ohsome GET request
@@ -114,7 +131,7 @@ class _OhsomeInfoClient:
             self._metadata = response.json()
 
 
-class _OhsomePostClient:
+class _OhsomePostClient(_OhsomeBaseClient):
     """Client for sending requests to ohsome API"""
 
     def __init__(
@@ -127,19 +144,10 @@ class _OhsomePostClient:
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
         """
-        self._cache = cache or []
+        super(_OhsomePostClient, self).__init__(base_api_url, log, log_dir, cache)
         self._parameters = None
         self._metadata = None
         self._url = None
-        self.log = log
-        self.log_dir = log_dir
-        if self.log:
-            if not os.path.exists(self.log_dir):
-                os.mkdir(self.log_dir)
-        if base_api_url is not None:
-            self._base_api_url = base_api_url.strip("/") + "/"
-        else:
-            self._base_api_url = OHSOME_BASE_API_URL
 
     def post(
         self,
@@ -260,6 +268,13 @@ class _OhsomePostClient:
                 error_code=error_code,
                 params=self._parameters,
             )
+        except AttributeError:
+            error = OhsomeException(
+                message=f"Seems like {self._url} is not a valid endpoint.",
+                url=self._url,
+                error_code=404,
+                params=self._parameters,
+            )
         finally:
             # If there has been an error and logging is enabled, write it to file
             if error:
@@ -336,27 +351,12 @@ class OhsomeClient(_OhsomeInfoClient, _OhsomePostClient):
             self._base_api_url, self.log, self.log_dir, self._cache + ["users"]
         )
 
+    def __repr__(self):
+        return f"<OhsomeClient: {self._base_api_url}>"
 
-class _OhsomeClientElements:
+
+class _OhsomeClientElements(_OhsomeBaseClient):
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
-
-    def __init__(
-        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
-    ):
-        """
-        Initialize _OhsomeClientElements object
-        :param base_api_url: URL of ohsome API instance
-        :param log: Log failed queries, default:True
-        :param log_dir: Directory for log files, default: ./ohsome_log
-        :param cache: Cache for endpoint components
-        """
-        self._cache = cache or []
-        if base_api_url is not None:
-            self._base_api_url = base_api_url.strip("/") + "/"
-        else:
-            self._base_api_url = OHSOME_BASE_API_URL
-        self.log = log
-        self.log_dir = log_dir
 
     @property
     def area(self):
@@ -401,26 +401,8 @@ class _OhsomeClientElements:
         )
 
 
-class _OhsomeClientElementsFullHistory:
+class _OhsomeClientElementsFullHistory(_OhsomeBaseClient):
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
-
-    def __init__(
-        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
-    ):
-        """
-        Initialize _OhsomeClientElementsFullHistory object
-        :param base_api_url: URL of ohsome API instance
-        :param log: Log failed queries, default:True
-        :param log_dir: Directory for log files, default: ./ohsome_log
-        :param cache: Cache for endpoint components
-        """
-        self._cache = cache or []
-        if base_api_url is not None:
-            self._base_api_url = base_api_url.strip("/") + "/"
-        else:
-            self._base_api_url = OHSOME_BASE_API_URL
-        self.log = log
-        self.log_dir = log_dir
 
     @property
     def bbox(self):
@@ -441,26 +423,8 @@ class _OhsomeClientElementsFullHistory:
         )
 
 
-class _OhsomeClientContributions:
+class _OhsomeClientContributions(_OhsomeBaseClient):
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
-
-    def __init__(
-        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
-    ):
-        """
-        Initiazlize _OhsomeClientContributions object
-        :param base_api_url: URL of ohsome API instance
-        :param log: Log failed queries, default:True
-        :param log_dir: Directory for log files, default: ./ohsome_log
-        :param cache: Cache for endpoint components
-        """
-        self._cache = cache or []
-        if base_api_url is not None:
-            self._base_api_url = base_api_url.strip("/") + "/"
-        else:
-            self._base_api_url = OHSOME_BASE_API_URL
-        self.log = log
-        self.log_dir = log_dir
 
     @property
     def bbox(self):
@@ -487,26 +451,8 @@ class _OhsomeClientContributions:
         )
 
 
-class _OhsomeClientUsers:
+class _OhsomeClientUsers(_OhsomeBaseClient):
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
-
-    def __init__(
-        self, base_api_url=None, log=DEFAULT_LOG, log_dir=DEFAULT_LOG_DIR, cache=None
-    ):
-        """
-        Initialize _OhsomeClientUsers object
-        :param base_api_url: URL of ohsome API instance
-        :param log: Log failed queries, default:True
-        :param log_dir: Directory for log files, default: ./ohsome_log
-        :param cache: Cache for endpoint components
-        """
-        self._cache = cache or []
-        if base_api_url is not None:
-            self._base_api_url = base_api_url.strip("/") + "/"
-        else:
-            self._base_api_url = OHSOME_BASE_API_URL
-        self.log = log
-        self.log_dir = log_dir
 
     @property
     def count(self):
