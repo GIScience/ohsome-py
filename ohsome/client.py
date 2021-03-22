@@ -276,7 +276,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 response=response,
             )
         except AttributeError:
-            error = OhsomeException(
+            ohsome_exception = OhsomeException(
                 message=f"Seems like {self._url} is not a valid endpoint.",
                 url=self._url,
                 error_code=404,
