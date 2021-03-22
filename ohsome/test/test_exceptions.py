@@ -67,6 +67,21 @@ def test_invalid_url():
     )
 
 
+def test_invalid_endpoint():
+    """
+    Test whether request can be sent to alternative url
+    :return:
+    """
+    base_api_url = "https://api.ohsme.org/v0.9/"
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2018-01-01"
+    fltr = "name=Krautturm and type:way"
+
+    client = ohsome.OhsomeClient(base_api_url=base_api_url, log=False)
+    with pytest.raises(AttributeError):
+        client.elements.cout.post(bboxes=bboxes, time=time, filter=fltr)
+
+
 def test_catch_incomplete_response_error():
     """
     Tests whether a AssertionError is raised if the result cannot be converted to a geodataframe object
