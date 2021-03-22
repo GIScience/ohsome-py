@@ -436,6 +436,103 @@ class _OhsomeClientElements(_OhsomeBaseClient):
         )
 
 
+class _OhsomeClientElementsAggregated(_OhsomePostClient):
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
+
+    @property
+    def density(self):
+        return _OhsomeClientElementsAggregatedDensity(
+            self._base_api_url, self.log, self.log_dir, self._cache + ["density"]
+        )
+
+    @property
+    def groupByBoundary(self):
+        return _OhsomeClientElementsAggregatedDensityGroupByBoundary(
+            self._base_api_url,
+            self.log,
+            self.log_dir,
+            self._cache + ["groupBy", "boundary"],
+        )
+
+    @property
+    def ratio(self):
+        return _OhsomeClientElementsAggregatedRatio(
+            self._base_api_url, self.log, self.log_dir, self._cache + ["ratio"]
+        )
+
+    @property
+    def groupByTag(self):
+        return _OhsomePostClient(
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
+        )
+
+    @property
+    def groupByType(self):
+        return _OhsomePostClient(
+            self._base_api_url,
+            self.log,
+            self.log_dir,
+            self._cache + ["groupBy", "type"],
+        )
+
+    @property
+    def groupByKey(self):
+        return _OhsomePostClient(
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "key"]
+        )
+
+
+class _OhsomeClientElementsAggregatedDensity(_OhsomePostClient):
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
+
+    @property
+    def groupByBoundary(self):
+        return _OhsomeClientElementsAggregatedDensityGroupByBoundary(
+            self._base_api_url,
+            self.log,
+            self.log_dir,
+            self._cache + ["groupBy", "boundary"],
+        )
+
+    @property
+    def groupByTag(self):
+        return _OhsomePostClient(
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
+        )
+
+    @property
+    def groupByType(self):
+        return _OhsomePostClient(
+            self._base_api_url,
+            self.log,
+            self.log_dir,
+            self._cache + ["groupBy", "type"],
+        )
+
+
+class _OhsomeClientElementsAggregatedDensityGroupByBoundary(_OhsomePostClient):
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
+
+    @property
+    def groupByTag(self):
+        return _OhsomePostClient(
+            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
+        )
+
+
+class _OhsomeClientElementsAggregatedRatio(_OhsomePostClient):
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
+
+    @property
+    def groupByBoundary(self):
+        return _OhsomePostClient(
+            self._base_api_url,
+            self.log,
+            self.log_dir,
+            self._cache + ["groupBy", "boundary"],
+        )
+
+
 class _OhsomeClientElementsFullHistory(_OhsomeBaseClient):
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
@@ -485,82 +582,18 @@ class _OhsomeClientContributions(_OhsomeBaseClient):
             self._base_api_url, self.log, self.log_dir, self._cache + ["latest"]
         )
 
-
-class _OhsomeClientUsers(_OhsomeBaseClient):
-    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
-
     @property
     def count(self):
-        return _OhsomeClientUsersAggregated(
+        return _OhsomeClientContributionsAggregated(
             self._base_api_url, self.log, self.log_dir, self._cache + ["count"]
         )
 
 
-class _OhsomeClientUsersAggregated(_OhsomePostClient):
-    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
-
+class _OhsomeClientContributionsAggregated(_OhsomePostClient):
     @property
     def density(self):
-        return _OhsomeClientUsersDensity(
+        return _OhsomePostClient(
             self._base_api_url, self.log, self.log_dir, self._cache + ["density"]
-        )
-
-    @property
-    def groupByBoundary(self):
-        return _OhsomePostClient(
-            self._base_api_url,
-            self.log,
-            self.log_dir,
-            self._cache + ["groupBy", "boundary"],
-        )
-
-    @property
-    def groupByTag(self):
-        return _OhsomePostClient(
-            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
-        )
-
-    @property
-    def groupByType(self):
-        return _OhsomePostClient(
-            self._base_api_url,
-            self.log,
-            self.log_dir,
-            self._cache + ["groupBy", "type"],
-        )
-
-    @property
-    def groupByKey(self):
-        return _OhsomePostClient(
-            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "key"]
-        )
-
-
-class _OhsomeClientUsersDensity(_OhsomePostClient):
-    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
-
-    @property
-    def groupByBoundary(self):
-        return _OhsomePostClient(
-            self._base_api_url,
-            self.log,
-            self.log_dir,
-            self._cache + ["groupBy", "boundary"],
-        )
-
-    @property
-    def groupByTag(self):
-        return _OhsomePostClient(
-            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
-        )
-
-    @property
-    def groupByType(self):
-        return _OhsomePostClient(
-            self._base_api_url,
-            self.log,
-            self.log_dir,
-            self._cache + ["groupBy", "type"],
         )
 
 
@@ -586,28 +619,32 @@ class _OhsomeClientContributionsLatest(_OhsomePostClient):
         )
 
 
-class _OhsomeClientElementsAggregated(_OhsomePostClient):
+class _OhsomeClientUsers(_OhsomeBaseClient):
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
+
+    @property
+    def count(self):
+        return _OhsomeClientUsersAggregated(
+            self._base_api_url, self.log, self.log_dir, self._cache + ["count"]
+        )
+
+
+class _OhsomeClientUsersAggregated(_OhsomePostClient):
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     @property
     def density(self):
-        return _OhsomeClientDensity(
+        return _OhsomeClientUsersAggregatedDensity(
             self._base_api_url, self.log, self.log_dir, self._cache + ["density"]
         )
 
     @property
     def groupByBoundary(self):
-        return _OhsomeClientElementsGroupByBoundary(
+        return _OhsomePostClient(
             self._base_api_url,
             self.log,
             self.log_dir,
             self._cache + ["groupBy", "boundary"],
-        )
-
-    @property
-    def ratio(self):
-        return _OhsomeClientElementsRatio(
-            self._base_api_url, self.log, self.log_dir, self._cache + ["ratio"]
         )
 
     @property
@@ -632,12 +669,12 @@ class _OhsomeClientElementsAggregated(_OhsomePostClient):
         )
 
 
-class _OhsomeClientDensity(_OhsomePostClient):
+class _OhsomeClientUsersAggregatedDensity(_OhsomePostClient):
     """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
 
     @property
     def groupByBoundary(self):
-        return _OhsomeClientElementsGroupByBoundary(
+        return _OhsomePostClient(
             self._base_api_url,
             self.log,
             self.log_dir,
@@ -657,27 +694,4 @@ class _OhsomeClientDensity(_OhsomePostClient):
             self.log,
             self.log_dir,
             self._cache + ["groupBy", "type"],
-        )
-
-
-class _OhsomeClientElementsGroupByBoundary(_OhsomePostClient):
-    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
-
-    @property
-    def groupByTag(self):
-        return _OhsomePostClient(
-            self._base_api_url, self.log, self.log_dir, self._cache + ["groupBy", "tag"]
-        )
-
-
-class _OhsomeClientElementsRatio(_OhsomePostClient):
-    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
-
-    @property
-    def groupByBoundary(self):
-        return _OhsomePostClient(
-            self._base_api_url,
-            self.log,
-            self.log_dir,
-            self._cache + ["groupBy", "boundary"],
         )
