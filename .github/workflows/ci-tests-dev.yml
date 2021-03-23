@@ -1,15 +1,29 @@
 name: tests
 
 on:
-  push:
-    branches:
-      - main
-      - master
-  schedule:
-    - cron: "0 0 * * 0"
+  pull_request:
+    branches: [ "**" ]
 
 jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install lint dependencies
+        run: |
+          pip install pre-commit black
+      - name: Install and run pre-commit
+        uses: pre-commit/action@v2.0.0
+        with:
+          extra_args: --all-files
   linux-tests:
+    needs:
+      - lint
     strategy:
       fail-fast: true
       matrix:
