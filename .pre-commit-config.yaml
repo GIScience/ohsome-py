@@ -40,3 +40,5 @@ repos:
         args: [ '--no-sort-keys' ]
       - id: no-commit-to-branch
         args: [ --branch, master ]
+      - id: no-commit-to-branch
+        args: [ --branch, main ]
