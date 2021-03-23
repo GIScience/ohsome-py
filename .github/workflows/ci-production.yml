@@ -80,10 +80,6 @@ jobs:
         uses: abatilo/actions-poetry@v2.1.0
         with:
           poetry-version: 1.1.4
-      - name: Poetry install and test
-        run: |
-          poetry install
-          poetry run tox -e py39
       - name: Publish distribution 📦 with test.pypi.org
         run: |
           poetry config repositories.testpypi https://test.pypi.org/legacy/
