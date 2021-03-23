@@ -5,71 +5,70 @@ on:
     branches:
       - main
       - master
-  pull_request:
-    branches: [ "**" ]
-  schedule:
-    - cron: "0 0 * * 0"
+  release:
+    types:
+      - created
 
 jobs:
-#  linux-tests:
-#    strategy:
-#      fail-fast: true
-#      matrix:
-#        config:
-#          - python-version: 3.6
-#            tox: 36
-#          - python-version: 3.7
-#            tox: 37
-#          - python-version: 3.8
-#            tox: 38
-#          - python-version: 3.9
-#            tox: 39
-#        poetry-version: [ 1.1.4 ]
-#        os: [ ubuntu-18.04, ubuntu-20.04 ]
-#    runs-on: ${{ matrix.os }}
-#    services:
-#      ohsome-api:
-#        image: julianpsotta/ohsome-api:1.3.2
-#        ports:
-#          - 8080:8080
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: Set up testing Python ${{ matrix.config.python-version }}
-#        uses: actions/setup-python@v2
-#        with:
-#          python-version: ${{ matrix.config.python-version }}
-#      - name: Set up base Python 3.9
-#        uses: actions/setup-python@v2
-#        with:
-#          python-version: 3.9
-#      - name: Python Poetry Action
-#        uses: abatilo/actions-poetry@v2.1.0
-#        with:
-#          poetry-version: ${{ matrix.poetry-version }}
-#      - name: Install dependencies
-#        run: |
-#          sudo add-apt-repository -y ppa:ubuntugis/ppa && sudo apt-get update && sudo apt-get install -y build-essential gdal-bin libgdal-dev
-#          python -m pip install --upgrade pip tox
-#      - name: Run tox
-#        env:
-#          OHSOME_URL: ohsome-api
-#          OHSOME_PORT: 8080
-#          TOX_TESTENV_PASSENV: OHSOME_URL, OHSOME_PORT
-#        run: tox -e py${{ matrix.config.tox }}
-#      - name: Upload coverage to Codecov
-#        uses: codecov/codecov-action@v1
-#        with:
-#          token: ${{ secrets.CODECOV_TOKEN }}
-#          flags: unittests
-#          env_vars: OS,PYTHON
-#          name: codecov-umbrella
-#          fail_ci_if_error: true
-#          verbose: true
+  linux-tests:
+    strategy:
+      fail-fast: true
+      matrix:
+        config:
+          - python-version: 3.6
+            tox: 36
+          - python-version: 3.7
+            tox: 37
+          - python-version: 3.8
+            tox: 38
+          - python-version: 3.9
+            tox: 39
+        poetry-version: [ 1.1.4 ]
+        os: [ ubuntu-18.04, ubuntu-20.04 ]
+    runs-on: ${{ matrix.os }}
+    services:
+      ohsome-api:
+        image: julianpsotta/ohsome-api:1.3.2
+        ports:
+          - 8080:8080
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up testing Python ${{ matrix.config.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.config.python-version }}
+      - name: Set up base Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Python Poetry Action
+        uses: abatilo/actions-poetry@v2.1.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install dependencies
+        run: |
+          sudo add-apt-repository -y ppa:ubuntugis/ppa && sudo apt-get update && sudo apt-get install -y build-essential gdal-bin libgdal-dev
+          python -m pip install --upgrade pip tox
+      - name: Run tox
+        env:
+          OHSOME_URL: ohsome-api
+          OHSOME_PORT: 8080
+          TOX_TESTENV_PASSENV: OHSOME_URL, OHSOME_PORT
+        run: tox -e py${{ matrix.config.tox }}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unittests
+          env_vars: OS,PYTHON
+          name: codecov-umbrella
+          fail_ci_if_error: true
+          verbose: true
   build-and-publish:
     name: Build and publish Python distributions 📦 to PyPI and TestPyPI
     runs-on: ubuntu-20.04
-#    needs:
-#      - linux-tests
+    needs:
+      - linux-tests
     steps:
       - uses: actions/checkout@v2
       - name: Set up base Python 3.9
@@ -81,16 +80,15 @@ jobs:
         with:
           poetry-version: 1.1.4
       - name: Publish distribution 📦 with test.pypi.org
+        if: startsWith(github.ref, 'refs/tags')
         run: |
           poetry config repositories.testpypi https://test.pypi.org/legacy/
-          poetry install --no-dev
           poetry config pypi-token.testpypi ${{ secrets.TEST_PYPI_API_TOKEN }}
           poetry build
           poetry publish -r testpypi
-  #      - name: Publish distribution 📦 to PyPI
-  #        if: startsWith(github.ref, 'refs/tags')
-  #        run: |
-  #          poetry install --no-dev
-  #          poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
-  #          poetry build
-  #          poetry publish
+      - name: Publish distribution 📦 to PyPI
+        if: startsWith(github.ref, 'refs/tags')
+        run: |
+          poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
+          poetry build
+          poetry publish
