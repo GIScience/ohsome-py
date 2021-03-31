@@ -4,21 +4,15 @@
 
 The *ohsome-py* package helps you extract and analyse OpenStreetMap history data using the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and Python. It handles queries to the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and converts its responses to [Pandas](https://pandas.pydata.org/) and [GeoPandas](https://geopandas.org/) data frames to facilitate easy data handling and analysis.
 
-The ohsome API provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions). Take a look at the [documentation of the ohsome API](https://docs.ohsome.org/ohsome-api/stable) to learn more about the endpoints and query parameters or go through the [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) to get started.
+The ohsome API provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions) to analyse the history of OSM data. Take a look at the [documentation of the ohsome API](https://docs.ohsome.org/ohsome-api/stable) or go through the [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) to get started on how to use *ohsome-py*.
 
 
 ## Installation
 
-The easiest way to install *ohsome-py* is using pip:
+*ohsome-py* requires Python >= 3.6. The easiest way to install *ohsome-py* is using pip:
 
 ```
 $ pip install ohsome
-```
-
-To install the latest *ohsome-py* version from GitHub:
-
-```
-$ pip install git+https://github.com/giscience/ohsome-py
 ```
 
 If you want to run the Juypter Notebook [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) you also need to install `jupyter` and `matplotlib`:
