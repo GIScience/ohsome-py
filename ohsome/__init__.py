@@ -5,7 +5,7 @@
 
 from .exceptions import OhsomeException
 from .response import OhsomeResponse
-from .client import OhsomeClient
+from .clients import OhsomeClient
 import logging
 
 log_format = "%(asctime)s  %(module)8s  %(levelname)5s:  %(message)s"
