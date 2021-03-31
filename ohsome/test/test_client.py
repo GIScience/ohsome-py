@@ -339,7 +339,7 @@ def test_post_with_endpoint_string(custom_client):
     endpoint = "contributions/latest/bbox"
     client = custom_client
     response = client.post(endpoint=endpoint, bboxes=bboxes, time=time, filter=filter)
-    result = response.as_geodataframe()
+    result = response.as_dataframe()
     assert isinstance(result, gpd.GeoDataFrame)
     assert len(result) == 1
 
@@ -347,7 +347,7 @@ def test_post_with_endpoint_string(custom_client):
     endpoint = "/contributions/latest/bbox/"
     client = custom_client
     response = client.post(endpoint=endpoint, bboxes=bboxes, time=time, filter=filter)
-    result = response.as_geodataframe()
+    result = response.as_dataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert len(result) == 1

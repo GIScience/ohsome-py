@@ -21,13 +21,21 @@ class OhsomeResponse:
 
     def as_dataframe(self, multi_index=True):
         """
+        Converts the ohsome response to a pandas.DataFrame or a geopandas.GeoDataFrame if the
+        response contains geometries
+        :param multi_index:
+        :return:
+        """
+        if "features" not in self.data.keys():
+            return self._as_dataframe(multi_index)
+        else:
+            return self._as_geodataframe(multi_index)
+
+    def _as_dataframe(self, multi_index=True):
+        """
         Converts the ohsome response to a pandas.DataFrame
         :return: pandas dataframe
         """
-        assert (
-            "features" not in self.data.keys()
-        ), "GeoJSON object cannot be converted to a pandas.Dataframe. Use response.as_geodataframe() instead."
-
         groupby_names = []
         if "result" in self.data.keys():
             result_df = pd.DataFrame().from_records(self.data["result"])
@@ -54,16 +62,11 @@ class OhsomeResponse:
 
         return result_df.sort_index()
 
-    def as_geodataframe(self, multi_index=True):
+    def _as_geodataframe(self, multi_index=True):
         """
         Converts the ohsome response to a geopandas.GeoDataFrame
         :return:
         """
-
-        assert (
-            "features" in self.data.keys()
-        ), "Response is not in geojson format. Use .as_dataframe() instead."
-
         try:
             features = gpd.GeoDataFrame().from_features(self.data, crs="epsg:4326")
         except TypeError():

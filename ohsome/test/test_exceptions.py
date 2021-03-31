@@ -12,23 +12,6 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
 
 
-def test_elements_count_exception(custom_client):
-    """
-    Tests whether a AssertionError is raised if the result cannot be converted to a geodataframe object
-    :return:
-    """
-    # GIVEN
-    bboxes = "8.67066,49.41423,8.68177,49.4204"
-    time = "2010-01-01/2011-01-01/P1Y"
-    fltr = "building=* and type:way"
-
-    client = custom_client
-    response = client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
-
-    with pytest.raises(AssertionError):
-        response.as_geodataframe()
-
-
 def test_timeout_error(custom_client):
     """
     Test whether an OhsomeException is raised, if the ohsome API contains a JSONDecodeError
