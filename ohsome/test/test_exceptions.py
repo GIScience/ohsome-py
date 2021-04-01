@@ -8,26 +8,8 @@ import logging
 import geopandas as gpd
 import ohsome
 
-
 script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
-
-
-def test_elements_count_exception(custom_client):
-    """
-    Tests whether a AssertionError is raised if the result cannot be converted to a geodataframe object
-    :return:
-    """
-    # GIVEN
-    bboxes = "8.67066,49.41423,8.68177,49.4204"
-    time = "2010-01-01/2011-01-01/P1Y"
-    fltr = "building=* and type:way"
-
-    client = custom_client
-    response = client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
-
-    with pytest.raises(AssertionError):
-        response.as_geodataframe()
 
 
 def test_timeout_error(custom_client):
@@ -46,8 +28,8 @@ def test_timeout_error(custom_client):
             bboxes=bboxes, time=time, filter=fltr, timeout=timeout
         )
     assert (
-        e_info.value.message
-        == "The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser time period."
+        "The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser time period."
+        in e_info.value.message
     )
 
 
@@ -65,9 +47,9 @@ def test_invalid_url():
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
     assert (
-        e_info.value.message
-        == "Connection Error: Query could not be sent. Make sure there are no network problems and "
+        "Connection Error: Query could not be sent. Make sure there are no network problems and "
         f"that the ohsome API URL {base_api_url}elements/count is valid."
+        in e_info.value.message
     )
 
 
@@ -163,3 +145,19 @@ def test_metadata_invalid_baseurl(custom_client_with_wrong_url):
 
     with pytest.raises(ohsome.OhsomeException):
         custom_client_with_wrong_url.metadata
+
+
+def test_exception_invalid_parameters(custom_client):
+    """
+    Test whether error message from ohsome API is forwarded to user
+    :param custom_client:
+    :return:
+    """
+    bboxes = [8.6577, 49.3958, 8.7122, 49.4296]
+    time = "2010-01-01/2020-01-01/P1M"
+    fltr = "highway=* and type:way"
+    with pytest.raises(ohsome.OhsomeException) as e_info:
+        custom_client.elements.count.groupByTag.post(
+            bboxes=bboxes, time=time, filter=fltr
+        )
+        "You need to give one groupByKey parameter" in e_info.value.message

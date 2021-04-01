@@ -5,17 +5,15 @@
 
 import requests
 from ohsome import OhsomeException, OhsomeResponse
+from ohsome.constants import DEFAULT_LOG_DIR, DEFAULT_LOG, OHSOME_BASE_API_URL
 from ohsome.helper import (
     extract_error_message_from_invalid_json,
     format_boundary,
     format_time,
 )
 import os
-
-
-OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"
-DEFAULT_LOG = True
-DEFAULT_LOG_DIR = "./ohsome_log"
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
 
 class _OhsomeBaseClient:
@@ -39,6 +37,25 @@ class _OhsomeBaseClient:
         else:
             self._base_api_url = OHSOME_BASE_API_URL
         self._cache = cache or []
+        self.__session = None
+
+    def _session(self):
+        """
+        Set up request session
+        :return:
+        """
+        if self.__session is None:
+            retry_strategy = Retry(
+                total=3,
+                status_forcelist=[429, 500, 502, 503, 504],
+                allowed_methods=["GET", "POST"],
+                backoff_factor=1,
+            )
+            adapter = HTTPAdapter(max_retries=retry_strategy)
+            self.__session = requests.Session()
+            self.__session.mount("https://", adapter)
+            self.__session.mount("http://", adapter)
+        return self.__session
 
     def __repr__(self):
         return f"<OhsomeClient: {self._base_api_url}>"
@@ -112,7 +129,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         """
         self._url = self._base_api_url + "/metadata"
         try:
-            response = requests.get(self._url)
+            response = self._session().get(self._url)
             response.raise_for_status()
         except requests.exceptions.ConnectionError:
             raise OhsomeException(
@@ -232,8 +249,9 @@ class _OhsomePostClient(_OhsomeBaseClient):
         :return:
         """
         ohsome_exception = None
+
         try:
-            response = requests.post(url=self._url, data=self._parameters)
+            response = self._session().post(url=self._url, data=self._parameters)
             response.raise_for_status()
             response.json()
         except requests.exceptions.HTTPError as e:

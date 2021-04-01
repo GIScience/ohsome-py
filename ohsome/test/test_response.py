@@ -244,7 +244,7 @@ def test_elements_geometry(custom_client):
 
     client = custom_client
     response = client.elements.geometry.post(bboxes=bboxes, time=time, filter=flter)
-    result = response.as_geodataframe()
+    result = response.as_dataframe()
     del client
 
     assert isinstance(result, gpd.GeoDataFrame)
@@ -264,7 +264,7 @@ def test_elementsFullHistory_geometry(custom_client):
     response = client.elementsFullHistory.centroid.post(
         bboxes=bboxes, time=time, filter=flter
     )
-    result = response.as_geodataframe()
+    result = response.as_dataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert len(result) == 2
@@ -300,7 +300,7 @@ def test_contributions_centroid(custom_client):
     response = client.contributions.centroid.post(
         bboxes=bboxes, time=time, filter=filter
     )
-    result = response.as_geodataframe()
+    result = response.as_dataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert len(result) == 1
@@ -319,7 +319,7 @@ def test_contributions_latest(custom_client):
     response = client.contributions.latest.bbox.post(
         bboxes=bboxes, time=time, filter=filter
     )
-    result = response.as_geodataframe()
+    result = response.as_dataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert len(result) == 1

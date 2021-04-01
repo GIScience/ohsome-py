@@ -29,7 +29,9 @@ class OhsomeException(Exception):
         Logs OhsomeException
         :return:
         """
-        log_file_name = f"{self.timestamp}"
+        log_file_name = (
+            f"ohsome_{self.error_code}_{dt.datetime.now().strftime('%Y-%m-%dT%H%M%S')}"
+        )
         self.log_bpolys(log_dir, log_file_name)
         self.log_response(log_dir, log_file_name)
         # self.log_query(log_dir, log_file_name)
