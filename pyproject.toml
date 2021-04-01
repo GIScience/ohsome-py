@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ohsome"
-version = "0.1.0b"
+version = "0.1.0rc"
 description = "A Python client for the ohsome API"
 authors = ["Christina Ludwig <christina.ludwig@uni-heidelberg.de>"]
 readme = 'README.md'
@@ -15,7 +15,6 @@ geopandas = "^0.9.0"
 pyproj = "^3.0.0"
 multidict = "^5.1.0"
 pip = ">=21.0.1"
-
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"

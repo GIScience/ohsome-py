@@ -1,32 +1,16 @@
-name: tests
+name: Continous Integration
 
 on:
-  pull_request:
-    branches: '**'
   push:
     branches:
+      - main
       - master
+  release:
+    types:
+      - created
 
 jobs:
-  lint:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Install lint dependencies
-        run: |
-          pip install pre-commit black
-      - name: Install and run pre-commit
-        uses: pre-commit/action@v2.0.0
-        with:
-          extra_args: --all-files
   linux-tests:
-    needs:
-      - lint
     strategy:
       fail-fast: true
       matrix:
@@ -80,3 +64,31 @@ jobs:
           name: codecov-umbrella
           fail_ci_if_error: true
           verbose: true
+  build-and-publish:
+    name: Build and publish Python distributions 📦 to PyPI and TestPyPI
+    runs-on: ubuntu-20.04
+    needs:
+      - linux-tests
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up base Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Python Poetry Action
+        uses: abatilo/actions-poetry@v2.1.0
+        with:
+          poetry-version: 1.1.4
+      - name: Publish distribution 📦 with test.pypi.org
+        if: startsWith(github.ref, 'refs/tags')
+        run: |
+          poetry config repositories.testpypi https://test.pypi.org/legacy/
+          poetry config pypi-token.testpypi ${{ secrets.TEST_PYPI_API_TOKEN }}
+          poetry build
+          poetry publish -r testpypi
+      - name: Publish distribution 📦 to PyPI
+        if: startsWith(github.ref, 'refs/tags')
+        run: |
+          poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
+          poetry build
+          poetry publish

@@ -1,0 +1,79 @@
+name: Continous Integration for development
+
+on:
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install lint dependencies
+        run: |
+          pip install pre-commit black
+      - name: Install and run pre-commit
+        uses: pre-commit/action@v2.0.0
+        with:
+          extra_args: --all-files
+  linux-tests:
+    needs:
+      - lint
+    strategy:
+      fail-fast: true
+      matrix:
+        config:
+          - python-version: 3.6
+            tox: 36
+          - python-version: 3.7
+            tox: 37
+          - python-version: 3.8
+            tox: 38
+          - python-version: 3.9
+            tox: 39
+        poetry-version: [ 1.1.4 ]
+        os: [ ubuntu-18.04, ubuntu-20.04 ]
+    runs-on: ${{ matrix.os }}
+    services:
+      ohsome-api:
+        image: julianpsotta/ohsome-api:1.3.2
+        ports:
+          - 8080:8080
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up testing Python ${{ matrix.config.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.config.python-version }}
+      - name: Set up base Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Python Poetry Action
+        uses: abatilo/actions-poetry@v2.1.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install dependencies
+        run: |
+          sudo add-apt-repository -y ppa:ubuntugis/ppa && sudo apt-get update && sudo apt-get install -y build-essential gdal-bin libgdal-dev
+          python -m pip install --upgrade pip tox
+      - name: Run tox
+        env:
+          OHSOME_URL: ohsome-api
+          OHSOME_PORT: 8080
+          TOX_TESTENV_PASSENV: OHSOME_URL, OHSOME_PORT
+        run: tox -e py${{ matrix.config.tox }}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unittests
+          env_vars: OS,PYTHON
+          name: codecov-umbrella
+          fail_ci_if_error: true
+          verbose: true

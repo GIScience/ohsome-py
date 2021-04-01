@@ -207,9 +207,8 @@ def test_format_bcircles_geodataframe_geometry_error(custom_client):
             bcircles=bcircles, time=time, filter=fltr
         )
     assert (
-        e_info.value.message
-        == "OhsomeException (None): The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry "
-        "types."
+        "The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types."
+        in e_info.value.message
     )
     del client
 
@@ -258,13 +257,13 @@ def test_format_bboxes_dataframe_missing_columns(custom_client):
     if "occurred at index 0" in e_info.value.message:
         # Python 3.6 does some weird stuff with the output. So it differs a bit.
         assert (
-            e_info.value.message
-            == "OhsomeException (None): Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
+            "Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
+            in e_info.value.message
         )
     else:
         assert (
-            e_info.value.message
-            == "OhsomeException (None): Column 'minx' is missing in the dataframe provided as 'bboxes'."
+            "Column 'minx' is missing in the dataframe provided as 'bboxes'."
+            in e_info.value.message
         )
 
 
@@ -283,14 +282,13 @@ def test_format_bboxes_geodataframe(custom_client):
     if "occurred at index 0" in e_info.value.message:
         # Python 3.6 does some weird stuff with the output. So it differs a bit.
         assert (
-            e_info.value.message
-            == "OhsomeException (None): Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
+            "Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
+            in e_info.value.message
         )
     else:
         assert (
-            e_info.value.message
-            == "OhsomeException (None): Use the 'bpolys' parameter to specify the boundaries using a "
-            "geopandas.GeoDataFrame."
+            "Use the 'bpolys' parameter to specify the boundaries using a "
+            "geopandas.GeoDataFrame." in e_info.value.message
         )
 
 
@@ -341,7 +339,7 @@ def test_post_with_endpoint_string(custom_client):
     endpoint = "contributions/latest/bbox"
     client = custom_client
     response = client.post(endpoint=endpoint, bboxes=bboxes, time=time, filter=filter)
-    result = response.as_geodataframe()
+    result = response.as_dataframe()
     assert isinstance(result, gpd.GeoDataFrame)
     assert len(result) == 1
 
@@ -349,7 +347,7 @@ def test_post_with_endpoint_string(custom_client):
     endpoint = "/contributions/latest/bbox/"
     client = custom_client
     response = client.post(endpoint=endpoint, bboxes=bboxes, time=time, filter=filter)
-    result = response.as_geodataframe()
+    result = response.as_dataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert len(result) == 1
