@@ -9,13 +9,34 @@ The ohsome API provides various endpoints for [data aggregation](https://api.ohs
 
 ## Installation
 
-*ohsome-py* requires Python >= 3.6. The easiest way to install *ohsome-py* is using pip:
+*ohsome-py* requires
+
+* Python >= 3.6
+* geopandas >= 0.9.0
+* pyproj >= 3.0.0
+* requests >= 2.25.1
+
+### Using pip
+
+You can install *ohsome-py* using pip, which will also install all dependencies.
 
 ```
 $ pip install ohsome
 ```
 
-If you want to run the Juypter Notebook [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) you also need to install `jupyter` and `matplotlib`:
+### Using Anaconda
+
+*ohsome-py* is not available through Anaconda yet. So if you are using Anaconda, create a new anaconda environment and install the required dependencies before installing *ohsome-py* using pip.
+
+```
+$ conda create -n ohsome python=3.8 geopandas requests
+$ conda activate ohsome
+$ pip install ohsome --no-deps
+```
+
+### Dependencies for Jupyter Notebooks
+
+If you want to run the Juypter Notebook [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) you also need to install `jupyter` and `matplotlib` e.g.
 
 ```
 $ pip install jupyter matplotlib
@@ -126,7 +147,17 @@ time = pandas.date_range("2018-01-01", periods=3, freq="M")
 
 If you want to contribute to this project, please fork the repository or create a new branch containing your changes.
 
-**Install the pre-commit hooks** in our local git repo before commiting to ensure homogenous code style.
+**Install dependencies for development**
+
+* pytest = ^6.2.2
+* pytest-cov = >=2.0.0
+* pre-commit = >=2.1.1
+* black = ^20.8b1
+* pytest-random-order = ^1.0.4
+* yaspin = <1.4.1
+* tox = ^3.23.0
+
+**Install the pre-commit hooks** in our local git repo before committing to ensure homogenous code style.
 
 ```
 $ pre-commit install
