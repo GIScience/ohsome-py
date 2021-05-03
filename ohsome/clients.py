@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """OhsomeClient classes to build and handle requests to ohsome API"""
+import urllib
 
 import requests
 from ohsome import OhsomeException, OhsomeResponse
@@ -334,9 +335,9 @@ class _OhsomePostClient(_OhsomeBaseClient):
         :return:
         """
         if endpoint:
-            self._url = self._base_api_url + "/" + endpoint.strip("/")
+            self._url = urllib.parse.urljoin(self._base_api_url, endpoint.strip("/"))
         else:
-            self._url = self._base_api_url + "/".join(self._cache)
+            self._url = urllib.parse.urljoin(self._base_api_url, "/".join(self._cache))
 
     def _(self, name):
         # Enables method chaining
