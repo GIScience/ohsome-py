@@ -31,10 +31,24 @@ class OhsomeException(Exception):
         """
         log_file_name = f"ohsome_{dt.datetime.now().strftime('%Y-%m-%dT%H%M%S')}"
         self.log_bpolys(log_dir, log_file_name)
+        self.log_parameter(log_dir, log_file_name)
         self.log_response(log_dir, log_file_name)
         # self.log_query(log_dir, log_file_name)
 
     def log_response(self, log_dir, log_file_name):
+        """
+        Log raw response. This may duplicate much data but is helpful for debugging to know the exact raw answer by the
+        ohsome-api.
+        """
+        log_file = os.path.join(
+            log_dir,
+            f"{log_file_name}_raw.txt",
+        )
+        with open(log_file, "w") as dst:
+            dst.write(self.response.text)
+
+
+    def log_parameter(self, log_dir, log_file_name):
         """
         Log query parameters to file
         :param log_dir:

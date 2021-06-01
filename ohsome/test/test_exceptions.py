@@ -110,7 +110,7 @@ def test_enable_logging(custom_client_without_log, tmpdir):
         )
 
     n_log_files_after = len(os.listdir(custom_client_without_log.log_dir))
-    assert n_log_files_before + 1 == n_log_files_after
+    assert n_log_files_before + 2 == n_log_files_after
 
 
 def test_log_bpolys(custom_client_without_log, tmpdir):
@@ -134,7 +134,7 @@ def test_log_bpolys(custom_client_without_log, tmpdir):
             bpolys=bpolys, time=time, filter=fltr, timeout=timeout
         )
     n_log_files_after = len(os.listdir(custom_client_without_log.log_dir))
-    assert n_log_files_before + 2 == n_log_files_after
+    assert n_log_files_before + 3 == n_log_files_after
 
 
 def test_metadata_invalid_baseurl(custom_client_with_wrong_url):

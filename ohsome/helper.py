@@ -10,6 +10,8 @@ import pandas as pd
 
 from ohsome import OhsomeException
 
+import re
+
 
 def format_time(params):
     """
@@ -183,11 +185,42 @@ def extract_error_message_from_invalid_json(response):
     :return:
 
     """
-    start_message = response.text.find("message") + 12
-    end_message = response.text.find("requestUrl") - 6
-    message = response.text[start_message:end_message]
-    start_error_code = response.text.find("status") + 10
-    end_error_code = response.text.find("message") - 5
-    error_code = response.text[start_error_code:end_error_code]
+    responsetext = response.text
+
+    m = re.search('"message" : "(.*)"',responsetext)
+    if m:
+        message = m.group(1)
+    else: # the response seems to be seriously broken
+        message ='A broken response has been received.'
+
+    m = re.search('"error" : "(.*)"', responsetext)
+    if m:
+        message += '; ' + m.group(0)
+
+    m = re.search('"timestamp" : "(.*)"', responsetext)
+    if m:
+        message += '; ' + m.group(0)
+
+    m = re.search('"path" : "(.*)"', responsetext)
+    if m:
+        message += '; ' + m.group(0)
+
+    m = re.search('"requestUrl" : "(.*)"', responsetext)
+    if m:
+        message += '; ' + m.group(0)
+
+    m = re.search('"status" : "(.*)"', responsetext)
+    if m:
+        status = m.group(1)
+        message += '; ' + m.group(0)
+    else:
+        status = None
+
+    if status and status.isdigit() and not (int(status) == 200):
+        error_code = int(status)
+    elif 'OutOfMemoryError' in message:
+        error_code = 507
+    else:
+        error_code = 500
 
     return error_code, message
