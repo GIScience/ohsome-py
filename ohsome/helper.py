@@ -187,38 +187,38 @@ def extract_error_message_from_invalid_json(response):
     """
     responsetext = response.text
 
-    m = re.search('"message" : "(.*)"',responsetext)
+    message = "A broken response has been received."
+
+    m = re.search('"message" : "(.*)"', responsetext)
     if m:
-        message = m.group(1)
-    else: # the response seems to be seriously broken
-        message ='A broken response has been received.'
+        message += ": " + m.group(1)
 
     m = re.search('"error" : "(.*)"', responsetext)
     if m:
-        message += '; ' + m.group(0)
+        message += "; " + m.group(0)
 
     m = re.search('"timestamp" : "(.*)"', responsetext)
     if m:
-        message += '; ' + m.group(0)
+        message += "; " + m.group(0)
 
     m = re.search('"path" : "(.*)"', responsetext)
     if m:
-        message += '; ' + m.group(0)
+        message += "; " + m.group(0)
 
     m = re.search('"requestUrl" : "(.*)"', responsetext)
     if m:
-        message += '; ' + m.group(0)
+        message += "; " + m.group(0)
 
     m = re.search('"status" : "(.*)"', responsetext)
     if m:
         status = m.group(1)
-        message += '; ' + m.group(0)
+        message += "; " + m.group(0)
     else:
         status = None
 
     if status and status.isdigit() and not (int(status) == 200):
         error_code = int(status)
-    elif 'OutOfMemoryError' in message:
+    elif "OutOfMemoryError" in message:
         error_code = 507
     else:
         error_code = 500
