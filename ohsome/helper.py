@@ -187,7 +187,7 @@ def extract_error_message_from_invalid_json(response):
     """
     responsetext = response.text
 
-    message = "A broken response has been received."
+    message = "A broken response has been received"
 
     m = re.search('"message" : "(.*)"', responsetext)
     if m:
