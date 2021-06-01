@@ -47,7 +47,6 @@ class OhsomeException(Exception):
         with open(log_file, "w") as dst:
             dst.write(self.response.text)
 
-
     def log_parameter(self, log_dir, log_file_name):
         """
         Log query parameters to file
