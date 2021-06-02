@@ -134,3 +134,7 @@ dmypy.json
 
 # Setup.py as it will be generated on the fly through dephell
 setup.py
+
+
+# project files
+**/ohsome_log/

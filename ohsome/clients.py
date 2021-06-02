@@ -286,7 +286,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 error_code=440,
             )
         except ValueError:
-            error_code, message = extract_error_message_from_invalid_json(response)
+            error_code, message = extract_error_message_from_invalid_json(response.text)
             ohsome_exception = OhsomeException(
                 message=message,
                 url=self._url,
