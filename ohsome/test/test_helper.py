@@ -71,6 +71,7 @@ def test_extract_error_message_from_invalid_json_no_message():
     assert expected_message == message
     assert expected_error_code == error_code
 
+
 def test_extract_error_message_from_invalid_json_outOfMemory():
     """
     Test whether error code and message are extracted correctly if the server reports out of memory
@@ -88,6 +89,7 @@ def test_extract_error_message_from_invalid_json_outOfMemory():
 
     assert expected_message == message
     assert expected_error_code == error_code
+
 
 def test_extract_error_message_from_invalid_json_custonErrorCode():
     """
