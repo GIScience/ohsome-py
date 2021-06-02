@@ -45,7 +45,7 @@ def test_extract_error_message_from_invalid_json():
         invalid_response_text = src.read()
 
     expected_error_code = 500
-    expected_message = 'A broken response has been received: java.lang.RuntimeException: java.lang.RuntimeException: java.lang.RuntimeException: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.; "error" : "OK"; "timestamp" : "2020-05-19T07:07:25.356+0000"; "path" : "/elements/geometry"'
+    expected_message = 'A broken response has been received: java.lang.RuntimeException: java.lang.RuntimeException: java.lang.RuntimeException: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.; "error" : "OK"; "timestamp" : "2020-05-19T07:07:25.356+0000"; "path" : "/elements/geometry"; "status" : 200'
 
     error_code, message = extract_error_message_from_invalid_json(invalid_response_text)
 
@@ -83,7 +83,7 @@ def test_extract_error_message_from_invalid_json_outOfMemory():
         invalid_response_text = src.read()
 
     expected_error_code = 507
-    expected_message = 'A broken response has been received: java.lang.OutOfMemoryError; "error" : "OK"; "timestamp" : "2021-06-01T11:38:52.821+0000"; "path" : "/elements/geometry"'
+    expected_message = 'A broken response has been received: java.lang.OutOfMemoryError; "error" : "OK"; "timestamp" : "2021-06-01T11:38:52.821+0000"; "path" : "/elements/geometry"; "status" : 200'
 
     error_code, message = extract_error_message_from_invalid_json(invalid_response_text)
 
