@@ -1,0 +1,48 @@
+{
+  "attribution" : {
+    "url" : "https://ohsome.org/copyrights",
+    "text" : "© OpenStreetMap contributors"
+  },
+  "apiVersion" : "0.9",
+  "type" : "FeatureCollection",
+  "features" : [{
+    "type" : "Feature",
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [
+        [
+          [
+            13.644420799999999,
+            50.9673861
+          ],
+          [
+            13.6446461,
+            50.967762699999994
+          ],
+          [
+            13.6435705,
+            50.9680009
+          ],
+          [
+            13.6433485,
+            50.9676301
+          ],
+          [
+            13.644420799999999,
+            50.9673861
+          ]
+        ]
+      ]
+    },
+    "properties" : {
+      "@osmId" : "way/437313075",
+      "@snapshotTimestamp" : "2019-12-10T00:00:00Z",
+      "leisure" : "park"
+    }
+  }{
+  "timestamp" : "2020-05-19T07:07:25.356+0000",
+  "status" : 200,
+  "error" : "OK",
+  "message" : "java.lang.RuntimeException: java.lang.RuntimeException: java.lang.RuntimeException: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.",
+  "path" : "/elements/geometry"
+}

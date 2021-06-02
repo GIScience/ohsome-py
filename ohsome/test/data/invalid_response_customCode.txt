@@ -1,0 +1,12 @@
+  "attribution" : {
+    "url" : "https://ohsome.org/copyrights",
+    "text" : "© OpenStreetMap contributors"
+  },
+  "apiVersion" : "1.3.2",
+  "type" : "FeatureCollection",
+  "features" : [{
+  "timestamp" : "2021-06-02T10:07:46.438591",
+  "status" : 413,
+  "message" : "The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser time period.",
+  "requestUrl" : "http://localhost:8080/elements/geometry"
+}

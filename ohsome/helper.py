@@ -177,7 +177,7 @@ def find_groupby_names(url):
     return [name.strip("/") for name in url.split("groupBy")[1:]]
 
 
-def extract_error_message_from_invalid_json(response):
+def extract_error_message_from_invalid_json(responsetext):
     """
     Extract error code and error message from invalid json returned from ohsome API
     Otherwise throws OhsomeException.
@@ -185,7 +185,7 @@ def extract_error_message_from_invalid_json(response):
     :return:
 
     """
-    responsetext = response.text
+    # responsetext = response.text
 
     message = "A broken response has been received"
 
@@ -209,7 +209,7 @@ def extract_error_message_from_invalid_json(response):
     if m:
         message += "; " + m.group(0)
 
-    m = re.search('"status" : "(.*)"', responsetext)
+    m = re.search('"status" : (\d+|".*")', responsetext)
     if m:
         status = m.group(1)
         message += "; " + m.group(0)
