@@ -6,7 +6,6 @@ The *ohsome-py* package helps you extract and analyse OpenStreetMap history data
 
 The ohsome API provides various endpoints for [data aggregation](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation), [data extraction](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=dataExtraction) and [contributions](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Contributions) to analyse the history of OSM data. Take a look at the [documentation of the ohsome API](https://docs.ohsome.org/ohsome-api/stable) or go through the [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) to get started on how to use *ohsome-py*.
 
-
 ## Installation
 
 *ohsome-py* requires
@@ -26,10 +25,10 @@ $ pip install ohsome
 
 ### Using Anaconda
 
-*ohsome-py* is not available through Anaconda yet. So if you are using Anaconda, create a new anaconda environment and install the required dependencies before installing *ohsome-py* using pip.
+*ohsome-py* is not available through Anaconda yet. So if you are using Anaconda, create a new anaconda environment and install the required dependencies before installing *ohsome-py* using pip. Please note that there might be issues when [using pip within anaconda](https://www.anaconda.com/blog/using-pip-in-a-conda-environment). To avoid issues make sure to install everythin in a new conda environment.
 
 ```
-$ conda create -n ohsome python=3.8 geopandas requests
+$ conda create -n ohsome python=3.8 geopandas>=0.9.0 requests>=2.25.1
 $ conda activate ohsome
 $ pip install ohsome --no-deps
 ```
@@ -149,11 +148,13 @@ If you want to contribute to this project, please fork the repository or create 
 
 **Install dependencies for development**
 
+All of these dependecies can be installed using pip. If you are using anaconda, you need to install the packages through conda-forge.
+
 * pytest = ^6.2.2
 * pytest-cov = >=2.0.0
 * pre-commit = >=2.1.1
 * black = ^20.8b1
-* pytest-random-order = ^1.0.4
+* pytest-random-order = ^1.0.4 (not available through anaconda)
 * yaspin = <1.4.1
 * tox = ^3.23.0
 
