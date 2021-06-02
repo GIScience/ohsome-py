@@ -209,7 +209,7 @@ def extract_error_message_from_invalid_json(responsetext):
     if m:
         message += "; " + m.group(0)
 
-    m = re.search('"status" : "(.*)"', responsetext)
+    m = re.search('"status" : (\d+|".*")', responsetext)
     if m:
         status = m.group(1)
         message += "; " + m.group(0)

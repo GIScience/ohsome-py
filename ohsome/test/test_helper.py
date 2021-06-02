@@ -70,3 +70,39 @@ def test_extract_error_message_from_invalid_json_no_message():
 
     assert expected_message == message
     assert expected_error_code == error_code
+
+def test_extract_error_message_from_invalid_json_outOfMemory():
+    """
+    Test whether error code and message are extracted correctly if the server reports out of memory
+    :return:
+    """
+
+    invalid_response = f"{script_path}/data/invalid_response_outOfMemory.txt"
+    with open(invalid_response) as src:
+        invalid_response_text = src.read()
+
+    expected_error_code = 507
+    expected_message = 'A broken response has been received: java.lang.OutOfMemoryError; "error" : "OK"; "timestamp" : "2021-06-01T11:38:52.821+0000"; "path" : "/elements/geometry"'
+
+    error_code, message = extract_error_message_from_invalid_json(invalid_response_text)
+
+    assert expected_message == message
+    assert expected_error_code == error_code
+
+def test_extract_error_message_from_invalid_json_custonErrorCode():
+    """
+    Test whether error code and message are extracted correctly if the server reports out of memory
+    :return:
+    """
+
+    invalid_response = f"{script_path}/data/invalid_response_customCode.txt"
+    with open(invalid_response) as src:
+        invalid_response_text = src.read()
+
+    expected_error_code = 413
+    expected_message = 'A broken response has been received: The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser time period.; "timestamp" : "2021-06-02T10:07:46.438591"; "requestUrl" : "http://localhost:8080/elements/geometry"; "status" : 413'
+
+    error_code, message = extract_error_message_from_invalid_json(invalid_response_text)
+
+    assert error_code == expected_error_code
+    assert message == expected_message

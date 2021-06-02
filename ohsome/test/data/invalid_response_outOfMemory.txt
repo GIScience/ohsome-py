@@ -1,0 +1,46 @@
+{
+  "attribution" : {
+    "url" : "https://ohsome.org/copyrights",
+    "text" : "© OpenStreetMap contributors"
+  },
+  "apiVersion" : "1.4.1",
+  "type" : "FeatureCollection",
+  "features" : [{
+    "type" : "Feature",
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [
+        [
+          [
+            8.7833329,
+            49.5470456
+          ],
+          [
+            8.7836152,
+            49.5466073
+          ],
+          [
+            8.7851933,
+            49.5470193
+          ],
+          [
+            8.785043,
+            49.5473679
+          ],
+          [
+            8.7849303,
+            49.5473947
+          ],
+          [
+            8.7833329,
+            49.5470456
+          ]
+        ]
+      ]
+    }{
+  "timestamp" : "2021-06-01T11:38:52.821+0000",
+  "status" : 200,
+  "error" : "OK",
+  "message" : "java.lang.OutOfMemoryError",
+  "path" : "/elements/geometry"
+}
