@@ -88,7 +88,7 @@ def test_disable_logging(custom_client):
 
     if os.path.exists(custom_client.log_dir):
         n_log_files_after = len(os.listdir(custom_client.log_dir))
-        assert n_log_files_before == n_log_files_after
+        assert n_log_files_after == n_log_files_before
 
 
 def test_enable_logging(custom_client_without_log, tmpdir):
@@ -110,7 +110,7 @@ def test_enable_logging(custom_client_without_log, tmpdir):
         )
 
     n_log_files_after = len(os.listdir(custom_client_without_log.log_dir))
-    assert n_log_files_before + 2 == n_log_files_after
+    assert n_log_files_after == n_log_files_before + 2
 
 
 def test_log_bpolys(custom_client_without_log, tmpdir):
@@ -134,7 +134,7 @@ def test_log_bpolys(custom_client_without_log, tmpdir):
             bpolys=bpolys, time=time, filter=fltr, timeout=timeout
         )
     n_log_files_after = len(os.listdir(custom_client_without_log.log_dir))
-    assert n_log_files_before + 3 == n_log_files_after
+    assert n_log_files_after == n_log_files_before + 3
 
 
 def test_metadata_invalid_baseurl(custom_client_with_wrong_url):
