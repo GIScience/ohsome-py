@@ -32,7 +32,7 @@ class OhsomeException(Exception):
         log_file_name = f"ohsome_{dt.datetime.now().strftime('%Y-%m-%dT%H%M%S')}"
         self.log_bpolys(log_dir, log_file_name)
         self.log_parameter(log_dir, log_file_name)
-        if self.response:
+        if self.response is not None:
             self.log_response(log_dir, log_file_name)
         # self.log_query(log_dir, log_file_name)
 
