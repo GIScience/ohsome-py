@@ -7,6 +7,8 @@ import pytest
 import logging
 import geopandas as gpd
 import ohsome
+from unittest.mock import patch, MagicMock
+from requests.exceptions import RequestException
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
@@ -161,3 +163,28 @@ def test_exception_invalid_parameters(custom_client):
             bboxes=bboxes, time=time, filter=fltr
         )
         "You need to give one groupByKey parameter" in e_info.value.message
+
+
+def test_exception_connection_reset(custom_client):
+    """
+    Test whether error without response (e.g. connection reset) is handled correctly
+    :param custom_client:
+    :return:
+    """
+
+    with patch(
+        "requests.Response.raise_for_status",
+        MagicMock(
+            side_effect=RequestException(
+                "This request was failed on purpose without response!"
+            )
+        ),
+    ), patch("ohsome.OhsomeException.log_response", MagicMock()) as mock_func:
+        bpolys = gpd.read_file(f"{script_path}/data/polygons.geojson")
+        time = "2018-01-01"
+        fltr = "name=Krautturm and type:way"
+
+        with pytest.raises(ohsome.OhsomeException):
+            custom_client.elements.count.post(bpolys=bpolys, time=time, filter=fltr)
+
+        mock_func.assert_not_called()
