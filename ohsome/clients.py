@@ -20,6 +20,7 @@ from ohsome.helper import (
 import os
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
+import numpy as np
 
 
 class _OhsomeBaseClient:
@@ -345,6 +346,9 @@ class _OhsomePostClient(_OhsomeBaseClient):
         :param params: Parameters for request
         :return:
         """
+        for i in params.keys():
+            if isinstance(params[i], np.ndarray):
+                params[i] = list(params[i])
         self._parameters = params.copy()
         try:
             format_boundary(self._parameters)
