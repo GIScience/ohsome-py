@@ -9,6 +9,7 @@ import os
 import geopandas as gpd
 import pandas as pd
 import pytest
+import numpy as np
 
 import ohsome
 from ohsome.constants import OHSOME_VERSION
@@ -338,6 +339,21 @@ def test_format_bboxes_list(custom_client):
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
     bboxes = "8.67066, 49.41423, 8.68177, 49.4204"
+    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
+
+
+def test_bbox_numpy(custom_client):
+    """
+    Tests whether numpy arrays are supported as input parameters
+    :return:
+    """
+
+    time = "2010-01-01"
+    fltr = "amenity=restaurant and type:node"
+
+    client = custom_client
+
+    bboxes = np.array([8.67066, 49.41423, 8.68177, 49.4204])
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
 
