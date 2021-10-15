@@ -28,7 +28,7 @@ $ pip install ohsome
 *ohsome-py* is not available through Anaconda yet. So if you are using Anaconda, create a new anaconda environment and install the required dependencies before installing *ohsome-py* using pip. Please note that there might be issues when [using pip within anaconda](https://www.anaconda.com/blog/using-pip-in-a-conda-environment). To avoid issues make sure to install everythin in a new conda environment.
 
 ```
-$ conda create -n ohsome python=3.8 geopandas>=0.9.0 requests>=2.25.1
+$ conda create -n ohsome python=3.8 geopandas">=0.9.0" requests">=2.25.1"
 $ conda activate ohsome
 $ pip install ohsome --no-deps
 ```
