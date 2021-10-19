@@ -74,7 +74,9 @@ class OhsomeResponse:
                 "This result type cannot be converted to a GeoPandas dataframe."
             )
 
-        if "@validFrom" in features.columns:
+        if features.empty:
+            pass
+        elif "@validFrom" in features.columns:
             features["@validFrom"] = pd.to_datetime(
                 features["@validFrom"], format="%Y-%m-%dT%H:%M:%SZ"
             )
