@@ -336,35 +336,10 @@ def test_empty_geodataframe(custom_client):
     filter = "name=Krautturm1 and type:way"
 
     client = custom_client
-    response = client.elements.bbox.post(
-        bboxes=bboxes, time=time, filter=filter
-    )
+    response = client.elements.bbox.post(bboxes=bboxes, time=time, filter=filter)
     with pytest.warns(None) as record:
         result = response.as_dataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert len(result) == 0
     assert len(record) == 0
-
-
-def test_empty_geodataframe(custom_client):
-    """
-    Tests whether an empty GeoDataFrame is created without a warning if no features are returned from ohsome
-    :return:
-    """
-    bboxes = "8.7137,49.4096,8.717,49.4119"
-    time = "2015-01-01,2016-01-01"
-    filter = "name=Krautturm1 and type:way"
-
-    client = custom_client
-    response = client.elements.bbox.post(
-        bboxes=bboxes, time=time, filter=filter
-    )
-    with pytest.warns(None) as record:
-        result = response.as_dataframe()
-
-    assert isinstance(result, gpd.GeoDataFrame)
-    assert len(result) == 0
-    assert len(record) == 0
-
-
