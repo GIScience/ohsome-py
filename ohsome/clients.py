@@ -38,6 +38,7 @@ class _OhsomeBaseClient:
         :param log: Log failed queries, default:True
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
+        :param user_agent: User agent passed with the request to the ohsome API
         """
         self.log = log
         self.log_dir = log_dir
@@ -95,6 +96,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         :param log: Log failed queries, default:True
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
+        :param user_agent: User agent passed with the request to the ohsome API
         """
         super(_OhsomeInfoClient, self).__init__(
             base_api_url, log, log_dir, cache, user_agent
@@ -190,6 +192,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         :param log: Log failed queries, default:True
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
+        :param user_agent: User agent passed with the request to the ohsome API
         """
         super(_OhsomePostClient, self).__init__(
             base_api_url, log, log_dir, cache, user_agent
