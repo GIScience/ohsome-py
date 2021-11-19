@@ -5,7 +5,7 @@
       "type": "Feature",
       "properties": {
         "id": 1,
-        "radius":  100
+        "radius": 100
       },
       "geometry": {
         "type": "Point",
@@ -19,7 +19,7 @@
       "type": "Feature",
       "properties": {
         "id": 2,
-        "radius":  150
+        "radius": 150
       },
       "geometry": {
         "type": "Point",
