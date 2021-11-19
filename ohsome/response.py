@@ -121,8 +121,8 @@ class OhsomeResponse:
         :return:
         """
         assert outfile.endswith("json"), "Output file must be json"
-        with open(outfile, "w") as dst:
-            json.dump(self.data, dst, indent=2)
+        with open(outfile, "w", encoding="utf-8") as dst:
+            json.dump(self.data, dst, indent=2, ensure_ascii=False)
 
     def _set_index(self, result_df, groupby_names):
         """
