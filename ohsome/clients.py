@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """OhsomeClient classes to build and handle requests to ohsome API"""
+import json
 import urllib
 
 import requests
@@ -289,13 +290,18 @@ class _OhsomePostClient(_OhsomeBaseClient):
             response.raise_for_status()
             response.json()
         except requests.exceptions.HTTPError as e:
-            ohsome_exception = OhsomeException(
-                message=e.response.json()["message"],
-                url=self._url,
-                params=self._parameters,
-                error_code=e.response.status_code,
-                response=e.response,
-            )
+            try:
+                error_message = e.response.json()["message"]
+            except json.decoder.JSONDecodeError:
+                error_message = f"Invalid response: Is {self._url} valid?"
+            finally:
+                ohsome_exception = OhsomeException(
+                    message=error_message,
+                    url=self._url,
+                    params=self._parameters,
+                    error_code=e.response.status_code,
+                    response=e.response,
+                )
         except requests.exceptions.ConnectionError as e:
             ohsome_exception = OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
