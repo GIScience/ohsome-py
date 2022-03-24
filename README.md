@@ -35,7 +35,7 @@ $ pip install ohsome --no-deps
 
 ### Dependencies for Jupyter Notebooks
 
-If you want to run the Juypter Notebook [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) you also need to install `jupyter` and `matplotlib` e.g.
+If you want to run the Jupyter Notebook [Tutorial](https://github.com/GIScience/ohsome-py/blob/master/notebooks/Tutorial.ipynb) you also need to install `jupyter` and `matplotlib` e.g.
 
 ```
 $ pip install jupyter matplotlib
