@@ -8,26 +8,27 @@ __email__ = "christina.ludwig@uni-heidelberg.de"
 
 from dataclasses import dataclass
 from typing import List, Union, Dict, Optional
-import pydantic
-from pydantic import BaseModel
 
 
-class OhsomeFilter(BaseModel):
+@dataclass
+class OhsomeFilter:
     """Contains filter parameters"""
 
-    tags: Optional[Dict[str, Union[List[str], str]]]
-    geoms: Optional[List[str]]
-    types: Optional[List[str]]
+    tags: Optional[Dict[str, Union[List[str], str]]] = None
+    geoms: Optional[List[str]] = None
+    types: Optional[List[str]] = None
 
-    @pydantic.validator("geoms", "types", pre=True)
-    @classmethod
-    def validate_geoms_tags(cls, value) -> List[str]:
+    def validate(self):
         """Validates geoms and tags parameters"""
-        if isinstance(value, str):
-            return [value]
-        return value
+        if isinstance(self.geoms, str):
+            self.geoms = [self.geoms]
+        elif self.geoms is None:
+            self.geoms = []
+        if isinstance(self.types, str):
+            self.types = [self.types]
+        elif self.types is None:
+            self.types = []
 
-    class Config:
-        """Config"""
-
-        extra = "forbid"
+    def __post_init__(self):
+        """Post init"""
+        self.validate()

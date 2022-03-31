@@ -5,7 +5,6 @@
 __author__ = "Christina Ludwig, GIScience Research Group, Heidelberg University"
 __email__ = "christina.ludwig@uni-heidelberg.de"
 
-import pydantic
 import pytest
 
 from ohsome.filter import OhsomeFilter
@@ -34,7 +33,7 @@ def test_ohsomefilter_typo():
         "tags": {"natural": ["tree", "tree_row"], "landuse": "forest"},
         "geos": "polygon",
     }
-    with pytest.raises(pydantic.error_wrappers.ValidationError):
+    with pytest.raises(TypeError):
         OhsomeFilter(**filter_dict)
 
 
