@@ -13,10 +13,12 @@ from ohsome.constants import (
     OHSOME_BASE_API_URL,
     OHSOME_VERSION,
 )
+from ohsome.filter import OhsomeFilter
 from ohsome.helper import (
     extract_error_message_from_invalid_json,
     format_boundary,
     format_time,
+    format_filter,
 )
 import os
 from requests.adapters import HTTPAdapter
@@ -369,6 +371,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 url=self._url,
             )
         format_time(self._parameters)
+        self._parameters["filter"] = format_filter(self._parameters["filter"])
 
     def _construct_resource_url(self, endpoint=None):
         """

@@ -4,6 +4,7 @@
 """Ohsome utility functions"""
 
 import datetime
+from typing import Union
 
 import geopandas as gpd
 import pandas as pd
@@ -11,6 +12,8 @@ import pandas as pd
 from ohsome import OhsomeException
 
 import re
+
+from ohsome.filter import OhsomeFilter
 
 
 def format_time(params):
@@ -167,6 +170,44 @@ def format_bpolys(bpolys):
         return bpolys.to_json(na="drop")
     else:
         return bpolys
+
+
+def format_filter(ohsome_filter: Union[str, OhsomeFilter]) -> str:
+    """
+    Format filter parameter
+    :param ohsome_filter: Filter for ohsome request
+    """
+    if isinstance(ohsome_filter, OhsomeFilter):
+        return build_filter(ohsome_filter)
+    return ohsome_filter
+
+
+def build_filter(ohsome_filter: OhsomeFilter) -> str:
+    """
+    Builds the filter string based a dictionary of tags
+    :param ohsome_filter: Dictionary containing tags, geoms and type information for ohsome request
+    :return:
+    """
+    tag_filters = []
+    for key, values in ohsome_filter.tags.items():
+        if isinstance(values, list):
+            tag_filter = "{0} in ({1})".format(key, ", ".join(values))
+        elif isinstance(values, str):
+            tag_filter = f"{key}={values}"
+        else:
+            raise TypeError(f"{type(values)} not supported for tag values")
+        tag_filters.append(tag_filter)
+    filter_str = "({0})".format(" or ".join(tag_filters))
+    if ohsome_filter.geoms:
+        geom_filter = " or ".join(
+            ["geometry:{0}".format(i) for i in ohsome_filter.geoms]
+        )
+        filter_str += f" and ({geom_filter})"
+    if ohsome_filter.types:
+        type_filter = " or ".join(["type:{0}".format(i) for i in ohsome_filter.types])
+        filter_str += f" and ({type_filter})"
+
+    return filter_str
 
 
 def find_groupby_names(url):

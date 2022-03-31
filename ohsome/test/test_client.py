@@ -13,6 +13,7 @@ import numpy as np
 
 import ohsome
 from ohsome.constants import OHSOME_VERSION
+from ohsome.filter import OhsomeFilter
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
@@ -340,6 +341,19 @@ def test_format_bboxes_list(custom_client):
 
     bboxes = "8.67066, 49.41423, 8.68177, 49.4204"
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
+
+
+def test_format_filter(custom_client):
+    """
+    Test whether a GeoDataFrame obejct is formatted correctly for ohsome api.
+    :return:
+    """
+    bpolys = gpd.read_file(f"{script_path}/data/polygons.geojson")
+    time = "2018-01-01"
+    filter_params = {"tags": {"amenity": "restaurant"}, "types": "node"}
+    ohsome_filter = OhsomeFilter(**filter_params)
+
+    custom_client.elements.count.post(bpolys=bpolys, time=time, filter=ohsome_filter)
 
 
 def test_bbox_numpy(custom_client):
