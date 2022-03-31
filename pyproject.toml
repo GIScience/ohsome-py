@@ -8,7 +8,7 @@ readme = 'README.md'
 license = "GPL-3.0"
 
 [tool.poetry.dependencies]
-python = ">=3.6,<4.0"
+python = ">=3.6.1,<4.0"
 requests = "^2.25.1"
 pandas = [{ version = "<0.25.3", python = "<3.7" }, { version = ">=0.25.3", python = ">=3.7, <4" }]
 numpy = [{ version = "<1.20.1", python = ">=3.0,<3.7" }, { version = ">=1.20.1", python = ">=3.7,<4" }]
@@ -16,6 +16,7 @@ geopandas = "^0.9.0"
 pyproj = "^3.0.0"
 multidict = "^5.1.0"
 pip = ">=21.0.1"
+pydantic = "^1.9.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
