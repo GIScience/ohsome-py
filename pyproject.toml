@@ -3,7 +3,7 @@ name = "ohsome"
 # update version in ohsome/constants.py as well
 version = "0.1.0"
 description = "A Python client for the ohsome API"
-authors = ["HeiGIT ohsome team <ohsome@heigit.org>"]
+authors = ["HeiGIT ohsome team <ohsome@heigit.org>", "GIScience Research Group, Heidelberg University"]
 repository = "https://github.com/GIScience/ohsome-py"
 readme = 'README.md'
 license = "GPL-3.0"
