@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     services:
       ohsome-api:
-        image: julianpsotta/ohsome-api:1.3.2
+        image: julianpsotta/ohsome-api:1.4.1
         ports:
           - 8080:8080
     steps:
