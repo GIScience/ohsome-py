@@ -69,7 +69,7 @@ def test_invalid_url2():
     client = ohsome.OhsomeClient(base_api_url=base_api_url, log=False)
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
-    assert "Invalid response" in e_info.value.message
+    assert "Invalid URL:" in e_info.value.message
 
 
 def test_invalid_endpoint():

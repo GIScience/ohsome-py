@@ -293,7 +293,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
             try:
                 error_message = e.response.json()["message"]
             except json.decoder.JSONDecodeError:
-                error_message = f"Invalid response: Is {self._url} valid?"
+                error_message = f"Invalid URL: Is {self._url} valid?"
             finally:
                 ohsome_exception = OhsomeException(
                     message=error_message,

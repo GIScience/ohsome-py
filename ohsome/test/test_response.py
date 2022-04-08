@@ -341,5 +341,5 @@ def test_empty_geodataframe(custom_client):
         result = response.as_dataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
-    assert len(result) == 0
+    assert result.empty
     assert len(record) == 0
