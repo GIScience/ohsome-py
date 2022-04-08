@@ -23,8 +23,8 @@ class OhsomeResponse:
         """
         Converts the ohsome response to a pandas.DataFrame or a geopandas.GeoDataFrame if the
         response contains geometries
-        :param multi_index:
-        :return:
+        :param multi_index: If true returns the dataframe with a multi index
+        :return: pandas.DataFrame or geopandas.GeoDataFrame
         """
         if "features" not in self.data.keys():
             return self._as_dataframe(multi_index)
@@ -34,8 +34,10 @@ class OhsomeResponse:
     def _as_dataframe(self, multi_index=True):
         """
         Converts the ohsome response to a pandas.DataFrame
-        :return: pandas dataframe
+        :param multi_index: If true returns the dataframe with a multi index
+        :return: pandas.DataFrame
         """
+
         groupby_names = []
         if "result" in self.data.keys():
             result_df = pd.DataFrame().from_records(self.data["result"])
@@ -65,18 +67,21 @@ class OhsomeResponse:
     def _as_geodataframe(self, multi_index=True):
         """
         Converts the ohsome response to a geopandas.GeoDataFrame
-        :return:
+        :param multi_index: If true returns the dataframe with a multi index
+        :return: geopandas.GeoDataFrame
         """
+
+        if len(self.data["features"]) == 0:
+            return gpd.GeoDataFrame(crs="epsg:4326", columns=["@osmId", "geometry"])
+
         try:
             features = gpd.GeoDataFrame().from_features(self.data, crs="epsg:4326")
         except TypeError():
             raise TypeError(
-                "This result type cannot be converted to a GeoPandas dataframe."
+                "This result type cannot be converted to a GeoPandas GeoDataFrame object."
             )
 
-        if features.empty:
-            pass
-        elif "@validFrom" in features.columns:
+        if "@validFrom" in features.columns:
             features["@validFrom"] = pd.to_datetime(
                 features["@validFrom"], format="%Y-%m-%dT%H:%M:%SZ"
             )
@@ -116,8 +121,8 @@ class OhsomeResponse:
         :return:
         """
         assert outfile.endswith("json"), "Output file must be json"
-        with open(outfile, "w") as dst:
-            json.dump(self.data, dst, indent=2)
+        with open(outfile, "w", encoding="utf-8") as dst:
+            json.dump(self.data, dst, indent=2, ensure_ascii=False)
 
     def _set_index(self, result_df, groupby_names):
         """

@@ -55,6 +55,23 @@ def test_invalid_url():
     )
 
 
+def test_invalid_url2():
+    """
+    Test whether an OhsomeException is raises if the ohsome API url is invalid, i.e.
+    https://api.ohsome.org/ instead of https://api.ohsome.org/v1
+    :return:
+    """
+    base_api_url = "https://api.ohsome.org/"
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2018-01-01"
+    fltr = "name=Krautturm and type:way"
+
+    client = ohsome.OhsomeClient(base_api_url=base_api_url, log=False)
+    with pytest.raises(ohsome.OhsomeException) as e_info:
+        client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
+    assert "Invalid URL:" in e_info.value.message
+
+
 def test_invalid_endpoint():
     """
     Test whether request can be sent to alternative url
