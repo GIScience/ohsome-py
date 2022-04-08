@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """OhsomeClient classes to build and handle requests to ohsome API"""
+import json
 import urllib
 
 import requests
@@ -38,6 +39,7 @@ class _OhsomeBaseClient:
         :param log: Log failed queries, default:True
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
+        :param user_agent: User agent passed with the request to the ohsome API
         """
         self.log = log
         self.log_dir = log_dir
@@ -95,6 +97,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         :param log: Log failed queries, default:True
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
+        :param user_agent: User agent passed with the request to the ohsome API
         """
         super(_OhsomeInfoClient, self).__init__(
             base_api_url, log, log_dir, cache, user_agent
@@ -190,6 +193,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         :param log: Log failed queries, default:True
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
+        :param user_agent: User agent passed with the request to the ohsome API
         """
         super(_OhsomePostClient, self).__init__(
             base_api_url, log, log_dir, cache, user_agent
@@ -286,13 +290,18 @@ class _OhsomePostClient(_OhsomeBaseClient):
             response.raise_for_status()
             response.json()
         except requests.exceptions.HTTPError as e:
-            ohsome_exception = OhsomeException(
-                message=e.response.json()["message"],
-                url=self._url,
-                params=self._parameters,
-                error_code=e.response.status_code,
-                response=e.response,
-            )
+            try:
+                error_message = e.response.json()["message"]
+            except json.decoder.JSONDecodeError:
+                error_message = f"Invalid URL: Is {self._url} valid?"
+            finally:
+                ohsome_exception = OhsomeException(
+                    message=error_message,
+                    url=self._url,
+                    params=self._parameters,
+                    error_code=e.response.status_code,
+                    response=e.response,
+                )
         except requests.exceptions.ConnectionError as e:
             ohsome_exception = OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
