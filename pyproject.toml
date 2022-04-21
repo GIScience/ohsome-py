@@ -25,7 +25,7 @@ black = "^20.8b1"
 pytest-random-order = "^1.0.4"
 yaspin = "<1.4.1"
 tox = "^3.23.0"
-pre-commit = "^2.9.2"
+pre-commit = "2.9.2"
 
 [tool.dephell.main]
 from = { format = "poetry", path = "pyproject.toml" }
