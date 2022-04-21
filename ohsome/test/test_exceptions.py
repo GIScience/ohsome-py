@@ -3,6 +3,8 @@
 """Test OhsomeExceptions"""
 
 import os
+from pathlib import Path
+
 import pytest
 import logging
 import geopandas as gpd
@@ -110,31 +112,33 @@ def test_disable_logging(custom_client):
         assert n_log_files_after == n_log_files_before
 
 
-def test_enable_logging(custom_client_without_log, tmpdir):
-    """
-    Tests whether logging is disabled so no new log file if created if an OhsomeException occurs
-    :return:
-    """
-    custom_client_without_log.log = True
-    custom_client_without_log.log_dir = tmpdir.mkdir("logs").strpath
-
-    bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
-    fltr = "building=* and type:way"
-    timeout = 0.001
-    n_log_files_before = len(os.listdir(custom_client_without_log.log_dir))
-
-    with pytest.raises(ohsome.OhsomeException):
-        custom_client_without_log.elements.geometry.post(
-            bboxes=bboxes, filter=fltr, timeout=timeout
-        )
-
-    n_log_files_after = len(os.listdir(custom_client_without_log.log_dir))
-    assert n_log_files_after == n_log_files_before + 2
+# def test_enable_logging(custom_client_without_log, tmpdir):
+#     """
+#     Tests whether two log files are created
+#     :return:
+#     """
+#     custom_client_without_log.log = True
+#     custom_client_without_log.log_dir = tmpdir.mkdir("logs").strpath
+#
+#     bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
+#     fltr = "building=* and type:way"
+#     timeout = 0.001
+#
+#     with pytest.raises(ohsome.OhsomeException):
+#         custom_client_without_log.elements.geometry.post(
+#             bboxes=bboxes, filter=fltr, timeout=timeout
+#         )
+#     log_file_patterns = ["ohsome_*.json", "ohsome_*raw.txt"]
+#     for p in log_file_patterns:
+#         log_file = list(Path(custom_client_without_log.log_dir).glob(p))
+#         assert len(log_file) == 1, f"Log file {p} not found"
+#         logger.info(f"Found log file: {log_file[0].name}")
+#         log_file[0].unlink()
 
 
 def test_log_bpolys(custom_client_without_log, tmpdir):
     """
-    Test whether a GeoDataFrame obejct is formatted correctly for ohsome api.
+    Test whether three log files are created when request fails (*bpolys.geojson, *.json and *_raw.txt)
     :return:
     """
 
@@ -146,14 +150,16 @@ def test_log_bpolys(custom_client_without_log, tmpdir):
     fltr = "amenity=restaurant and type:node"
     timeout = 0.001
 
-    n_log_files_before = len(os.listdir(custom_client_without_log.log_dir))
-
     with pytest.raises(ohsome.OhsomeException):
         custom_client_without_log.elements.count.post(
             bpolys=bpolys, time=time, filter=fltr, timeout=timeout
         )
-    n_log_files_after = len(os.listdir(custom_client_without_log.log_dir))
-    assert n_log_files_after == n_log_files_before + 3
+    log_file_patterns = ["ohsome_*_bpolys.geojson", "ohsome_*.json", "ohsome_*raw.txt"]
+    for p in log_file_patterns:
+        log_file = list(Path(custom_client_without_log.log_dir).glob(p))
+        assert len(log_file) == 1, f"Log file {p} not found"
+        logger.info(f"Found log file: {log_file[0].name}")
+        log_file[0].unlink()
 
 
 def test_metadata_invalid_baseurl(custom_client_with_wrong_url):
