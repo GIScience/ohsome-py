@@ -12,7 +12,7 @@ on:
 jobs:
   linux-tests:
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         config:
           - python-version: 3.7
