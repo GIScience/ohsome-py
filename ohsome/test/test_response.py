@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Tests for ohsome API response"""
+import warnings
 
 import geopandas as gpd
 import pandas as pd
-import pytest
 
 
 def test_elements_count(custom_client):
@@ -337,9 +337,9 @@ def test_empty_geodataframe(custom_client):
 
     client = custom_client
     response = client.elements.bbox.post(bboxes=bboxes, time=time, filter=filter)
-    with pytest.warns(None) as record:
+    with warnings.catch_warnings():
+        warnings.simplefilter(action="error")
         result = response.as_dataframe()
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert result.empty
-    assert len(record) == 0
