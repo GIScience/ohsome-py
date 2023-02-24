@@ -8,23 +8,21 @@ readme = 'README.md'
 license = "GPL-3.0"
 
 [tool.poetry.dependencies]
-python = ">=3.7,<4.0"
+python = "^3.8"
 requests = "^2.25.1"
-pandas = [{ version = "<=0.25.3", python = "<3.8" }, { version = "^1.0.5", python = ">=3.8, <4" }]
-numpy = [{ version = "<=1.19.5", python = "3.7" }, { version = "^1.20.0", python = ">=3.8, <4" }]
-geopandas = "^0.10.0"
+pandas = "^1.0.5"
+numpy = "^1.20.0"
+geopandas = "^0.12.0"
 pyproj = "^3.0.0"
-multidict = "^5.1.0"
-pip = "^22.0.4"
 urllib3 = "^1.26"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.1"
-pytest-cov = "^3.0.0"
-black = "^22.3.0"
+pytest-cov = "^4.0.0"
+black = "^23.1.0"
 pytest-random-order = "^1.0.4"
-tox = "^3.23.0"
-pre-commit = "^2.9.2"
+tox = "^4.4.6"
+pre-commit = "^3.1.0"
 
 [tool.dephell.main]
 from = { format = "poetry", path = "pyproject.toml" }
