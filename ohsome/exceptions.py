@@ -83,18 +83,5 @@ class OhsomeException(Exception):
             with open(log_file_bpolys, "w") as dst:
                 json.dump(obj=json.loads(bpolys), fp=dst, indent=4)
 
-    def log_query(self, log_dir, log_file_name):
-        """
-        Log ohsome response to file (not implemented)
-        :param log_file_response:
-        :return:
-        """
-        # log_file_response = os.path.join(
-        #    log_dir,
-        #    f"{log_file_name}_query.json",
-        # )
-        # with open(log_file_response, "w") as dst:
-        # put code here to format and log query to a file so it can be easily reproduced
-
     def __str__(self):
         return f"OhsomeException ({self.error_code}): {self.message}"
