@@ -185,7 +185,7 @@ def test_exception_invalid_parameters(custom_client):
         custom_client.elements.count.groupByTag.post(
             bboxes=bboxes, time=time, filter=fltr
         )
-        "You need to give one groupByKey parameter" in e_info.value.message
+        assert "You need to give one groupByKey parameter" in e_info.value.message
 
 
 def test_exception_connection_reset(custom_client):
