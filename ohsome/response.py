@@ -76,7 +76,7 @@ class OhsomeResponse:
 
         try:
             features = gpd.GeoDataFrame().from_features(self.data, crs="epsg:4326")
-        except TypeError():
+        except TypeError:
             raise TypeError(
                 "This result type cannot be converted to a GeoPandas GeoDataFrame object."
             )
