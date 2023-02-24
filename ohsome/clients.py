@@ -17,6 +17,7 @@ from ohsome.helper import (
     extract_error_message_from_invalid_json,
     format_boundary,
     format_time,
+    format_lists,
 )
 import os
 from requests.adapters import HTTPAdapter
@@ -278,7 +279,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         self._format_parameters(params)
         return self._handle_request()
 
-    def _handle_request(self):
+    def _handle_request(self) -> OhsomeResponse:
         """
         Handles request to ohsome API
         :return:
@@ -340,14 +341,14 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 error_code=404,
                 params=self._parameters,
             )
-        finally:
-            # If there has been an error and logging is enabled, write it to file
-            if ohsome_exception:
-                if self.log:
-                    ohsome_exception.log(self.log_dir)
-                raise ohsome_exception
-            else:
-                return OhsomeResponse(response, url=self._url, params=self._parameters)
+
+        # If there has been an error and logging is enabled, write it to file
+        if ohsome_exception:
+            if self.log:
+                ohsome_exception.log(self.log_dir)
+            raise ohsome_exception
+
+        return OhsomeResponse(response, url=self._url, params=self._parameters)
 
     def _format_parameters(self, params):
         """
@@ -368,7 +369,8 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 params=self._parameters,
                 url=self._url,
             )
-        format_time(self._parameters)
+        self._parameters = format_time(self._parameters)
+        self._parameters = format_lists(self._parameters)
 
     def _construct_resource_url(self, endpoint=None):
         """

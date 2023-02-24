@@ -13,24 +13,23 @@ from ohsome import OhsomeException
 import re
 
 
-def format_time(params):
+def format_time(params: dict) -> dict:
     """
     Formats the 'time' parameter given as string, list of dates or pandas.Series or pandas.DateTimeIndex
     :param params:
     :return:
     """
-    if params["time"] is None:
-        return False
     if isinstance(params["time"], pd.DatetimeIndex):
         params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S").tolist()
     elif isinstance(params["time"], pd.Series):
         params["time"] = params["time"].tolist()
     elif isinstance((params["time"]), list):
         if isinstance((params["time"])[0], datetime.datetime):
-            params["time"] = [x.strftime("%Y-%m-%dT%H:%M:%S") for x in params["time"]]
+            params["time"] = [x.isoformat() for x in params["time"]]
     elif isinstance(params["time"], datetime.datetime):
         params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S")
-    return False
+
+    return params
 
 
 def format_boundary(params):
@@ -167,6 +166,18 @@ def format_bpolys(bpolys):
         return bpolys.to_json(na="drop")
     else:
         return bpolys
+
+
+def format_lists(parameters: dict) -> dict:
+    """
+    Converts parameters of type list to strings using ',' as seperator.
+    :param parameters: request parameters
+    :return: the modified parameters
+    """
+    for k, v in parameters.items():
+        if isinstance(v, list):
+            parameters[k] = ",".join(v)
+    return parameters
 
 
 def find_groupby_names(url):

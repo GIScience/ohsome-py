@@ -67,7 +67,6 @@ def test_user_agent(custom_client):
     """
     client = custom_client
     resp = client._session().get(client._url)
-    print(resp.request.headers)
     used_user_agent = resp.request.headers["user-agent"].split("/")
     assert used_user_agent[0] == "ohsome-py"
     assert used_user_agent[1] == OHSOME_VERSION
@@ -79,7 +78,7 @@ def test_check_time_parameter_list(custom_client):
     :return:
     """
     time = pd.date_range("2018-01-01", periods=3, freq="D")
-    time = list(time.strftime("%Y-%m-%dT%H:%M:%S").tolist())
+    time = time.strftime("%Y-%m-%dT%H:%M:%S").tolist()
     bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
 

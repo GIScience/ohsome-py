@@ -4,9 +4,13 @@
 
 ### Added
 
- - added support for python 3.11
- - added support for geopandas up to v0.12.0
+ - support for python 3.11
+ - support for geopandas up to v0.12.0
 
 ### Removed
 
- - removed support for python 3.7
+ - support for python 3.7
+
+### Fixed
+
+ - wrong formatting of list parameters for ohsome requests if not given as string
