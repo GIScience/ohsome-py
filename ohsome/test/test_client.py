@@ -19,38 +19,38 @@ logger = logging.getLogger(__name__)
 
 
 @pytest.mark.vcr
-def test_get_metadata(custom_client):
+def test_get_metadata(base_client):
     """Test get metadata."""
-    _ = custom_client.metadata
-    _ = custom_client.base_api_url
+    _ = base_client.metadata
+    _ = base_client.base_api_url
 
 
 @pytest.mark.vcr
-def test_start_and_end_timestamp(custom_client):
+def test_start_and_end_timestamp(base_client):
     """
     Get start timestamp
     :return:
     """
-    assert custom_client.start_timestamp == "2007-10-08T00:00:00Z"
-    assert isinstance(custom_client.end_timestamp, str)
+    assert base_client.start_timestamp == "2007-10-08T00:00:00Z"
+    assert isinstance(base_client.end_timestamp, str)
 
 
 @pytest.mark.vcr
-def test_api_version(custom_client):
+def test_api_version(base_client):
     """
     Get ohsome API version
     :return:
     """
-    assert isinstance(custom_client.api_version, str)
+    assert isinstance(base_client.api_version, str)
 
 
 @pytest.mark.vcr
-def test_user_agent(custom_client):
+def test_user_agent(base_client):
     """
     Checks user agent set by ohsome-py
     :return:
     """
-    client = custom_client
+    client = base_client
     resp = client._session().get(client._url)
     used_user_agent = resp.request.headers["user-agent"].split("/")
     assert used_user_agent[0] == "ohsome-py"
@@ -58,7 +58,7 @@ def test_user_agent(custom_client):
 
 
 @pytest.mark.vcr
-def test_check_time_parameter_list(custom_client):
+def test_check_time_parameter_list(base_client):
     """
     Checks whether time provided as list of strings is converted correctly
     :return:
@@ -68,12 +68,12 @@ def test_check_time_parameter_list(custom_client):
     bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
 
-    client = custom_client
+    client = base_client
     client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
 @pytest.mark.vcr
-def test_check_time_parameter_datetimeindex(custom_client):
+def test_check_time_parameter_datetimeindex(base_client):
     """
     Checks whether time provided as pandas.DateTimeIndex is converted correctly
     :return:
@@ -82,12 +82,12 @@ def test_check_time_parameter_datetimeindex(custom_client):
     bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
 
-    client = custom_client
+    client = base_client
     client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
 @pytest.mark.vcr
-def test_check_time_parameter_series(custom_client):
+def test_check_time_parameter_series(base_client):
     """
     Checks whether time provided as pandas.DateTimeIndex is converted correctly
     :return:
@@ -96,19 +96,19 @@ def test_check_time_parameter_series(custom_client):
     bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
 
-    client = custom_client
+    client = base_client
     client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
 @pytest.mark.vcr
-def test_check_time_parameter_datetime(custom_client):
+def test_check_time_parameter_datetime(base_client):
     """
     Checks whether time provided as pandas.Series is converted correctly
     :return:
     """
     bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
-    client = custom_client
+    client = base_client
 
     time = [
         dt.datetime.strptime("2018-01-01", "%Y-%m-%d"),
@@ -120,14 +120,14 @@ def test_check_time_parameter_datetime(custom_client):
 
 
 @pytest.mark.vcr
-def test_end_timestamp_as_time_input(custom_client):
+def test_end_timestamp_as_time_input(base_client):
     """
     Test whether the end_timestamp value can be used as input to a query as time
     :return:
     """
     bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
-    client = custom_client
+    client = base_client
 
     time = client.end_timestamp
     response = client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
@@ -136,7 +136,7 @@ def test_end_timestamp_as_time_input(custom_client):
 
 
 @pytest.mark.vcr
-def test_format_bcircles_dataframe(custom_client):
+def test_format_bcircles_dataframe(base_client):
     """
     Test whether a DataFrame object given as 'bcircles' is formatted correctly.
     :return:
@@ -152,21 +152,21 @@ def test_format_bcircles_dataframe(custom_client):
     time = "2018-01-01"
     fltr = "amenity=restaurant and type:way"
 
-    client = custom_client
+    client = base_client
     client.elements.count.groupByBoundary.post(
         bcircles=bcircles, time=time, filter=fltr
     )
 
 
 @pytest.mark.vcr
-def test_format_bcircles_list(custom_client):
+def test_format_bcircles_list(base_client):
     """
     Test whether a DataFrame object given as 'bcircles' is formatted correctly.
     :return:
     """
     time = "2018-01-01"
     fltr = "amenity=restaurant and type:node"
-    client = custom_client
+    client = base_client
 
     bcircles = [[8.695, 49.41, 200], [8.696, 49.41, 200]]
     client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
@@ -184,7 +184,7 @@ def test_format_bcircles_list(custom_client):
 
 
 @pytest.mark.vcr
-def test_format_bcircles_geodataframe(custom_client):
+def test_format_bcircles_geodataframe(base_client):
     """
     Test whether a GeoDataFrame object given as 'bcircles' is formatted correctly.
     :return:
@@ -193,14 +193,14 @@ def test_format_bcircles_geodataframe(custom_client):
     time = "2014-01-01/2017-01-01/P1Y"
     fltr = "amenity=restaurant and type:way"
 
-    client = custom_client
+    client = base_client
     client.elements.count.groupByBoundary.post(
         bcircles=bcircles, time=time, filter=fltr
     )
 
 
 @pytest.mark.vcr
-def test_format_bcircles_geodataframe_geometry_error(custom_client):
+def test_format_bcircles_geodataframe_geometry_error(base_client):
     """
     Test whether a GeoDataFrame object given as 'bcircles' is formatted correctly.
     :return:
@@ -209,7 +209,7 @@ def test_format_bcircles_geodataframe_geometry_error(custom_client):
     time = "2018-01-01"
     fltr = "amenity=restaurant and type:way"
 
-    client = custom_client
+    client = base_client
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.groupByBoundary.post(
             bcircles=bcircles, time=time, filter=fltr
@@ -222,7 +222,7 @@ def test_format_bcircles_geodataframe_geometry_error(custom_client):
 
 
 @pytest.mark.vcr
-def test_format_bpolys(custom_client):
+def test_format_bpolys(base_client):
     """
     Test whether a GeoDataFrame obejct is formatted correctly for ohsome api.
     :return:
@@ -231,12 +231,12 @@ def test_format_bpolys(custom_client):
     time = "2018-01-01"
     fltr = "amenity=restaurant and type:node"
 
-    client = custom_client
+    client = base_client
     client.elements.count.post(bpolys=bpolys, time=time, filter=fltr)
 
 
 @pytest.mark.vcr
-def test_format_bboxes_dataframe(custom_client):
+def test_format_bboxes_dataframe(base_client):
     """
     Tests whether input parameter given as a pandas.DataFrame is formatted correctly to a string
     :return:
@@ -246,12 +246,12 @@ def test_format_bboxes_dataframe(custom_client):
     time = "2010-01-01"
     fltr = "amenity=restaurant and type:node"
 
-    client = custom_client
+    client = base_client
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
 
 @pytest.mark.vcr
-def test_format_bboxes_dataframe_missing_columns(custom_client):
+def test_format_bboxes_dataframe_missing_columns(base_client):
     """
     Tests whether input parameter given as a pandas.DataFrame is formatted correctly to a string
     :return:
@@ -262,7 +262,7 @@ def test_format_bboxes_dataframe_missing_columns(custom_client):
     time = "2010-01-01"
     fltr = "amenity=restaurant and type:node"
 
-    client = custom_client
+    client = base_client
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
     if "occurred at index 0" in e_info.value.message:
@@ -279,7 +279,7 @@ def test_format_bboxes_dataframe_missing_columns(custom_client):
 
 
 @pytest.mark.vcr
-def test_format_bboxes_geodataframe(custom_client):
+def test_format_bboxes_geodataframe(base_client):
     """
     Tests whether input parameter given as a pandas.DataFrame is formatted correctly to a string
     :return:
@@ -288,7 +288,7 @@ def test_format_bboxes_geodataframe(custom_client):
     time = "2010-01-01/2011-01-01/P1Y"
     fltr = "amenity=restaurant and type:node"
 
-    client = custom_client
+    client = base_client
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.post(bboxes=data, time=time, filter=fltr)
     if "occurred at index 0" in e_info.value.message:
@@ -305,7 +305,7 @@ def test_format_bboxes_geodataframe(custom_client):
 
 
 @pytest.mark.vcr
-def test_format_bboxes_list(custom_client):
+def test_format_bboxes_list(base_client):
     """
     Tests whether parameter bboxes given as a list is formatted correctly
     :return:
@@ -313,7 +313,7 @@ def test_format_bboxes_list(custom_client):
     time = "2010-01-01"
     fltr = "amenity=restaurant and type:node"
 
-    client = custom_client
+    client = base_client
 
     bboxes = [
         [8.67066, 49.41423, 8.68177, 49.4204],
@@ -341,7 +341,7 @@ def test_format_bboxes_list(custom_client):
 
 
 @pytest.mark.vcr
-def test_bbox_numpy(custom_client):
+def test_bbox_numpy(base_client):
     """
     Tests whether numpy arrays are supported as input parameters
     :return:
@@ -350,14 +350,14 @@ def test_bbox_numpy(custom_client):
     time = "2010-01-01"
     fltr = "amenity=restaurant and type:node"
 
-    client = custom_client
+    client = base_client
 
     bboxes = np.array([8.67066, 49.41423, 8.68177, 49.4204])
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
 
 @pytest.mark.vcr
-def test_post_with_endpoint_string(custom_client):
+def test_post_with_endpoint_string(base_client):
     """
     Tests whether a request can be sent of by providing the endpoint url as a string to post()
     :return:
@@ -367,7 +367,7 @@ def test_post_with_endpoint_string(custom_client):
     filter = "name=Krautturm and type:way"
 
     endpoint = "contributions/latest/bbox"
-    client = custom_client
+    client = base_client
     response = client.post(endpoint=endpoint, bboxes=bboxes, time=time, filter=filter)
     result = response.as_dataframe()
     assert isinstance(result, gpd.GeoDataFrame)
@@ -375,7 +375,7 @@ def test_post_with_endpoint_string(custom_client):
 
     # Test query with leading and ending slashes
     endpoint = "/contributions/latest/bbox/"
-    client = custom_client
+    client = base_client
     response = client.post(endpoint=endpoint, bboxes=bboxes, time=time, filter=filter)
     result = response.as_dataframe()
 

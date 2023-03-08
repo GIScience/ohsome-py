@@ -9,7 +9,7 @@ import pandas as pd
 
 
 @pytest.mark.vcr
-def test_elements_count(custom_client):
+def test_elements_count(base_client):
     """
     Tests whether the result of elements.count is formatted correctly as a pandas.DataFrame. If this works
     .area, .length and .permiter should work as well.
@@ -19,7 +19,7 @@ def test_elements_count(custom_client):
     time = "2019-12-10"
     fltr = "amenity=cafe and type:node"
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
     result = response.as_dataframe()
 
@@ -29,7 +29,7 @@ def test_elements_count(custom_client):
 
 
 @pytest.mark.vcr
-def test_elements_density(custom_client):
+def test_elements_density(base_client):
     """
     Tests whether the result of elements.count.density is formatted correctly as a pandas.DataFrame
     :return:
@@ -38,7 +38,7 @@ def test_elements_density(custom_client):
     time = "2019-12-10"
     fltr = "amenity=cafe and type:node"
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.density.post(bboxes=bboxes, time=time, filter=fltr)
     result = response.as_dataframe()
 
@@ -48,7 +48,7 @@ def test_elements_density(custom_client):
 
 
 @pytest.mark.vcr
-def test_elements_count_groupby_key(custom_client):
+def test_elements_count_groupby_key(base_client):
     """
     Tests whether the result of elements.count.groupBy.key is formatted correctly as a pandas.DataFrame
     :return:
@@ -58,7 +58,7 @@ def test_elements_count_groupby_key(custom_client):
     fltr = "type:node"
     groupByKeys = ["amenity", "shop"]
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.groupByKey.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKeys=groupByKeys
     )
@@ -70,7 +70,7 @@ def test_elements_count_groupby_key(custom_client):
 
 
 @pytest.mark.vcr
-def test_not_implemented_query(custom_client):
+def test_not_implemented_query(base_client):
     """
     Tests whether a query which is not implemented in ohsome-py still works
     :return:
@@ -80,7 +80,7 @@ def test_not_implemented_query(custom_client):
     fltr = "type:node"
     groupByKeys = ["amenity", "shop"]
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.groupBy.key.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKeys=groupByKeys
     )
@@ -92,7 +92,7 @@ def test_not_implemented_query(custom_client):
 
 
 @pytest.mark.vcr
-def test_elements_count_groupby_tag(custom_client):
+def test_elements_count_groupby_tag(base_client):
     """
     Tests whether the result of elements.count.groupBy.tag is formatted correctly as a pandas.DataFrame
     :return:
@@ -102,7 +102,7 @@ def test_elements_count_groupby_tag(custom_client):
     fltr = "type:node"
     groupByKey = "amenity"
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.groupByTag.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
     )
@@ -114,7 +114,7 @@ def test_elements_count_groupby_tag(custom_client):
 
 
 @pytest.mark.vcr
-def test_multi_index_false(custom_client):
+def test_multi_index_false(base_client):
     """
     Tests whether the response is formatted correctly as a pandas.DataFrame without a multiindex
     :return:
@@ -124,7 +124,7 @@ def test_multi_index_false(custom_client):
     fltr = "type:node"
     groupByKey = "amenity"
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.groupByTag.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
     )
@@ -136,7 +136,7 @@ def test_multi_index_false(custom_client):
 
 
 @pytest.mark.vcr
-def test_elements_count_groupby_type(custom_client):
+def test_elements_count_groupby_type(base_client):
     """
     Tests whether the result of elements.count.groupBy.type is formatted correctly as a pandas.DataFrame
     :return:
@@ -145,7 +145,7 @@ def test_elements_count_groupby_type(custom_client):
     time = "2019-12-10,2019-12-11"
     fltr = "amenity=* and (type:way or type:node)"
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.groupByType.post(
         bboxes=bboxes, time=time, filter=fltr
     )
@@ -157,7 +157,7 @@ def test_elements_count_groupby_type(custom_client):
 
 
 @pytest.mark.vcr
-def test_elements_count_groupby_boundary(custom_client):
+def test_elements_count_groupby_boundary(base_client):
     """
     Tests whether the result of elements.count.groupBy.boundary is formatted correctly as a pandas.DataFrame
     :return:
@@ -169,7 +169,7 @@ def test_elements_count_groupby_boundary(custom_client):
     time = "2019-12-10"
     fltr = "amenity=cafe and type:node"
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.groupByBoundary.post(
         bboxes=bboxes, time=time, filter=fltr
     )
@@ -181,7 +181,7 @@ def test_elements_count_groupby_boundary(custom_client):
 
 
 @pytest.mark.vcr
-def test_elements_count_groupby_boundary_groupby_tag(custom_client):
+def test_elements_count_groupby_boundary_groupby_tag(base_client):
     """
     Tests whether the result of elements.count.groupBy.boundary.groupBy.tag is formatted correctly as a pandas.DataFrame
     :return:
@@ -191,7 +191,7 @@ def test_elements_count_groupby_boundary_groupby_tag(custom_client):
     fltr = "amenity=cafe and type:node"
     groupByKey = "amenity"
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.groupByBoundary.groupByTag.post(
         bboxes=bboxes, time=time, filter=fltr, groupByKey=groupByKey
     )
@@ -203,7 +203,7 @@ def test_elements_count_groupby_boundary_groupby_tag(custom_client):
 
 
 @pytest.mark.vcr
-def test_elements_count_ratio(custom_client):
+def test_elements_count_ratio(base_client):
     """
     Tests whether the result of elements.count.ratio is formatted correctly as a pandas.DataFrame
     :return:
@@ -213,7 +213,7 @@ def test_elements_count_ratio(custom_client):
     fltr = "amenity=* and type:node"
     fltr2 = "amenity=cafe and type:node"
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.ratio.post(
         bboxes=bboxes, time=time, filter=fltr, filter2=fltr2
     )
@@ -225,7 +225,7 @@ def test_elements_count_ratio(custom_client):
 
 
 @pytest.mark.vcr
-def test_elements_count_ratio_groupby_boundary(custom_client):
+def test_elements_count_ratio_groupby_boundary(base_client):
     """
     Tests whether the result of elements.count.ratio.groupBy.boundary is formatted correctly as a pandas.DataFrame
     :return:
@@ -235,7 +235,7 @@ def test_elements_count_ratio_groupby_boundary(custom_client):
     fltr = "amenity=hotel and type:node"
     fltr2 = "amenity=cafe and type:node"
 
-    client = custom_client
+    client = base_client
     response = client.elements.count.ratio.groupByBoundary.post(
         bboxes=bboxes, time=time, filter=fltr, filter2=fltr2
     )
@@ -247,7 +247,7 @@ def test_elements_count_ratio_groupby_boundary(custom_client):
 
 
 @pytest.mark.vcr
-def test_elements_geometry(custom_client):
+def test_elements_geometry(base_client):
     """
     Tests whether the result of elements.geometry is converted to a geopandas.GeoDataFrame
     :return:
@@ -256,7 +256,7 @@ def test_elements_geometry(custom_client):
     time = "2016-01-01"
     flter = "name=Krautturm and type:way"
 
-    client = custom_client
+    client = base_client
     response = client.elements.geometry.post(bboxes=bboxes, time=time, filter=flter)
     result = response.as_dataframe()
     del client
@@ -266,7 +266,7 @@ def test_elements_geometry(custom_client):
 
 
 @pytest.mark.vcr
-def test_elementsFullHistory_geometry(custom_client):
+def test_elementsFullHistory_geometry(base_client):
     """
     Tests whether the result of elementsFullHistory.centroid is converted to a geopandas.GeoDataFrame
     :return:
@@ -275,7 +275,7 @@ def test_elementsFullHistory_geometry(custom_client):
     time = "2015-01-01,2016-01-01"
     flter = "name=Krautturm and type:way"
 
-    client = custom_client
+    client = base_client
     response = client.elementsFullHistory.centroid.post(
         bboxes=bboxes, time=time, filter=flter
     )
@@ -286,7 +286,7 @@ def test_elementsFullHistory_geometry(custom_client):
 
 
 @pytest.mark.vcr
-def test_users_timestamp(custom_client):
+def test_users_timestamp(base_client):
     """
     Tests whether the result of users.count is converted to a pandas.DataFrame
     :return:
@@ -295,7 +295,7 @@ def test_users_timestamp(custom_client):
     time = "2015-01-01/2016-01-01/P1Y"
     flter = "name=Krautturm and type:way"
 
-    client = custom_client
+    client = base_client
     response = client.users.count.post(bboxes=bboxes, time=time, filter=flter)
     result = response.as_dataframe()
 
@@ -304,7 +304,7 @@ def test_users_timestamp(custom_client):
 
 
 @pytest.mark.vcr
-def test_contributions_centroid(custom_client):
+def test_contributions_centroid(base_client):
     """
     Test whether the result of conributions.centroid is converted to a geopandas.GeoDataFrame
     :return:
@@ -313,7 +313,7 @@ def test_contributions_centroid(custom_client):
     time = "2015-01-01,2016-01-01"
     filter = "name=Krautturm and type:way"
 
-    client = custom_client
+    client = base_client
     response = client.contributions.centroid.post(
         bboxes=bboxes, time=time, filter=filter
     )
@@ -324,7 +324,7 @@ def test_contributions_centroid(custom_client):
 
 
 @pytest.mark.vcr
-def test_contributions_latest(custom_client):
+def test_contributions_latest(base_client):
     """
     Test whether the result of conributions.latest.bbox is converted to a geopandas.GeoDataFrame
     :return:
@@ -333,7 +333,7 @@ def test_contributions_latest(custom_client):
     time = "2015-01-01,2016-01-01"
     filter = "name=Krautturm and type:way"
 
-    client = custom_client
+    client = base_client
     response = client.contributions.latest.bbox.post(
         bboxes=bboxes, time=time, filter=filter
     )
@@ -344,7 +344,7 @@ def test_contributions_latest(custom_client):
 
 
 @pytest.mark.vcr
-def test_empty_geodataframe(custom_client):
+def test_empty_geodataframe(base_client):
     """
     Tests whether an empty GeoDataFrame is created without a warning if no features are returned from ohsome
     :return:
@@ -353,7 +353,7 @@ def test_empty_geodataframe(custom_client):
     time = "2015-01-01,2016-01-01"
     filter = "name=Krautturm1 and type:way"
 
-    client = custom_client
+    client = base_client
     response = client.elements.bbox.post(bboxes=bboxes, time=time, filter=filter)
     with warnings.catch_warnings():
         warnings.simplefilter(action="error")
