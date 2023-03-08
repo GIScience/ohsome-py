@@ -20,10 +20,8 @@ logger = logging.getLogger(__name__)
 
 def test_get_metadata(custom_client):
     """Test get metadata."""
-    res = custom_client.metadata
-    logger.info(res)
-    res = custom_client.base_api_url
-    logger.info(res)
+    _ = custom_client.metadata
+    _ = custom_client.base_api_url
 
 
 def test_start_and_end_timestamp(custom_client):

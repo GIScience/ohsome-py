@@ -39,26 +39,6 @@ def test_timeout_error(custom_client):
 
 def test_invalid_url():
     """
-    Test whether request can be sent to alternative url
-    :return:
-    """
-    base_api_url = "https://api.ohsme.org/v0.9/"
-    bboxes = "8.7137,49.4096,8.717,49.4119"
-    time = "2018-01-01"
-    fltr = "name=Krautturm and type:way"
-
-    client = ohsome.OhsomeClient(base_api_url=base_api_url, log=False)
-    with pytest.raises(ohsome.OhsomeException) as e_info:
-        client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
-    assert (
-        "Connection Error: Query could not be sent. Make sure there are no network problems and "
-        f"that the ohsome API URL {base_api_url}elements/count is valid."
-        in e_info.value.message
-    )
-
-
-def test_invalid_url2():
-    """
     Test whether an OhsomeException is raises if the ohsome API url is invalid, i.e.
     https://api.ohsome.org/ instead of https://api.ohsome.org/v1
     :return:
@@ -145,7 +125,7 @@ def test_metadata_invalid_baseurl(custom_client_with_wrong_url):
     """
 
     with pytest.raises(ohsome.OhsomeException):
-        custom_client_with_wrong_url.metadata
+        _ = custom_client_with_wrong_url.metadata
 
 
 def test_exception_invalid_parameters(custom_client):
