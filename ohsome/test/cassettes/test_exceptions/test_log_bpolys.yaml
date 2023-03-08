@@ -13,16 +13,16 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.1.1rc1
+      - ohsome-py/0.2.0
     method: POST
     uri: https://api.ohsome.org/v1/elements/count
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAADyOQWrEMAxF93MK4XVrJ55JO80pupgewGSEY3AsV5IHSund66RQ0N983kP/+wRg
-        NG0oGrZqYAbjB39+Hvpdb+M0+9d5eLH+8uanyTztdCe1yY5exvPRdFtCxMO+rQgxPbDAZ0P+giSg
-        RJADR4RUgFEqLtpL0H90H0BNLbxnDILQegLIFnJG7kpMVCCUuyOGhQJLb3cHKnKiu/0bxthfin5w
-        PpasqlVm50JNllahDS1xdI/RYcYNi4pbqBU1p59fAAAA//8DAIE6SWgGAQAA
+        H4sIAAAAAAAAADyOQWoDMQxF9zmFmHVrx3FChzlFF+kBzER4DLblSnKglN69nikU9Def99D/PgFM
+        mgqKhtImWGC6nC/+9Txuvrvb4v3i3szNXf08Ty87PUjtsqNX549m2BIiHvZ9Q4jpiRU+O/IXJAEl
+        ghw4IqQKjNJw1VGC/qP7AOpq4D1jEIQ+EkBKyBl5KDFRhVAflhhWCiyj3R1oyIke5m8Y43gp+sH5
+        WLKpNlmsDS0Z2oQKGuJon85ixoJVxa7Uq06nn18AAAD//wMAn+EpjQYBAAA=
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -43,7 +43,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 08 Mar 2023 15:27:06 GMT
+      - Wed, 08 Mar 2023 15:33:17 GMT
       Server:
       - Apache/2.4.52 (Ubuntu)
       Strict-Transport-Security:
