@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 def custom_client(tmpdir_factory):
     """Session-wide test client."""
     temp_directory = tmpdir_factory.mktemp("custom_client").mkdir("logs").strpath
-    ohsome_url = os.getenv("OHSOME_URL", "localhost")
-    ohsome_port = os.getenv("OHSOME_PORT", "8080")
+    ohsome_url = os.getenv("OHSOME_URL", "https://api.ohsome.org/v1")
+    ohsome_port = os.getenv("OHSOME_PORT", "80")
 
     client = ohsome.OhsomeClient(
         base_api_url=f"http://{ohsome_url}:{ohsome_port}/", log_dir=temp_directory
@@ -26,8 +26,8 @@ def custom_client(tmpdir_factory):
 @pytest.fixture(scope="session")
 def custom_client_without_log(tmpdir_factory):
     """Session-wide test client."""
-    ohsome_url = os.getenv("OHSOME_URL", "localhost")
-    ohsome_port = os.getenv("OHSOME_PORT", "8080")
+    ohsome_url = os.getenv("OHSOME_URL", "https://api.ohsome.org/v1")
+    ohsome_port = os.getenv("OHSOME_PORT", "80")
 
     client = ohsome.OhsomeClient(
         base_api_url=f"http://{ohsome_url}:{ohsome_port}/", log=False
