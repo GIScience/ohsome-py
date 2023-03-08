@@ -155,7 +155,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         :param params: parameters of the request as in ohsome documentation
         :return:
         """
-        self._url = self._base_api_url + "/metadata"
+        self._url = self._base_api_url + "metadata"
         try:
             response = self._session().get(self._url)
             response.raise_for_status()

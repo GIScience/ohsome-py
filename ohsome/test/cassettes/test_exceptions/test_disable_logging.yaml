@@ -19,10 +19,10 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAADyOTWoDMQxG9zmF8LqxM39tmVN0kR7AJMJjsC1H0gRC6d3jmUDA2jzew9/fAcBo
-        zCjqczUwg+lP/XA8tfd97sa5G+Zpsp/9MH2N5mOzm6mrbOrYDTtptfiAe31eEEK8Y4HbivyAKKBE
-        kDwHhFiAUSpetEHQt7oNoFUt/CT0grC28yDZp4TckhCpgC9XRwwX8iyNbg1U5EhX+xrG2L4U/eW0
-        L1lUq8zO+RotLUIZLXFw985hwoxFxQVsVPlhDv9PAAAA//8DACB5APgJAQAA
+        H4sIAAAAAAAAADyOQYrDMAxF9z2F8Lq1kzYzDTnFLDoHMK1wDLblkZRCKXP3OikUrM3jPfyfOwCj
+        MaOoz9XABObYHU+Hrr3x0g/TME79tx3H7ut8NvvVbqYusqpDf9pIq8UH3OrLjBDiHQv8LcgPiAJK
+        BMlzQIgFGKXiVRsE/ajrAFrUwk9CLwhLOw+SfUrILQmRCvhyc8RwJc/S6NpARY50s+9hjO1L0V9O
+        25JZtcrknK/R0iyU0RIHd+8dJsxYVFzARpUfZvf/AgAA//8DACmyfAIJAQAA
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -45,7 +45,7 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Wed, 08 Mar 2023 14:13:55 GMT
+      - Wed, 08 Mar 2023 14:48:16 GMT
       Server:
       - Apache/2.4.52 (Ubuntu)
       Strict-Transport-Security:
