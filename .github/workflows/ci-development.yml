@@ -1,8 +1,26 @@
-name: Continuous Integration
+name: Continuous Integration for development
 
 on: pull_request
 jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      - name: Install lint dependencies
+        run: |
+          pip install pre-commit black
+      - name: Install and run pre-commit
+        uses: pre-commit/action@v2.0.0
+        with:
+          extra_args: --all-files
   linux-tests:
+    needs:
+      - lint
     strategy:
       fail-fast: false
       matrix:
@@ -22,15 +40,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up testing Python ${{ matrix.config.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.config.python-version }}
       - name: Set up base Python 3.10
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: "3.10"
       - name: Python Poetry Action
-        uses: abatilo/actions-poetry@v2.2.0
+        uses: abatilo/actions-poetry@v2.3.0
         with:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Install dependencies
@@ -40,7 +58,7 @@ jobs:
       - name: Run tox
         run: tox -e py${{ matrix.config.tox }}
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unittests
