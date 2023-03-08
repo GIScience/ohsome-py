@@ -13,6 +13,7 @@ def base_client(tmpdir_factory):
     """Session-wide test client."""
     temp_directory = tmpdir_factory.mktemp("base_client").mkdir("logs").strpath
     client = ohsome.OhsomeClient(log_dir=temp_directory)
+    assert client.metadata  # call metadata once to ensure it is cached
     yield client
 
 
@@ -20,6 +21,7 @@ def base_client(tmpdir_factory):
 def base_client_without_log():
     """Session-wide test client."""
     client = ohsome.OhsomeClient(log=False)
+    assert client.metadata  # call metadata once to ensure it is cached
     yield client
 
 

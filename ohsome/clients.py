@@ -120,7 +120,6 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         if self._metadata is None:
             self._query_metadata()
         return self._metadata["extractRegion"]["temporalExtent"]["fromTimestamp"]
-        # return dt.datetime.fromisoformat(start_timestamp.strip("Z"))
 
     @property
     def end_timestamp(self):
