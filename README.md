@@ -1,6 +1,6 @@
 # ohsome-py: A Python client for the ohsome API
 
-[![status: experimental](https://github.com/GIScience/badges/raw/master/status/experimental.svg)](https://github.com/GIScience/badges#experimental)
+[![status: active](https://github.com/GIScience/badges/raw/master/status/active.svg)](https://github.com/GIScience/badges#active)
 
 The *ohsome-py* package helps you extract and analyse OpenStreetMap history data using the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and Python. It handles queries to the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and converts its responses to [Pandas](https://pandas.pydata.org/) and [GeoPandas](https://geopandas.org/) data frames to facilitate easy data handling and analysis.
 
@@ -18,7 +18,7 @@ $ pip install ohsome
 
 ### Using Anaconda
 
-*ohsome-py* is not available through Conda. So if you are using Conda, create a new conda-environment and install your required dependencies as well as those from *ohsome-py* (see [pyproject.toml](pyproject.toml)) before installing *ohsome-py* using pip. Please note that there might be issues when [using pip within anaconda](https://www.anaconda.com/blog/using-pip-in-a-conda-environment). To avoid issues we advise to install everything in a new conda environment.
+*ohsome-py* is not available through Conda. So if you are using Conda, create a new conda environment and install your required dependencies as well as those from *ohsome-py* (see [pyproject.toml](pyproject.toml)) before installing *ohsome-py* using pip. Please note that there might be issues when [using pip within anaconda](https://www.anaconda.com/blog/using-pip-in-a-conda-environment). To avoid issues we advise to install everything in a new conda environment.
 
 ### Dependencies for Jupyter Notebooks
 
