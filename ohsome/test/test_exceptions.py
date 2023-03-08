@@ -112,30 +112,6 @@ def test_disable_logging(custom_client):
         assert n_log_files_after == n_log_files_before
 
 
-# def test_enable_logging(custom_client_without_log, tmpdir):
-#     """
-#     Tests whether two log files are created
-#     :return:
-#     """
-#     custom_client_without_log.log = True
-#     custom_client_without_log.log_dir = tmpdir.mkdir("logs").strpath
-#
-#     bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
-#     fltr = "building=* and type:way"
-#     timeout = 0.001
-#
-#     with pytest.raises(ohsome.OhsomeException):
-#         custom_client_without_log.elements.geometry.post(
-#             bboxes=bboxes, filter=fltr, timeout=timeout
-#         )
-#     log_file_patterns = ["ohsome_*.json", "ohsome_*raw.txt"]
-#     for p in log_file_patterns:
-#         log_file = list(Path(custom_client_without_log.log_dir).glob(p))
-#         assert len(log_file) == 1, f"Log file {p} not found"
-#         logger.info(f"Found log file: {log_file[0].name}")
-#         log_file[0].unlink()
-
-
 def test_log_bpolys(custom_client_without_log, tmpdir):
     """
     Test whether three log files are created when request fails (*bpolys.geojson, *.json and *_raw.txt)

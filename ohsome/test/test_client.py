@@ -18,23 +18,6 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
 
 
-# def test_userdefined_url():
-#     """
-#     Test whether request can be sent to alternative url
-#     :return:
-#     """
-#     base_api_url = "https://api.ohsome.org/v0.9/"
-#     bboxes = "8.7137,49.4096,8.717,49.4119"
-#     time = "2018-01-01"
-#     fltr = "name=Krautturm and type:way"
-#
-#     client = ohsome.OhsomeClient(base_api_url=base_api_url)
-#     response = client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
-#     result = response.as_dataframe()
-#
-#     assert isinstance(result, pd.DataFrame)
-
-
 def test_get_metadata(custom_client):
     """Test get metadata."""
     res = custom_client.metadata
