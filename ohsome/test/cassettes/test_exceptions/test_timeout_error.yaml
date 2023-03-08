@@ -13,16 +13,16 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.1.1rc1
+      - ohsome-py/0.2.0
     method: POST
     uri: https://api.ohsome.org/v1/elements/geometry
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAADyOTWoDMQxG9zmF8Lq15y8kzCmySA9gEuEx2JYjaQZC6d3rmULB2jzew9/3CcBo
-        zCjqczUwgxm6Yfzs2rve+/M8XOZuspfrdB5G87HbzdRVdnXqx4O0WnzAo74vCCFuWOC1Ir8hCigR
-        JM8BIRZglIoPbRD0X90H0KoWbgm9IKztPEj2KSG3JEQq4MvTEcODPEujewMVOdLT/g1jbF+KfnE6
-        liyqVWbnfI2WFqGMlji4rXeYMGNRcQEbVX6b088vAAAA//8DAJ/qHVYJAQAA
+        H4sIAAAAAAAAADyOTWoDMQxG9zmF8Dqx5y8hzCm6SA9gEuEx2JYraQKh5O71TCFgbR7v4e/3AGA0
+        ZhT1uRqYwQzdMJ669q63/jyP4zxM9tJ1l2Eyx81upq6yqVM/7qTV4gPu9W1BCPGJBX5W5BdEASWC
+        5DkgxAKMUvGuDYJ+1G0ArWrhK6EXhLWdB8k+JeSWhEgFfHk4YriTZ2l0a6AiR3rY/2GM7UvRb077
+        kkW1yuycr9HSIpTREgf37B0mzFhUXMBGlV/m8P4DAAD//wMArQsgFQkBAAA=
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -45,7 +45,7 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Wed, 08 Mar 2023 15:27:04 GMT
+      - Wed, 08 Mar 2023 15:33:24 GMT
       Server:
       - Apache/2.4.52 (Ubuntu)
       Strict-Transport-Security:

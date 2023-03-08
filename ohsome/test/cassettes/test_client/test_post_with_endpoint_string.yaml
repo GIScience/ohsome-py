@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.1.1rc1
+      - ohsome-py/0.2.0
     method: POST
     uri: https://api.ohsome.org/v1/contributions/latest/bbox
   response:
@@ -46,7 +46,7 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Wed, 08 Mar 2023 15:26:35 GMT
+      - Wed, 08 Mar 2023 15:32:32 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -74,7 +74,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.1.1rc1
+      - ohsome-py/0.2.0
     method: POST
     uri: https://api.ohsome.org/v1/contributions/latest/bbox
   response:
@@ -107,7 +107,7 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Wed, 08 Mar 2023 15:26:36 GMT
+      - Wed, 08 Mar 2023 15:32:33 GMT
       Keep-Alive:
       - timeout=5, max=99
       Server:
