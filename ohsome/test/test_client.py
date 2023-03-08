@@ -18,12 +18,14 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.vcr
 def test_get_metadata(custom_client):
     """Test get metadata."""
     _ = custom_client.metadata
     _ = custom_client.base_api_url
 
 
+@pytest.mark.vcr
 def test_start_and_end_timestamp(custom_client):
     """
     Get start timestamp
@@ -33,6 +35,7 @@ def test_start_and_end_timestamp(custom_client):
     assert isinstance(custom_client.end_timestamp, str)
 
 
+@pytest.mark.vcr
 def test_api_version(custom_client):
     """
     Get ohsome API version
@@ -41,6 +44,7 @@ def test_api_version(custom_client):
     assert isinstance(custom_client.api_version, str)
 
 
+@pytest.mark.vcr
 def test_user_agent(custom_client):
     """
     Checks user agent set by ohsome-py
@@ -53,6 +57,7 @@ def test_user_agent(custom_client):
     assert used_user_agent[1] == OHSOME_VERSION
 
 
+@pytest.mark.vcr
 def test_check_time_parameter_list(custom_client):
     """
     Checks whether time provided as list of strings is converted correctly
@@ -67,6 +72,7 @@ def test_check_time_parameter_list(custom_client):
     client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
+@pytest.mark.vcr
 def test_check_time_parameter_datetimeindex(custom_client):
     """
     Checks whether time provided as pandas.DateTimeIndex is converted correctly
@@ -80,6 +86,7 @@ def test_check_time_parameter_datetimeindex(custom_client):
     client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
+@pytest.mark.vcr
 def test_check_time_parameter_series(custom_client):
     """
     Checks whether time provided as pandas.DateTimeIndex is converted correctly
@@ -93,6 +100,7 @@ def test_check_time_parameter_series(custom_client):
     client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
+@pytest.mark.vcr
 def test_check_time_parameter_datetime(custom_client):
     """
     Checks whether time provided as pandas.Series is converted correctly
@@ -111,6 +119,7 @@ def test_check_time_parameter_datetime(custom_client):
     assert len(result) == 2
 
 
+@pytest.mark.vcr
 def test_end_timestamp_as_time_input(custom_client):
     """
     Test whether the end_timestamp value can be used as input to a query as time
@@ -126,6 +135,7 @@ def test_end_timestamp_as_time_input(custom_client):
     assert len(result) == 1
 
 
+@pytest.mark.vcr
 def test_format_bcircles_dataframe(custom_client):
     """
     Test whether a DataFrame object given as 'bcircles' is formatted correctly.
@@ -148,6 +158,7 @@ def test_format_bcircles_dataframe(custom_client):
     )
 
 
+@pytest.mark.vcr
 def test_format_bcircles_list(custom_client):
     """
     Test whether a DataFrame object given as 'bcircles' is formatted correctly.
@@ -172,6 +183,7 @@ def test_format_bcircles_list(custom_client):
     client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
 
 
+@pytest.mark.vcr
 def test_format_bcircles_geodataframe(custom_client):
     """
     Test whether a GeoDataFrame object given as 'bcircles' is formatted correctly.
@@ -187,6 +199,7 @@ def test_format_bcircles_geodataframe(custom_client):
     )
 
 
+@pytest.mark.vcr
 def test_format_bcircles_geodataframe_geometry_error(custom_client):
     """
     Test whether a GeoDataFrame object given as 'bcircles' is formatted correctly.
@@ -208,6 +221,7 @@ def test_format_bcircles_geodataframe_geometry_error(custom_client):
     del client
 
 
+@pytest.mark.vcr
 def test_format_bpolys(custom_client):
     """
     Test whether a GeoDataFrame obejct is formatted correctly for ohsome api.
@@ -221,6 +235,7 @@ def test_format_bpolys(custom_client):
     client.elements.count.post(bpolys=bpolys, time=time, filter=fltr)
 
 
+@pytest.mark.vcr
 def test_format_bboxes_dataframe(custom_client):
     """
     Tests whether input parameter given as a pandas.DataFrame is formatted correctly to a string
@@ -235,6 +250,7 @@ def test_format_bboxes_dataframe(custom_client):
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
 
+@pytest.mark.vcr
 def test_format_bboxes_dataframe_missing_columns(custom_client):
     """
     Tests whether input parameter given as a pandas.DataFrame is formatted correctly to a string
@@ -262,6 +278,7 @@ def test_format_bboxes_dataframe_missing_columns(custom_client):
         )
 
 
+@pytest.mark.vcr
 def test_format_bboxes_geodataframe(custom_client):
     """
     Tests whether input parameter given as a pandas.DataFrame is formatted correctly to a string
@@ -287,6 +304,7 @@ def test_format_bboxes_geodataframe(custom_client):
         )
 
 
+@pytest.mark.vcr
 def test_format_bboxes_list(custom_client):
     """
     Tests whether parameter bboxes given as a list is formatted correctly
@@ -322,6 +340,7 @@ def test_format_bboxes_list(custom_client):
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
 
+@pytest.mark.vcr
 def test_bbox_numpy(custom_client):
     """
     Tests whether numpy arrays are supported as input parameters
@@ -337,6 +356,7 @@ def test_bbox_numpy(custom_client):
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
 
+@pytest.mark.vcr
 def test_post_with_endpoint_string(custom_client):
     """
     Tests whether a request can be sent of by providing the endpoint url as a string to post()

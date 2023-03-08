@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 """Tests for ohsome API response"""
 import warnings
+import pytest
 
 import geopandas as gpd
 import pandas as pd
 
 
+@pytest.mark.vcr
 def test_elements_count(custom_client):
     """
     Tests whether the result of elements.count is formatted correctly as a pandas.DataFrame. If this works
@@ -26,6 +28,7 @@ def test_elements_count(custom_client):
     assert list(result.index.names) == ["timestamp"]
 
 
+@pytest.mark.vcr
 def test_elements_density(custom_client):
     """
     Tests whether the result of elements.count.density is formatted correctly as a pandas.DataFrame
@@ -44,6 +47,7 @@ def test_elements_density(custom_client):
     assert list(result.index.names) == ["timestamp"]
 
 
+@pytest.mark.vcr
 def test_elements_count_groupby_key(custom_client):
     """
     Tests whether the result of elements.count.groupBy.key is formatted correctly as a pandas.DataFrame
@@ -65,6 +69,7 @@ def test_elements_count_groupby_key(custom_client):
     assert list(result.index.names) == ["key", "timestamp"]
 
 
+@pytest.mark.vcr
 def test_not_implemented_query(custom_client):
     """
     Tests whether a query which is not implemented in ohsome-py still works
@@ -86,6 +91,7 @@ def test_not_implemented_query(custom_client):
     assert list(result.index.names) == ["key", "timestamp"]
 
 
+@pytest.mark.vcr
 def test_elements_count_groupby_tag(custom_client):
     """
     Tests whether the result of elements.count.groupBy.tag is formatted correctly as a pandas.DataFrame
@@ -107,6 +113,7 @@ def test_elements_count_groupby_tag(custom_client):
     assert list(result.index.names) == ["tag", "timestamp"]
 
 
+@pytest.mark.vcr
 def test_multi_index_false(custom_client):
     """
     Tests whether the response is formatted correctly as a pandas.DataFrame without a multiindex
@@ -128,6 +135,7 @@ def test_multi_index_false(custom_client):
     assert isinstance(result.index, pd.RangeIndex)
 
 
+@pytest.mark.vcr
 def test_elements_count_groupby_type(custom_client):
     """
     Tests whether the result of elements.count.groupBy.type is formatted correctly as a pandas.DataFrame
@@ -148,6 +156,7 @@ def test_elements_count_groupby_type(custom_client):
     assert list(result.index.names) == ["type", "timestamp"]
 
 
+@pytest.mark.vcr
 def test_elements_count_groupby_boundary(custom_client):
     """
     Tests whether the result of elements.count.groupBy.boundary is formatted correctly as a pandas.DataFrame
@@ -171,6 +180,7 @@ def test_elements_count_groupby_boundary(custom_client):
     assert list(result.index.names) == ["boundary", "timestamp"]
 
 
+@pytest.mark.vcr
 def test_elements_count_groupby_boundary_groupby_tag(custom_client):
     """
     Tests whether the result of elements.count.groupBy.boundary.groupBy.tag is formatted correctly as a pandas.DataFrame
@@ -192,6 +202,7 @@ def test_elements_count_groupby_boundary_groupby_tag(custom_client):
     assert list(result.index.names) == ["boundary", "tag", "timestamp"]
 
 
+@pytest.mark.vcr
 def test_elements_count_ratio(custom_client):
     """
     Tests whether the result of elements.count.ratio is formatted correctly as a pandas.DataFrame
@@ -213,6 +224,7 @@ def test_elements_count_ratio(custom_client):
     assert list(result.index.names) == ["timestamp"]
 
 
+@pytest.mark.vcr
 def test_elements_count_ratio_groupby_boundary(custom_client):
     """
     Tests whether the result of elements.count.ratio.groupBy.boundary is formatted correctly as a pandas.DataFrame
@@ -234,6 +246,7 @@ def test_elements_count_ratio_groupby_boundary(custom_client):
     assert list(result.index.names) == ["boundary", "timestamp"]
 
 
+@pytest.mark.vcr
 def test_elements_geometry(custom_client):
     """
     Tests whether the result of elements.geometry is converted to a geopandas.GeoDataFrame
@@ -252,6 +265,7 @@ def test_elements_geometry(custom_client):
     assert len(result) == 1
 
 
+@pytest.mark.vcr
 def test_elementsFullHistory_geometry(custom_client):
     """
     Tests whether the result of elementsFullHistory.centroid is converted to a geopandas.GeoDataFrame
@@ -271,6 +285,7 @@ def test_elementsFullHistory_geometry(custom_client):
     assert len(result) == 2
 
 
+@pytest.mark.vcr
 def test_users_timestamp(custom_client):
     """
     Tests whether the result of users.count is converted to a pandas.DataFrame
@@ -288,6 +303,7 @@ def test_users_timestamp(custom_client):
     assert len(result) == 1
 
 
+@pytest.mark.vcr
 def test_contributions_centroid(custom_client):
     """
     Test whether the result of conributions.centroid is converted to a geopandas.GeoDataFrame
@@ -307,6 +323,7 @@ def test_contributions_centroid(custom_client):
     assert len(result) == 1
 
 
+@pytest.mark.vcr
 def test_contributions_latest(custom_client):
     """
     Test whether the result of conributions.latest.bbox is converted to a geopandas.GeoDataFrame
@@ -326,6 +343,7 @@ def test_contributions_latest(custom_client):
     assert len(result) == 1
 
 
+@pytest.mark.vcr
 def test_empty_geodataframe(custom_client):
     """
     Tests whether an empty GeoDataFrame is created without a warning if no features are returned from ohsome

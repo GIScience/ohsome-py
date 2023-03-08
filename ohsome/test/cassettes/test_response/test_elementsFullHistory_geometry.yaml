@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: bboxes=8.7137%2C49.4096%2C8.717%2C49.4119&time=2015-01-01%2C2016-01-01&filter=name%3DKrautturm+and+type%3Away
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '109'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.1.1rc1
+    method: POST
+    uri: https://api.ohsome.org/v1/elementsFullHistory/centroid
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAOSQ30rDMBTG732KkOvZJrWbXa8GwsALUbB4MfGitnELdD3h5EwtYw/ka/hkZmn2
+        h4pPIARCvvxyvi/f9oIxXhKhft2QhpaznG2d5tQNNvsTXxEZm8cxrCysVQS4jCswHerliiwf9TCp
+        T/L09xe7N6p9JFSK7krDKmj76YCWO3g38pZGPym0wZHLKIuEn8WpM8prc1XSBtUNNI2qfDZ//9bL
+        ds88h6jDN4dUS+USE3anX53DD6BbCqjTKwCsdVtSmB10xrLoWk6SZDo6Kuk0SqVIpkkWpBe/74Kt
+        QTAKSfeDjsYzsOvb2lt/lF2cpFk2nqTylGD2Xja6niOsPZQIOb4U0q1CiNyvxRAu4Azd04UU+VWa
+        S7ngfSZfOfsHRQ1+/2dRk1+dnor6AQAA//+K5arlAgAAAP//AwAYl89REwMAAA==
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/geo+json;charset=utf-8
+      Content-disposition:
+      - attachment;filename=ohsome.geojson
+      Date:
+      - Wed, 08 Mar 2023 12:57:13 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.52 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+version: 1

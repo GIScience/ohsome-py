@@ -1,0 +1,60 @@
+interactions:
+- request:
+    body: bboxes=8.67555%2C49.39885%2C8.69637%2C49.41122&filter=building%3D%2A+and+type%3Away&timeout=0.001
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '97'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.1.1rc1
+    method: POST
+    uri: https://api.ohsome.org/v1/elements/geometry
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAADyOTWoDMQxG9zmF8Lqx5y8hzCmySA9gEuEx2JYjaQIh9O71TKFgbR7v4e9zADAa
+        M4r6XA3MYIZuGI9de5dbP8ynce4mex77y3Q2X5vdTF1lU6d+3EmrxQfc69uCEOILCzxX5DdEASWC
+        5DkgxAKMUvGuDYL+q9sAWtXCNaEXhLWdB8k+JeSWhEgFfHk4YriTZ2l0a6AiR3rYv2GM7UvRb077
+        kkW1yuycr9HSIpTREgf36h0mzFhUXMBGld/m8PMLAAD//wMAKIHhlQkBAAA=
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Content-disposition:
+      - attachment;filename=ohsome.geojson
+      Date:
+      - Wed, 08 Mar 2023 12:53:04 GMT
+      Server:
+      - Apache/2.4.52 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 413
+      message: ''
+version: 1
