@@ -1,0 +1,234 @@
+interactions:
+- request:
+    body: bcircles=8.695%2C49.41%2C200%7C8.696%2C49.41%2C200&time=2018-01-01&filter=amenity%3Drestaurant+and+type%3Anode
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '110'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.1.1rc1
+    method: POST
+    uri: https://api.ohsome.org/v1/elements/count
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAADSOQQrCMBRE954iZF3TtKvSO4gLxYXiIpZPG2ib8P+PKKUH8hqezDS1MJsZHjMz
+        7YSQhhntI7B1oxS1mGIW04D94mTH7KnOc9eRG0A5bPPG+TfatmOS2QozvDjR3484ehhPjAB8MF40
+        blzbHZKM8JylSW8vgPRflIWqlE5dEoFCn7pu2xO2AxCbwSe21EW110XUWes66brdeJo+wEKVSi9b
+        4r6bfwAAAP//AwAkdXg54wAAAA==
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Cache-Control:
+      - no-transform, public, max-age=31556926
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Mar 2023 12:51:23 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.52 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+- request:
+    body: bcircles=1%3A8.695%2C49.41%2C200%7C2%3A8.696%2C49.41%2C200&time=2018-01-01&filter=amenity%3Drestaurant+and+type%3Anode
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '118'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.1.1rc1
+    method: POST
+    uri: https://api.ohsome.org/v1/elements/count/groupBy/boundary
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAALSOsQrCMBCGd58iZK5t0kk6uoug4qA41HK0kbYJl4tYSh/I1/DJTNM6iaNwBPLn
+        y/9dv2CM50Soro6UbjnLWO8znzqsxxuviIzNkkRXVjcQayyTQpsOVVmR5dEEEzwo0K8n2xpo94QA
+        tMkNK3Q7tWu03MNDFJRGHQHtbOQyXsUidPEStTPrbgfW1aHy/Floftleb1BMMvnR4xc97qQasJQ3
+        JrCpkKulkH4OQmRhTvN3z97z2sHIyViEbGCXsOxvefp3uT+HNwAAAP//AwB6ZS2IoQEAAA==
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Cache-Control:
+      - no-transform, public, max-age=31556926
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Mar 2023 12:51:24 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.52 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+- request:
+    body: bcircles=1%3A8.695%2C+49.41%2C+200%7C2%3A8.696%2C+49.41%2C+200&time=2018-01-01&filter=amenity%3Drestaurant+and+type%3Anode
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '122'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.1.1rc1
+    method: POST
+    uri: https://api.ohsome.org/v1/elements/count
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAADSOQQrCMBRE954iZF3TtKvSO4gLxYXiIpZPG2ib8P+PKKUH8hqezDS1MJsZHjMz
+        7YSQhhntI7B1oxS1mGIW04D94mTH7KnOc9eRG0A5bPPG+TfatmOS2QozvDjR3484ehhPjAB8MF40
+        blzbHZKM8JylSW8vgPRflIWqlE5dEoFCn7pu2xO2AxCbwSe21EW110XUWes66brdeJo+wEKVSi9b
+        4r6bfwAAAP//AwAkdXg54wAAAA==
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Cache-Control:
+      - no-transform, public, max-age=31556926
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Mar 2023 12:51:26 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.52 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+- request:
+    body: bcircles=1%3A8.695%2C+49.41%2C+200&time=2018-01-01&filter=amenity%3Drestaurant+and+type%3Anode
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '94'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.1.1rc1
+    method: POST
+    uri: https://api.ohsome.org/v1/elements/count
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAADSOQQrCMBRE9z1FyLqmiavSO4gLxYXiIpZPG2ib8PMjSumBvIYnM0ktzGaGx8zM
+        BWNcE6F5BDJ24qxhc8xiGnBIjvdEzjdVZXtvRxAWu6q17o2m68nzcoUJXpTp74cdHUwnQgA6aMda
+        O63tFj2P8FLmSWcugP6/yJWohcxdHMGHIXfdtidkRvCkR5fZvVT1Tqqos5RN1nW78dRDgEQpIdMW
+        uxfLDwAA//8DACUTmqDjAAAA
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Cache-Control:
+      - no-transform, public, max-age=31556926
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Mar 2023 12:51:27 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.52 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+version: 1

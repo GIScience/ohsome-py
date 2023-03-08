@@ -16,6 +16,7 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.vcr
 def test_timeout_error(custom_client):
     """
     Test whether an OhsomeException is raised, if the ohsome API contains a JSONDecodeError
@@ -37,6 +38,7 @@ def test_timeout_error(custom_client):
     )
 
 
+@pytest.mark.vcr
 def test_invalid_url():
     """
     Test whether an OhsomeException is raises if the ohsome API url is invalid, i.e.
@@ -54,6 +56,7 @@ def test_invalid_url():
     assert "Invalid URL:" in e_info.value.message
 
 
+@pytest.mark.vcr
 def test_invalid_endpoint():
     """
     Test whether request can be sent to alternative url
@@ -69,6 +72,7 @@ def test_invalid_endpoint():
         client.elements.cout.post(bboxes=bboxes, time=time, filter=fltr)
 
 
+@pytest.mark.vcr
 def test_disable_logging(custom_client):
     """
     Tests whether logging is disabled so no new log file if created if an OhsomeException occurs
@@ -92,6 +96,7 @@ def test_disable_logging(custom_client):
         assert n_log_files_after == n_log_files_before
 
 
+@pytest.mark.vcr
 def test_log_bpolys(custom_client_without_log, tmpdir):
     """
     Test whether three log files are created when request fails (*bpolys.geojson, *.json and *_raw.txt)
@@ -128,6 +133,7 @@ def test_metadata_invalid_baseurl(custom_client_with_wrong_url):
         _ = custom_client_with_wrong_url.metadata
 
 
+@pytest.mark.vcr
 def test_exception_invalid_parameters(custom_client):
     """
     Test whether error message from ohsome API is forwarded to user
@@ -144,6 +150,7 @@ def test_exception_invalid_parameters(custom_client):
         assert "You need to give one groupByKey parameter" in e_info.value.message
 
 
+@pytest.mark.vcr
 def test_exception_connection_reset(custom_client):
     """
     Test whether error without response (e.g. connection reset) is handled correctly

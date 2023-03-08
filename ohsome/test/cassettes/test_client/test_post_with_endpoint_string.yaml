@@ -1,0 +1,124 @@
+interactions:
+- request:
+    body: bboxes=8.7137%2C49.4096%2C8.717%2C49.4119&time=2015-01-01%2C2016-01-01&filter=name%3DKrautturm+and+type%3Away
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '109'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.1.1rc1
+    method: POST
+    uri: https://api.ohsome.org/v1/contributions/latest/bbox
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAALRSTUvEMBC9+ytCzrVN2rTb7WlhQfAgCooHxUPsjm2hbUIyi5Zlf5B/w19mm9b9
+        AgVBIZDpm9eXN7zZnBFCJaKpntdYqZaSjGx6rEfXph6+aImobRYEqrSqAV+ZIsiV7kxVlGipN5IR
+        3tCxP97JtYb2Fg0AXklNctWO6spY2pO3nntSV/dg7PQi5X7qM6dFsdPgsAuQuDawVHUNufPm+i8j
+        bAfO42T19J8vVwX0jtF0+6kOyTeq7opJ1nVypcyqaiVO6hNODqrjmpDUn/GEJVHoHcFi7gvOeCqS
+        A/jJ+1lGsFD8o0w0j8NfyHw31B/JnA51dlqN93ZKUhulwWA1JrPLcrHbrn4/lqVsC7CAl6uBFLEk
+        ncWc7+JdKNuMLfoquyAUaRongu/zX2DVgEXZaEcKGY/PWX/4HWdZJDLOH+joatjjTwAAAP//iuWq
+        5QIAAAD//wMAHXIXhz8DAAA=
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/geo+json;charset=utf-8
+      Content-disposition:
+      - attachment;filename=ohsome.geojson
+      Date:
+      - Wed, 08 Mar 2023 12:51:41 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.52 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+- request:
+    body: bboxes=8.7137%2C49.4096%2C8.717%2C49.4119&time=2015-01-01%2C2016-01-01&filter=name%3DKrautturm+and+type%3Away
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '109'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.1.1rc1
+    method: POST
+    uri: https://api.ohsome.org/v1/contributions/latest/bbox
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAALRSTUvEMBC9+ytCzrVN2rTb7WlhQfAgCooHxUPsjm2hbUIyi5Zlf5B/w19mm9b9
+        AgVBIZDpm9eXN7zZnBFCJaKpntdYqZaSjGx6rEfXph6+aImobRYEqrSqAV+ZIsiV7kxVlGipN5IR
+        3tCxP97JtYb2Fg0AXklNctWO6spY2pO3nntSV/dg7PQi5X7qM6dFsdPgsAuQuDawVHUNufPm+i8j
+        bAfO42T19J8vVwX0jtF0+6kOyTeq7opJ1nVypcyqaiVO6hNODqrjmpDUn/GEJVHoHcFi7gvOeCqS
+        A/jJ+1lGsFD8o0w0j8NfyHw31B/JnA51dlqN93ZKUhulwWA1JrPLcrHbrn4/lqVsC7CAl6uBFLEk
+        ncWc7+JdKNuMLfoquyAUaRongu/zX2DVgEXZaEcKGY/PWX/4HWdZJDLOH+joatjjTwAAAP//iuWq
+        5QIAAAD//wMAHXIXhz8DAAA=
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/geo+json;charset=utf-8
+      Content-disposition:
+      - attachment;filename=ohsome.geojson
+      Date:
+      - Wed, 08 Mar 2023 12:51:42 GMT
+      Keep-Alive:
+      - timeout=5, max=99
+      Server:
+      - Apache/2.4.52 (Ubuntu)
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+version: 1

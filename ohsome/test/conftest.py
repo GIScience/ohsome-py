@@ -49,3 +49,20 @@ def custom_client_with_wrong_url(tmpdir_factory):
     )
 
     yield client
+
+
+@pytest.fixture(scope="module")
+def vcr_config():
+    """Get custom VCR configuration for tests."""
+    return {
+        "match_on": [
+            "method",
+            "scheme",
+            "host",
+            "port",
+            "path",
+            "query",
+            "body",
+            "headers",
+        ]
+    }
