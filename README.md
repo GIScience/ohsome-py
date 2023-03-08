@@ -8,13 +8,6 @@ The ohsome API provides various endpoints for [data aggregation](https://api.ohs
 
 ## Installation
 
-*ohsome-py* requires
-
-* Python >= 3.6
-* geopandas >= 0.9.0
-* pyproj >= 3.0.0
-* requests >= 2.25.1
-
 ### Using pip
 
 You can install *ohsome-py* using pip, which will also install all dependencies.
@@ -25,13 +18,7 @@ $ pip install ohsome
 
 ### Using Anaconda
 
-*ohsome-py* is not available through Anaconda yet. So if you are using Anaconda, create a new anaconda environment and install the required dependencies before installing *ohsome-py* using pip. Please note that there might be issues when [using pip within anaconda](https://www.anaconda.com/blog/using-pip-in-a-conda-environment). To avoid issues make sure to install everythin in a new conda environment.
-
-```
-$ conda create -n ohsome python=3.8 geopandas">=0.9.0" requests">=2.25.1"
-$ conda activate ohsome
-$ pip install ohsome --no-deps
-```
+*ohsome-py* is not available through Conda. So if you are using Conda, create a new conda-environment and install your required dependencies as well as those from *ohsome-py* (see [pyproject.toml](pyproject.toml)) before installing *ohsome-py* using pip. Please note that there might be issues when [using pip within anaconda](https://www.anaconda.com/blog/using-pip-in-a-conda-environment). To avoid issues we advise to install everything in a new conda environment.
 
 ### Dependencies for Jupyter Notebooks
 
@@ -144,39 +131,33 @@ time = pandas.date_range("2018-01-01", periods=3, freq="M")
 
 ## Contribution Guidelines
 
-If you want to contribute to this project, please fork the repository or create a new branch containing your changes.
+The easiest way to contribute is to file a comprehensive [issue](https://github.com/GIScience/ohsome-py/issues) with a reproducible example. Pull requests are always welcome, so if you want to contribute to this project, please fork the repository or create a new branch containing your changes.
 
-**Install dependencies for development**
+This package uses [poetry](https://python-poetry.org/) for dependency management.
 
-All of these dependecies can be installed using pip. If you are using anaconda, you need to install the packages through conda-forge.
+### Install Package
 
-* pytest = ^6.2.2
-* pytest-cov = >=2.0.0
-* pre-commit = >=2.1.1
-* black = ^20.8b1
-* pytest-random-order = ^1.0.4 (not available through anaconda)
-* yaspin = <1.4.1
-* tox = ^3.23.0
+`poetry install`
+
+### Install Pre-Commit Hooks
 
 **Install the pre-commit hooks** in our local git repo before committing to ensure homogenous code style.
 
-```
-$ pre-commit install
-```
+`poertry run pre-commit install`
 
-**Run the tests** inside the repo using `pytest` (and `poetry` if you like) to make sure everything works.
+### Run Tests
 
-```
-$ poetry run pytest
-```
+**Before pushing your commits**, run python tests for all supported versions.
 
-Running the tests against a dockerised local instance of the ohsome API is faster, but not mandatory. By default the test will issue a warning that it could not find the local instance and then fall back to the public one. To set up and start a local instance run the following command before running the tests (see https://github.com/GIScience/ohsome-api-dockerized).
+`poetry run tox`
 
-```
-$ docker run -dt --name ohsome-api -p 8080:8080 julianpsotta/ohsome-api:latest
-```
+Create a **pull request to the main/master** branch once it is ready to be merged.
 
-Create a **pull request to the development** branch once it is ready to be merged.
+#### VCR
+
+ohsome-py records responses using [VCR](https://vcrpy.readthedocs.io/en/latest/) via [pytest-recording](https://github.com/kiwicom/pytest-recording) to prevent unnecessary network traffic and computing during testing. If you implement a test or change an existing one, make sure to update the recorded cassettes.
+
+`poetry run pytest --record-mode=all`
 
 ## References
 
