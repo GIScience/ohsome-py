@@ -35,14 +35,13 @@ def test_api_version(base_client):
     assert isinstance(base_client.api_version, str)
 
 
-@pytest.mark.vcr
+@pytest.mark.vcr(match_on=["method", "headers"])
 def test_user_agent(base_client):
     """
     Checks user agent set by ohsome-py
     :return:
     """
-    client = base_client
-    resp = client._session().get(client._url)
+    resp = base_client._session().get(base_client._url)
     used_user_agent = resp.request.headers["user-agent"].split("/")
     assert used_user_agent[0] == "ohsome-py"
     assert used_user_agent[1] == OHSOME_VERSION
