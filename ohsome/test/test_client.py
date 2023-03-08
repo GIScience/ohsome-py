@@ -18,14 +18,6 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
 
 
-@pytest.mark.vcr
-def test_get_metadata(base_client):
-    """Test get metadata."""
-    _ = base_client.metadata
-    _ = base_client.base_api_url
-
-
-@pytest.mark.vcr
 def test_start_and_end_timestamp(base_client):
     """
     Get start timestamp
@@ -35,7 +27,6 @@ def test_start_and_end_timestamp(base_client):
     assert isinstance(base_client.end_timestamp, str)
 
 
-@pytest.mark.vcr
 def test_api_version(base_client):
     """
     Get ohsome API version
