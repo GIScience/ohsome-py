@@ -3,11 +3,8 @@
 """Conftest for shared pytest fixtures"""
 import logging
 import os
-
 import pytest
-
 import ohsome
-from ohsome import OhsomeException
 
 logger = logging.getLogger(__name__)
 
@@ -23,18 +20,6 @@ def custom_client(tmpdir_factory):
         base_api_url=f"http://{ohsome_url}:{ohsome_port}/", log_dir=temp_directory
     )
 
-    try:
-        client.metadata
-    except OhsomeException as err:
-        logger.warning(
-            f"Local/custom ohsome-api endpoint not found. Using the public  one as fallback: "
-            f"https://api.ohsome.org/v1/. It is highly recommended to use a local endpoint for testing and development."
-            f" The error while searching for a local one: {err}"
-        )
-        client = ohsome.OhsomeClient(
-            base_api_url="https://api.ohsome.org/v1/", log_dir=temp_directory
-        )
-
     yield client
 
 
@@ -47,18 +32,6 @@ def custom_client_without_log(tmpdir_factory):
     client = ohsome.OhsomeClient(
         base_api_url=f"http://{ohsome_url}:{ohsome_port}/", log=False
     )
-
-    try:
-        client.metadata
-    except OhsomeException as err:
-        logger.warning(
-            f"Local/custom ohsome-api endpoint not found. Using the public  one as fallback: "
-            f"https://api.ohsome.org/v1/. It is highly recommended to use a local endpoint for testing and development."
-            f" The error while searching for a local one: {err}"
-        )
-        client = ohsome.OhsomeClient(
-            base_api_url="https://api.ohsome.org/v1/", log=False
-        )
 
     yield client
 
