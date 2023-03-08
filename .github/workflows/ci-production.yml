@@ -1,4 +1,4 @@
-name: Continous Integration
+name: Continuous Integration
 
 on:
   push:
@@ -24,13 +24,9 @@ jobs:
           - python-version: 3.11
             tox: 311
         poetry-version: [ 1.3.2 ]
-        os: [ ubuntu-18.04, ubuntu-20.04, ubuntu-22.04 ]
+        os: [ ubuntu-22.04 ]
     runs-on: ${{ matrix.os }}
-    services:
-      ohsome-api:
-        image: julianpsotta/ohsome-api:latest
-        ports:
-          - 8080:8080
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up testing Python ${{ matrix.config.python-version }}
@@ -50,10 +46,6 @@ jobs:
           sudo add-apt-repository -y ppa:ubuntugis/ppa && sudo apt-get update && sudo apt-get install -y build-essential gdal-bin libgdal-dev
           python -m pip install --upgrade pip tox
       - name: Run tox
-        env:
-          OHSOME_URL: ohsome-api
-          OHSOME_PORT: 8080
-          TOX_TESTENV_PASSENV: OHSOME_URL, OHSOME_PORT
         run: tox -e py${{ matrix.config.tox }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
