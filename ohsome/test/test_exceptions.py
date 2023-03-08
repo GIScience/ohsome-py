@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 @pytest.mark.vcr
-def test_timeout_error(custom_client):
+def test_timeout_error(base_client):
     """
     Test whether an OhsomeException is raised, if the ohsome API contains a JSONDecodeError
     :return:
@@ -27,7 +27,7 @@ def test_timeout_error(custom_client):
     fltr = "building=* and type:way"
     timeout = 0
 
-    client = custom_client
+    client = base_client
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.geometry.post(
             bboxes=bboxes, time=time, filter=fltr, timeout=timeout
@@ -73,38 +73,36 @@ def test_invalid_endpoint():
 
 
 @pytest.mark.vcr
-def test_disable_logging(custom_client):
+def test_disable_logging(base_client):
     """
     Tests whether logging is disabled so no new log file if created if an OhsomeException occurs
     :return:
     """
-    custom_client.log = False
+    base_client.log = False
     bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
     fltr = "building=* and type:way"
     timeout = 0.001
     try:
-        n_log_files_before = len(os.listdir(custom_client.log_dir))
+        n_log_files_before = len(os.listdir(base_client.log_dir))
     except FileNotFoundError:
         n_log_files_before = 0
     with pytest.raises(ohsome.OhsomeException):
-        custom_client.elements.geometry.post(
-            bboxes=bboxes, filter=fltr, timeout=timeout
-        )
+        base_client.elements.geometry.post(bboxes=bboxes, filter=fltr, timeout=timeout)
 
-    if os.path.exists(custom_client.log_dir):
-        n_log_files_after = len(os.listdir(custom_client.log_dir))
+    if os.path.exists(base_client.log_dir):
+        n_log_files_after = len(os.listdir(base_client.log_dir))
         assert n_log_files_after == n_log_files_before
 
 
 @pytest.mark.vcr
-def test_log_bpolys(custom_client_without_log, tmpdir):
+def test_log_bpolys(base_client_without_log, tmpdir):
     """
     Test whether three log files are created when request fails (*bpolys.geojson, *.json and *_raw.txt)
     :return:
     """
 
-    custom_client_without_log.log = True
-    custom_client_without_log.log_dir = tmpdir.mkdir("logs").strpath
+    base_client_without_log.log = True
+    base_client_without_log.log_dir = tmpdir.mkdir("logs").strpath
 
     bpolys = gpd.read_file(f"{script_path}/data/polygons.geojson")
     time = "2018-01-01"
@@ -112,12 +110,12 @@ def test_log_bpolys(custom_client_without_log, tmpdir):
     timeout = 0.001
 
     with pytest.raises(ohsome.OhsomeException):
-        custom_client_without_log.elements.count.post(
+        base_client_without_log.elements.count.post(
             bpolys=bpolys, time=time, filter=fltr, timeout=timeout
         )
     log_file_patterns = ["ohsome_*_bpolys.geojson", "ohsome_*.json", "ohsome_*raw.txt"]
     for p in log_file_patterns:
-        log_file = list(Path(custom_client_without_log.log_dir).glob(p))
+        log_file = list(Path(base_client_without_log.log_dir).glob(p))
         assert len(log_file) == 1, f"Log file {p} not found"
         logger.info(f"Found log file: {log_file[0].name}")
         log_file[0].unlink()
@@ -134,7 +132,7 @@ def test_metadata_invalid_baseurl(custom_client_with_wrong_url):
 
 
 @pytest.mark.vcr
-def test_exception_invalid_parameters(custom_client):
+def test_exception_invalid_parameters(base_client):
     """
     Test whether error message from ohsome API is forwarded to user
     :param custom_client:
@@ -144,14 +142,14 @@ def test_exception_invalid_parameters(custom_client):
     time = "2010-01-01/2020-01-01/P1M"
     fltr = "highway=* and type:way"
     with pytest.raises(ohsome.OhsomeException) as e_info:
-        custom_client.elements.count.groupByTag.post(
+        base_client.elements.count.groupByTag.post(
             bboxes=bboxes, time=time, filter=fltr
         )
         assert "You need to give one groupByKey parameter" in e_info.value.message
 
 
 @pytest.mark.vcr
-def test_exception_connection_reset(custom_client):
+def test_exception_connection_reset(base_client):
     """
     Test whether error without response (e.g. connection reset) is handled correctly
     :param custom_client:
@@ -171,6 +169,6 @@ def test_exception_connection_reset(custom_client):
         fltr = "name=Krautturm and type:way"
 
         with pytest.raises(ohsome.OhsomeException):
-            custom_client.elements.count.post(bpolys=bpolys, time=time, filter=fltr)
+            base_client.elements.count.post(bpolys=bpolys, time=time, filter=fltr)
 
         mock_func.assert_not_called()
