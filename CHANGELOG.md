@@ -7,7 +7,7 @@
 
 ### Removed
 
- - support for python 3.8
+ - support for python 3.8 and 3.9
 
 ## 0.2.0
 
