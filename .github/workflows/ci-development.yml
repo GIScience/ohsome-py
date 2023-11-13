@@ -16,8 +16,6 @@ jobs:
           pip install pre-commit black
       - name: Install and run pre-commit
         uses: pre-commit/action@v3.0.0
-        with:
-          extra_args: --all-files
   linux-tests:
     needs:
       - lint
