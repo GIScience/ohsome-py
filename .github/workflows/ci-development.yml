@@ -31,21 +31,18 @@ jobs:
           - python-version: 3.12
             tox: 312
 
-
     steps:
       - uses: actions/checkout@v4
       - name: Set up testing Python ${{ matrix.config.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.config.python-version }}
-      - name: Set up base Python 3.10
+      - name: Set up base Python 3.11
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: 3.11
       - name: Python Poetry Action
         uses: abatilo/actions-poetry@v2.3.0
-        with:
-          poetry-version: 1.7.0
       - name: Install dependencies
         run: |
           sudo add-apt-repository -y ppa:ubuntugis/ppa && sudo apt-get update && sudo apt-get install -y build-essential gdal-bin libgdal-dev
