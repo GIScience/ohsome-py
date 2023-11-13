@@ -15,7 +15,6 @@ numpy = "^1.20.0"
 geopandas = "^0.12.0"
 pyproj = "^3.0.0"
 urllib3 = "^1.26"
-jupyter = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.1.1"
@@ -49,5 +48,5 @@ exclude = '''
   | buck-out
   | build
   | dist
-)
+)/
 '''
