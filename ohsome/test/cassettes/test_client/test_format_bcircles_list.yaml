@@ -18,11 +18,10 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/count
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAA/zSOQQrCMBRE9z1FyLqmSVfSO4gLxYXiIpZPG2ib8PMjSumBvIYnM0ktzGaGx8zM
-        BWNcE6F5BDJ24qxhc8xiGnBIjvdEzjdVZXtvRxAWu6q17o2m68nzcoUJXpTp74cdHUwnQgA6aMda
-        O63tFj2P8FLmSWcugP6/yJVQUqhcxhF8GHLZbbtCZgRPenQZrqXa76SKOkvZZF23H089BEhULWQa
-        Y/di+QEAAP//AwA8xOog5AAAAA==
+      string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
+        \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
+        : \"1.10.1\",\n  \"result\" : [ {\n    \"timestamp\" : \"2018-01-01T00:00:00Z\",\n
+        \   \"value\" : 2.0\n  } ]\n}"
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -43,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Nov 2023 11:26:23 GMT
+      - Mon, 13 Nov 2023 16:46:05 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -76,11 +75,13 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/count/groupBy/boundary
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAA/7SOsQrCMBCGd58iZK5t4iQd3UVQcVAcYjnaSNuEy0Us0gfyNXwy07RO4igcgfz5
-        8n/3mDHGFRHqiydtWs5y9ghZSD3Ww41XRNblWWYqZxpIDZZZYWyHuqzI8WSECe4U6deTbSy0O0IA
-        WivLCtOO7QYdD3CfRKXVB0A3GblMpUhlLOMlGm9X3Racr2Pn6bPR9LK5XKEYbfLjxy96WEo34Eg1
-        NrILIZdzIcPshcjjHKfvgb2p2sPAyVTErGfnuO1v+eLv8nD2bwAAAP//AwAlF9J/ogEAAA==
+      string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
+        \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
+        : \"1.10.1\",\n  \"groupByResult\" : [ {\n    \"groupByObject\" : \"1\",\n
+        \   \"result\" : [ {\n      \"timestamp\" : \"2018-01-01T00:00:00Z\",\n      \"value\"
+        : 1.0\n    } ]\n  }, {\n    \"groupByObject\" : \"2\",\n    \"result\" : [
+        {\n      \"timestamp\" : \"2018-01-01T00:00:00Z\",\n      \"value\" : 1.0\n
+        \   } ]\n  } ]\n}"
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -101,7 +102,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Nov 2023 11:26:23 GMT
+      - Mon, 13 Nov 2023 16:46:08 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -134,11 +135,10 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/count
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAA/zSOQQrCMBRE9z1FyLqmSVfSO4gLxYXiIpZPG2ib8PMjSumBvIYnM0ktzGaGx8zM
-        BWNcE6F5BDJ24qxhc8xiGnBIjvdEzjdVZXtvRxAWu6q17o2m68nzcoUJXpTp74cdHUwnQgA6aMda
-        O63tFj2P8FLmSWcugP6/yJVQUqhcxhF8GHLZbbtCZgRPenQZrqXa76SKOkvZZF23H089BEhULWQa
-        Y/di+QEAAP//AwA8xOog5AAAAA==
+      string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
+        \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
+        : \"1.10.1\",\n  \"result\" : [ {\n    \"timestamp\" : \"2018-01-01T00:00:00Z\",\n
+        \   \"value\" : 2.0\n  } ]\n}"
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -159,7 +159,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Nov 2023 11:26:24 GMT
+      - Mon, 13 Nov 2023 16:46:10 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -192,11 +192,10 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/count
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAA/zSOQQrCMBRE954iZF3TxJX0DuJCcaG4iOXTBtom/P8jSumBvIYnM00tzGaGx8yM
-        GyGkZUb3iOz8IEUlxpSlNGI3O9kyB6rK0rfke1Aem7L24Y2uaZlkscAML8709yOOAYYTIwAfbBC1
-        H5Z2jyQTPBV5MrgLIP0XpVFGK5PLJALFLpfd1ivseiC2fcjwTpv9Vpuks9ZV1nX98bRdhJkySs9j
-        4r6ZfgAAAP//AwA9ogi55AAAAA==
+      string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
+        \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
+        : \"1.10.1\",\n  \"result\" : [ {\n    \"timestamp\" : \"2018-01-01T00:00:00Z\",\n
+        \   \"value\" : 1.0\n  } ]\n}"
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -217,239 +216,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Nov 2023 11:26:24 GMT
-      Keep-Alive:
-      - timeout=5, max=100
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubdomains;
-      Transfer-Encoding:
-      - chunked
-      vary:
-      - accept-encoding
-    status:
-      code: 200
-      message: ''
-- request:
-    body: bcircles=8.695%2C49.41%2C200%7C8.696%2C49.41%2C200&time=2018-01-01&filter=amenity%3Drestaurant+and+type%3Anode
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '110'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      user-agent:
-      - ohsome-py/0.2.0
-    method: POST
-    uri: https://api.ohsome.org/v1/elements/count
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAA/zSOQQrCMBRE9z1FyLqmSVfSO4gLxYXiIpZPG2ib8PMjSumBvIYnM0ktzGaGx8zM
-        BWNcE6F5BDJ24qxhc8xiGnBIjvdEzjdVZXtvRxAWu6q17o2m68nzcoUJXpTp74cdHUwnQgA6aMda
-        O63tFj2P8FLmSWcugP6/yJVQUqhcxhF8GHLZbbtCZgRPenQZrqXa76SKOkvZZF23H089BEhULWQa
-        Y/di+QEAAP//AwA8xOog5AAAAA==
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Headers:
-      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-      Access-Control-Allow-Methods:
-      - POST, GET
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Max-Age:
-      - '3600'
-      Cache-Control:
-      - no-transform, public, max-age=31556926
-      Connection:
-      - Keep-Alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Nov 2023 11:27:10 GMT
-      Keep-Alive:
-      - timeout=5, max=100
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubdomains;
-      Transfer-Encoding:
-      - chunked
-      vary:
-      - accept-encoding
-    status:
-      code: 200
-      message: ''
-- request:
-    body: bcircles=1%3A8.695%2C49.41%2C200%7C2%3A8.696%2C49.41%2C200&time=2018-01-01&filter=amenity%3Drestaurant+and+type%3Anode
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '118'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      user-agent:
-      - ohsome-py/0.2.0
-    method: POST
-    uri: https://api.ohsome.org/v1/elements/count/groupBy/boundary
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAA/7SOsQrCMBCGd58iZK5t4iQd3UVQcVAcYjnaSNuEy0Us0gfyNXwy07RO4igcgfz5
-        8n/3mDHGFRHqiydtWs5y9ghZSD3Ww41XRNblWWYqZxpIDZZZYWyHuqzI8WSECe4U6deTbSy0O0IA
-        WivLCtOO7QYdD3CfRKXVB0A3GblMpUhlLOMlGm9X3Racr2Pn6bPR9LK5XKEYbfLjxy96WEo34Eg1
-        NrILIZdzIcPshcjjHKfvgb2p2sPAyVTErGfnuO1v+eLv8nD2bwAAAP//AwAlF9J/ogEAAA==
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Headers:
-      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-      Access-Control-Allow-Methods:
-      - POST, GET
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Max-Age:
-      - '3600'
-      Cache-Control:
-      - no-transform, public, max-age=31556926
-      Connection:
-      - Keep-Alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Nov 2023 11:27:12 GMT
-      Keep-Alive:
-      - timeout=5, max=100
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubdomains;
-      Transfer-Encoding:
-      - chunked
-      vary:
-      - accept-encoding
-    status:
-      code: 200
-      message: ''
-- request:
-    body: bcircles=1%3A8.695%2C+49.41%2C+200%7C2%3A8.696%2C+49.41%2C+200&time=2018-01-01&filter=amenity%3Drestaurant+and+type%3Anode
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '122'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      user-agent:
-      - ohsome-py/0.2.0
-    method: POST
-    uri: https://api.ohsome.org/v1/elements/count
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAA/zSOQQrCMBRE9z1FyLqmSVfSO4gLxYXiIpZPG2ib8PMjSumBvIYnM0ktzGaGx8zM
-        BWNcE6F5BDJ24qxhc8xiGnBIjvdEzjdVZXtvRxAWu6q17o2m68nzcoUJXpTp74cdHUwnQgA6aMda
-        O63tFj2P8FLmSWcugP6/yJVQUqhcxhF8GHLZbbtCZgRPenQZrqXa76SKOkvZZF23H089BEhULWQa
-        Y/di+QEAAP//AwA8xOog5AAAAA==
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Headers:
-      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-      Access-Control-Allow-Methods:
-      - POST, GET
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Max-Age:
-      - '3600'
-      Cache-Control:
-      - no-transform, public, max-age=31556926
-      Connection:
-      - Keep-Alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Nov 2023 11:27:12 GMT
-      Keep-Alive:
-      - timeout=5, max=100
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubdomains;
-      Transfer-Encoding:
-      - chunked
-      vary:
-      - accept-encoding
-    status:
-      code: 200
-      message: ''
-- request:
-    body: bcircles=1%3A8.695%2C+49.41%2C+200&time=2018-01-01&filter=amenity%3Drestaurant+and+type%3Anode
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '94'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      user-agent:
-      - ohsome-py/0.2.0
-    method: POST
-    uri: https://api.ohsome.org/v1/elements/count
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAA/zSOQQrCMBRE954iZF3TxJX0DuJCcaG4iOXTBtom/P8jSumBvIYnM00tzGaGx8yM
-        GyGkZUb3iOz8IEUlxpSlNGI3O9kyB6rK0rfke1Aem7L24Y2uaZlkscAML8709yOOAYYTIwAfbBC1
-        H5Z2jyQTPBV5MrgLIP0XpVFGK5PLJALFLpfd1ivseiC2fcjwTpv9Vpuks9ZV1nX98bRdhJkySs9j
-        4r6ZfgAAAP//AwA9ogi55AAAAA==
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Headers:
-      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-      Access-Control-Allow-Methods:
-      - POST, GET
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Max-Age:
-      - '3600'
-      Cache-Control:
-      - no-transform, public, max-age=31556926
-      Connection:
-      - Keep-Alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Nov 2023 11:27:13 GMT
+      - Mon, 13 Nov 2023 16:46:12 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
