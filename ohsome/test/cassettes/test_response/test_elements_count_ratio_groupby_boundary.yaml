@@ -19,11 +19,11 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAAMRRwUrEMBS871eEnNvuSzyovdmbB1lQ8SIesjW2kTYJyYtYln6Qv+GXmaZdWFFh
-        8aAQApnMm5lMditCqEB0ahtQGU1JSXYRi2hw3XSiLaL15XptWm96WRjXrGtjB6eaFj3NZjLKV0zs
-        9zeysVLfoJMSr4QltdGzunGeRvKYJUur7qTziyNlxVkBSYs2zgRbDZUJ+lG44Vr60CXp+32whbHZ
-        Pst6Nr3Yx3AiPuLryBRQ9dKj6G0a4MDOc8ZzBrcAZVqLRKS+iC7IiQYFfAb5hDJ+ACfDJHmpn5RW
-        ONB0NWY/W3PI4TTnJ7+whmOsycPqIMA3dVV/Whf7v7qO+qm5rriPHwAAAP//AwDv4zzxDQMAAA==
+        H4sIAAAAAAAA/8RRzUrEMBi871OEnPvzJR7E3tybB1lQ8SIesjW2kTYJyRexLH0gX8MnM027sKLC
+        sgeFEMhkvpnJZLcihApEp7YBldGUVGQXsYgG100n2iJaX5Wlab3pZWFcU9bGDk41LXqazWSUb5jY
+        H+9kY6W+RSclXgtLaqNndeM8jeQxS5ZW3UvnF0fKCgYFS2K0cSbY9bA2QT8JN9xIH7qk/bBPtjA2
+        2xdZz66X+xxOxFd8H5kSql56FL1NAxzYRc54zuAOoEprkYjUV9EFOdGggK8gn1DGD+BkmCSv9LPS
+        Cgearsbsd2sOOZzn/OwEazjGmjyuDgL8UNf6T+ti/1fXUT811xX38RMAAP//AwALRLe6DgMAAA==
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -44,11 +44,70 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 08 Mar 2023 15:32:50 GMT
+      - Mon, 13 Nov 2023 11:26:55 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.52 (Ubuntu)
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+- request:
+    body: bboxes=A%3A8.6933%2C49.40893%2C8.69797%2C49.41106%7CB%3A8.6887%2C49.41325%2C8.69462%2C49.4166&time=2019-12-10%2C+2020-07-23&filter=amenity%3Dhotel+and+type%3Anode&filter2=amenity%3Dcafe+and+type%3Anode
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '201'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.2.0
+    method: POST
+    uri: https://api.ohsome.org/v1/elements/count/ratio/groupBy/boundary
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/8RRzUrEMBi871OEnPvzJR7E3tybB1lQ8SIesjW2kTYJyRexLH0gX8MnM027sKLC
+        sgeFEMhkvpnJZLcihApEp7YBldGUVGQXsYgG100n2iJaX5Wlab3pZWFcU9bGDk41LXqazWSUb5jY
+        H+9kY6W+RSclXgtLaqNndeM8jeQxS5ZW3UvnF0fKCgYFS2K0cSbY9bA2QT8JN9xIH7qk/bBPtjA2
+        2xdZz66X+xxOxFd8H5kSql56FL1NAxzYRc54zuAOoEprkYjUV9EFOdGggK8gn1DGD+BkmCSv9LPS
+        Cgearsbsd2sOOZzn/OwEazjGmjyuDgL8UNf6T+ti/1fXUT811xX38RMAAP//AwALRLe6DgMAAA==
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Cache-Control:
+      - no-transform, public, max-age=31556926
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 13 Nov 2023 11:27:41 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:

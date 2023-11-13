@@ -19,10 +19,10 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAADSOTQqDMBCF954iZO1PIkKrdyhdtHTR0kUqgwbUhMmktIgH6jV6smqsMJt5fLzv
-        jRFjXBGhfnjSZuCsYuOczanHbvl4S2RdlWWmdaaH1GCT1ca+UTctOR6vMMGLAv39sKOF4UQIQAdl
-        WW2Gtd2g4zM8xUFp9QXQ/Y1cpvtUhC6O4HwXum7bEtI9OFK9DWwuZJnIPJHiLEQV7rrNeKrOw0LJ
-        okyL3aJj92j6AQAA//8DAHIguDvmAAAA
+        H4sIAAAAAAAA/zSOQQqDMBBF954iZK0xEaHUO5QuWrpo6SKVQQNqwmRSWsQD9Ro9WTVWmM18Hv/9
+        MWGMayI0j0DGDpxVbJyzOQ3YLR9viZyv8ty23vYgLDZ5bd0bTdOS5+kKE7wo0t8POzoYToQAdNCO
+        1XZY2y16PsNTGpXOXAD938iVUFKoWMYRfOhi2W2bQqYHT7p3ES6k2meqyJQ8S1nFu247nroLsFCq
+        3Ityt/jYPZl+AAAA//8DADK/UsrnAAAA
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -43,11 +43,69 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 08 Mar 2023 15:32:58 GMT
+      - Mon, 13 Nov 2023 11:26:43 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.52 (Ubuntu)
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+- request:
+    body: bboxes=8.6933%2C49.40893%2C8.69797%2C49.41106&time=2019-12-10&filter=amenity%3Dcafe+and+type%3Anode
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '99'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.2.0
+    method: POST
+    uri: https://api.ohsome.org/v1/elements/count/density
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/zSOQQqDMBBF954iZK0xEaHUO5QuWrpo6SKVQQNqwmRSWsQD9Ro9WTVWmM18Hv/9
+        MWGMayI0j0DGDpxVbJyzOQ3YLR9viZyv8ty23vYgLDZ5bd0bTdOS5+kKE7wo0t8POzoYToQAdNCO
+        1XZY2y16PsNTGpXOXAD938iVUFKoWMYRfOhi2W2bQqYHT7p3ES6k2meqyJQ8S1nFu247nroLsFCq
+        3Ityt/jYPZl+AAAA//8DADK/UsrnAAAA
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Cache-Control:
+      - no-transform, public, max-age=31556926
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 13 Nov 2023 11:27:35 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:

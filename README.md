@@ -155,7 +155,7 @@ Create a **pull request to the main/master** branch once it is ready to be merge
 
 #### VCR
 
-ohsome-py records responses using [VCR](https://vcrpy.readthedocs.io/en/latest/) via [pytest-recording](https://github.com/kiwicom/pytest-recording) to prevent unnecessary network traffic and computing during testing. If you implement a test or change an existing one, make sure to update the recorded cassettes.
+ohsome-py records responses using [VCR](https://vcrpy.readthedocs.io/en/latest/) via [pytest-recording](https://github.com/kiwicom/pytest-recording) to prevent unnecessary network traffic and computing during testing. If you implement a test or change an existing one, make sure to update the recorded cassettes. In addition, you should delete all cassettes after a certain time (e.g. every 6m or on each new ohsome release) and re-record them. To do that run
 
 `poetry run pytest --record-mode=all`
 
