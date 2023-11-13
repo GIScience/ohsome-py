@@ -49,6 +49,5 @@ exclude = '''
   | buck-out
   | build
   | dist
-  | .*.ipynb
-)/
+)
 '''
