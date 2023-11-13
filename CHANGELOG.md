@@ -1,5 +1,14 @@
 # Changelog
 
+### Added
+
+ - support for python 3.12
+ - support for geopandas up to v0.14
+
+### Removed
+
+ - support for python 3.8
+
 ## 0.2.0
 
 ### Added
