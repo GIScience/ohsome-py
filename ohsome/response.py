@@ -170,12 +170,12 @@ class OhsomeResponse:
         """
         if "timestamp" in result_df.columns:
             result_df["timestamp"] = pd.to_datetime(
-                result_df["timestamp"], format="%Y-%m-%dT%H:%M:%S"
+                result_df["timestamp"], format="ISO8601"
             )
         else:
             result_df["fromTimestamp"] = pd.to_datetime(
-                result_df["fromTimestamp"], format="%Y-%m-%dT%H:%M:%S"
+                result_df["fromTimestamp"], format="ISO8601"
             )
             result_df["toTimestamp"] = pd.to_datetime(
-                result_df["toTimestamp"], format="%Y-%m-%dT%H:%M:%S"
+                result_df["toTimestamp"], format="ISO8601"
             )
