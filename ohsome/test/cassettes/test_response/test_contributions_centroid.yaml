@@ -19,12 +19,12 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAAFyQwUrEMBCG7z5FyHltm2672+1pYUHwIAqKB8VD7I5tYNsJyRQtyz6Qr+GTmaax
+        H4sIAAAAAAAA/1yQwUrEMBCG7z5FyHltm2672+1pYUHwIAqKB8VD7I5tYNsJyRQtyz6Qr+GTmaax
         uwiBkH++/PPPHK8Y45LIqPeeFHaclezoNKf25jC+eEOkbRnH2FhsIUJTxxXqwai6IcsXE0zwRZ7+
-        +Wb3GrpHMgB0JzWrsJvc0Vju4NPCt9TqGYwNHbmIiijxXpwGDV67AUm9gR0eDlD5bL7+Mcl2ZF5D
-        1P9//lLV4BKTGc5TXcIPqDoKqNMrRLNXnaTgHXTGimgtVmm6WcxKtokykaSbtAjSm79Poa02qMGQ
-        mozmxtt5FW6YXSO7GizQ7X6ElsmqWOdCzGm2aNupxD/lEKdZUeSrTJzjbkm1YEm22kNpIvLrxB3x
-        JJJymZVCvPAp1bj0XwAAAP//iuWq5QIAAAD//wMAVLwV7OwBAAA=
+        +Wb3GrpHMgB0JzWrsJvc0Vju4NPCt9TqGYwNHbmIRBIJb8Zp0ODFG5DUG9jh4QCVD+frH5NsR+Y1
+        ZP3/5y9WDS4ymeE81iX8gKqjgDq9QjR71UkK3kFnrIjWYpWmm8WsZJsoE0m6SYsgvfn7FNpqgxoM
+        qclobrydd+GG2TWyq8EC3e5HaJmsinUuxJxmi7adSvxTDnGaFUW+ysQ57pZUC5Zkqz2UJiK/TtwR
+        TyIpl1kpxAufUo1b/wUAAP//iuWq5QIAAAD//wMAcIBOru0BAAA=
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -45,11 +45,71 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Wed, 08 Mar 2023 15:33:04 GMT
+      - Mon, 13 Nov 2023 11:26:58 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.52 (Ubuntu)
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+- request:
+    body: bboxes=8.7137%2C49.4096%2C8.717%2C49.4119&time=2015-01-01%2C2016-01-01&filter=name%3DKrautturm+and+type%3Away
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '109'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.2.0
+    method: POST
+    uri: https://api.ohsome.org/v1/contributions/centroid
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/1yQwUrEMBCG7z5FyHltm2672+1pYUHwIAqKB8VD7I5tYNsJyRQtyz6Qr+GTmaax
+        uwiBkH++/PPPHK8Y45LIqPeeFHaclezoNKf25jC+eEOkbRnH2FhsIUJTxxXqwai6IcsXE0zwRZ7+
+        +Wb3GrpHMgB0JzWrsJvc0Vju4NPCt9TqGYwNHbmIRBIJb8Zp0ODFG5DUG9jh4QCVD+frH5NsR+Y1
+        ZP3/5y9WDS4ymeE81iX8gKqjgDq9QjR71UkK3kFnrIjWYpWmm8WsZJsoE0m6SYsgvfn7FNpqgxoM
+        qclobrydd+GG2TWyq8EC3e5HaJmsinUuxJxmi7adSvxTDnGaFUW+ysQ57pZUC5Zkqz2UJiK/TtwR
+        TyIpl1kpxAufUo1b/wUAAP//iuWq5QIAAAD//wMAcIBOru0BAAA=
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/geo+json;charset=utf-8
+      Content-disposition:
+      - attachment;filename=ohsome.geojson
+      Date:
+      - Mon, 13 Nov 2023 11:27:43 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:

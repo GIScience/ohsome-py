@@ -19,10 +19,10 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAAEzOPQvCMBAG4L2/4shcm7SxUDq6uurgGPRMC82HyaVSxP9uWkGEm47nfe9eBQCj
-        0WAkZTyDHlgjGrkTebpT3fZS9nVbyU6IrmPlqrOkFFe6F2Lb5HRUGrf0xSWwiDcgB3qcEZxF0MEl
-        f1iOuIBXQRkkDCWMd1iyfipLq07xBzkpXX2vBXyk/Nw5TFv9QORjz7nyY+WG6AxWLmg+1xwnNGgp
-        8qtLlvhfEyveHwAAAP//AwAztlH25wAAAA==
+        H4sIAAAAAAAA/0zOuw7CMAxA0b1fYWVum6QviY6srDAwRmDSSuRB4hRViH+nLRJitY6v/coAGI0G
+        IynjGfTAKlHVhZSFrI9S9lXXN6IUXdvuuk40LF8XFkwprroRYpssgag0boGzS2ARr0AO9DghOIug
+        g0t+Px9wBq+CMkgYchhvMC/6qSytOsUf5KR0+b0W8JGW/07hvuUHIh97zpUfSzdEZ7B0QfNJcryj
+        QUuRX1yyxP9KLHt/AAAA//8DAMZjboHqAAAA
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -43,9 +43,65 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 08 Mar 2023 15:33:15 GMT
+      - Mon, 13 Nov 2023 11:26:40 GMT
       Server:
-      - Apache/2.4.52 (Ubuntu)
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 400
+      message: ''
+- request:
+    body: bboxes=8.6577%2C49.3958%2C8.7122%2C49.4296&time=2010-01-01%2F2020-01-01%2FP1M&filter=highway%3D%2A+and+type%3Away
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '113'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.2.0
+    method: POST
+    uri: https://api.ohsome.org/v1/elements/count/groupBy/tag
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/0zOPQ+CMBCA4Z1fcekMtAVFw+jqqoNjo2choR+2Vwwx/ncBE+N6ee69e2UAjHqD
+        kZTxDFpglajqQspC1icp22rX1rLcN0JIsWu2LF8WZkwpLnojxDqZA1FpXAMXl8Ai3oAc6H5EcBZB
+        B5f8YTriBF4FZZAw5NDfYZr1U1ladIo/yEnp8nst4CPN/53DsOY7Ih9bzpXvS9dFZ7B0QfNRchzQ
+        oKXIry5Z4n8llr0/AAAA//8DAB9LdRXqAAAA
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 13 Nov 2023 11:27:31 GMT
+      Server:
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:

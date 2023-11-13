@@ -19,10 +19,11 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAALSOsQrCMBCGd58iZNY26aQd3aWg4qA41HK0kbYJl4so0gfyNXwy07QOIo5CCOS/
-        L/939wljPCdCdXKkdMtZyu4+86nDun/xisjYNI51ZXUDkcYyLrS5oSorsnw6wARXCvTzwTID7YYQ
-        gFa5YYVuh3aNlnu4mwalUTtAOxq5jOaRCF28RO3M8rYG6+pQeXgvNE6y0xmKQSbfevyi+51UA5by
-        xgQ2EXIxk8lMiq0QaTj78btnL3ntoOdkEokQduwYtv1tT/5gl592f3cvAAAA//8DAEcTw0qjAQAA
+        H4sIAAAAAAAA/7SOwarCMBBF9+8rQtbaZrqzy7cXQcWF4qKWoc2jbcJkIor0g/wNv8w0rQuRtxRC
+        IHdO7pnbjxCyYCZ98qxNJ0UubiELqadmeMma2bo8TU3tTIuJoSotjb2Srmp2cjbCjBeO9OMuVha7
+        DRMiLwsrStON7YacDHA/i0qrd0huMkpIQCUQy2RFxtvf6xqdb2Ln4bXRNFmd/rAcbfDy0wc9LKVb
+        dFy0NrKZgsUcsjmorVJ5PPvpe2DPReNx4CBLVAx7cYzr/m/PvmCHd3u4+ycAAAD//wMAM7XryaQB
+        AAA=
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -43,11 +44,70 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 08 Mar 2023 15:32:52 GMT
+      - Mon, 13 Nov 2023 11:26:52 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.52 (Ubuntu)
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+- request:
+    body: bboxes=1%3A8.6933%2C49.40893%2C8.69797%2C49.41106%7C2%3A8.6887%2C49.41325%2C8.69462%2C49.4166&time=2019-12-10&filter=amenity%3Dcafe+and+type%3Anode
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.2.0
+    method: POST
+    uri: https://api.ohsome.org/v1/elements/count/groupBy/boundary
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/7SOwarCMBBF9+8rQtbaZrqzy7cXQcWF4qKWoc2jbcJkIor0g/wNv8w0rQuRtxRC
+        IHdO7pnbjxCyYCZ98qxNJ0UubiELqadmeMma2bo8TU3tTIuJoSotjb2Srmp2cjbCjBeO9OMuVha7
+        DRMiLwsrStON7YacDHA/i0qrd0huMkpIQCUQy2RFxtvf6xqdb2Ln4bXRNFmd/rAcbfDy0wc9LKVb
+        dFy0NrKZgsUcsjmorVJ5PPvpe2DPReNx4CBLVAx7cYzr/m/PvmCHd3u4+ycAAAD//wMAM7XryaQB
+        AAA=
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Cache-Control:
+      - no-transform, public, max-age=31556926
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 13 Nov 2023 11:27:39 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:
