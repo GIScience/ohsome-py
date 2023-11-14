@@ -2,11 +2,17 @@
 # -*- coding: utf-8 -*-
 
 """Tests for utility functions"""
-
-from ohsome.helper import find_groupby_names, extract_error_message_from_invalid_json
-import os
+import datetime
 import logging
+import os
 
+import numpy as np
+
+from ohsome.helper import (
+    find_groupby_names,
+    extract_error_message_from_invalid_json,
+    format_lists,
+)
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
@@ -108,3 +114,42 @@ def test_extract_error_message_from_invalid_json_custonErrorCode():
 
     assert error_code == expected_error_code
     assert message == expected_message
+
+
+def test_format_lists():
+    """Test if the list formatter converts list of string to string."""
+    parameters = {"time": ["2022-01-01", "2022-01-02"]}
+
+    expected_output = {"time": "2022-01-01,2022-01-02"}
+
+    output = format_lists(parameters)
+
+    assert expected_output == output
+
+
+def test_format_lists_numpy_datetime():
+    """Test if the list formatter converts list of pandas datetime to string."""
+    parameters = {"time": [np.datetime64("2022-01-01"), np.datetime64("2022-01-02")]}
+
+    expected_output = {
+        "time": "2022-01-01,2022-01-02",
+    }
+
+    output = format_lists(parameters)
+
+    assert expected_output == output
+
+
+def test_format_lists_datetime():
+    """Test if the list formatter converts list of datatime.datetime to string."""
+    parameters = {
+        "time": [datetime.datetime(2022, 1, 1), datetime.datetime(2022, 1, 2)]
+    }
+
+    expected_output = {
+        "time": "2022-01-01,2022-01-02",
+    }
+
+    output = format_lists(parameters)
+
+    assert expected_output == output
