@@ -3,7 +3,7 @@
 ### Added
 
  - support for python 3.12
- - support for geopandas up to v0.14
+- support for geopandas <= 0.14, pandas <= 2.1 and urllib3 <= 2.1
 
 ### Removed
 
