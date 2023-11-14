@@ -1,5 +1,14 @@
 # Changelog
 
+### Added
+
+ - support for python 3.12
+
+### Removed
+
+ - support for python 3.8 and 3.9
+ - support for geopandas <= 0.14, pandas <= 2.1 and urllib3 <= 2.1
+
 ## 0.2.0
 
 ### Added

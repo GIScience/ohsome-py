@@ -18,14 +18,18 @@ interactions:
     uri: https://api.ohsome.org/v1/contributions/latest/bbox
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAA/7RSTUvEMBC9+ytCzrVN2rTb7WlhQfAgCooHxUPsjm2hbUIyi5Zlf5B/w19mm9b9
-        AgVBIZDpm9eXN7zZnBFCJaKpntdYqZaSjGx6rEfXph6+aImobRYEqrSqAV+ZIsiV7kxVlGipN5IR
-        3tCxP97JtYb2Fg0AXklNctWO6spY2pO3nntSV/dg7PQi5T5nPndiFDsNDrwAiWsDS1XXkDtzrv8y
-        wnbgPE5eT//5slVAbxlNtx/rkHyj6q6YZF0nV8qsqlbipD7h5KA6rglJ/RlPWBKF3hEs5r7gjKci
-        OYCfvJ9lBAvFP8pE8zj8hcx3Q/2RzOlQZ6fVeG+nJLVRGgxWYzK7LBe79er3Y1nKtgALeLkaSBFL
-        0lnM+S7ehbLN2KKvsgtCkaZxIvg+/wVWDViUjXakkPH4nPWH33GWRSLj/IGOroZF/gQAAP//iuWq
-        5QIAAAD//wMAVRIcMUADAAA=
+      string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
+        \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
+        : \"1.10.1\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
+        \   \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\" : \"Polygon\",\n
+        \     \"coordinates\" : [\n        [\n          [\n            8.7160632,\n
+        \           49.4101846\n          ],\n          [\n            8.7164024,\n
+        \           49.4101846\n          ],\n          [\n            8.7164024,\n
+        \           49.4103952\n          ],\n          [\n            8.7160632,\n
+        \           49.4103952\n          ],\n          [\n            8.7160632,\n
+        \           49.4101846\n          ]\n        ]\n      ]\n    },\n    \"properties\"
+        : {\n      \"@contributionChangesetId\" : 30687511,\n      \"@osmId\" : \"way/24885641\",\n
+        \     \"@timestamp\" : \"2015-05-01T10:34:11Z\"\n    }\n  }]\n}\n"
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -46,7 +50,7 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Mon, 13 Nov 2023 11:26:31 GMT
+      - Mon, 13 Nov 2023 16:46:33 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -79,14 +83,18 @@ interactions:
     uri: https://api.ohsome.org/v1/contributions/latest/bbox
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAA/7RSTUvEMBC9+ytCzrVN2rTb7WlhQfAgCooHxUPsjm2hbUIyi5Zlf5B/w19mm9b9
-        AgVBIZDpm9eXN7zZnBFCJaKpntdYqZaSjGx6rEfXph6+aImobRYEqrSqAV+ZIsiV7kxVlGipN5IR
-        3tCxP97JtYb2Fg0AXklNctWO6spY2pO3nntSV/dg7PQi5T5nPndiFDsNDrwAiWsDS1XXkDtzrv8y
-        wnbgPE5eT//5slVAbxlNtx/rkHyj6q6YZF0nV8qsqlbipD7h5KA6rglJ/RlPWBKF3hEs5r7gjKci
-        OYCfvJ9lBAvFP8pE8zj8hcx3Q/2RzOlQZ6fVeG+nJLVRGgxWYzK7LBe79er3Y1nKtgALeLkaSBFL
-        0lnM+S7ehbLN2KKvsgtCkaZxIvg+/wVWDViUjXakkPH4nPWH33GWRSLj/IGOroZF/gQAAP//iuWq
-        5QIAAAD//wMAVRIcMUADAAA=
+      string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
+        \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
+        : \"1.10.1\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
+        \   \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\" : \"Polygon\",\n
+        \     \"coordinates\" : [\n        [\n          [\n            8.7160632,\n
+        \           49.4101846\n          ],\n          [\n            8.7164024,\n
+        \           49.4101846\n          ],\n          [\n            8.7164024,\n
+        \           49.4103952\n          ],\n          [\n            8.7160632,\n
+        \           49.4103952\n          ],\n          [\n            8.7160632,\n
+        \           49.4101846\n          ]\n        ]\n      ]\n    },\n    \"properties\"
+        : {\n      \"@contributionChangesetId\" : 30687511,\n      \"@osmId\" : \"way/24885641\",\n
+        \     \"@timestamp\" : \"2015-05-01T10:34:11Z\"\n    }\n  }]\n}\n"
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -107,131 +115,9 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Mon, 13 Nov 2023 11:26:32 GMT
-      Keep-Alive:
-      - timeout=5, max=99
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubdomains;
-      Transfer-Encoding:
-      - chunked
-      vary:
-      - accept-encoding
-    status:
-      code: 200
-      message: ''
-- request:
-    body: bboxes=8.7137%2C49.4096%2C8.717%2C49.4119&time=2015-01-01%2C2016-01-01&filter=name%3DKrautturm+and+type%3Away
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '109'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      user-agent:
-      - ohsome-py/0.2.0
-    method: POST
-    uri: https://api.ohsome.org/v1/contributions/latest/bbox
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAA/7RSTUvEMBC9+ytCzrVN2rTb7WlhQfAgCooHxUPsjm2hbUIyi5Zlf5B/w19mm9b9
-        AgVBIZDpm9eXN7zZnBFCJaKpntdYqZaSjGx6rEfXph6+aImobRYEqrSqAV+ZIsiV7kxVlGipN5IR
-        3tCxP97JtYb2Fg0AXklNctWO6spY2pO3nntSV/dg7PQi5T5nPndiFDsNDrwAiWsDS1XXkDtzrv8y
-        wnbgPE5eT//5slVAbxlNtx/rkHyj6q6YZF0nV8qsqlbipD7h5KA6rglJ/RlPWBKF3hEs5r7gjKci
-        OYCfvJ9lBAvFP8pE8zj8hcx3Q/2RzOlQZ6fVeG+nJLVRGgxWYzK7LBe79er3Y1nKtgALeLkaSBFL
-        0lnM+S7ehbLN2KKvsgtCkaZxIvg+/wVWDViUjXakkPH4nPWH33GWRSLj/IGOroZF/gQAAP//iuWq
-        5QIAAAD//wMAVRIcMUADAAA=
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Headers:
-      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-      Access-Control-Allow-Methods:
-      - POST, GET
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Max-Age:
-      - '3600'
-      Connection:
-      - Keep-Alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/geo+json;charset=utf-8
-      Content-disposition:
-      - attachment;filename=ohsome.geojson
-      Date:
-      - Mon, 13 Nov 2023 11:27:23 GMT
+      - Mon, 13 Nov 2023 16:46:36 GMT
       Keep-Alive:
       - timeout=5, max=100
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubdomains;
-      Transfer-Encoding:
-      - chunked
-      vary:
-      - accept-encoding
-    status:
-      code: 200
-      message: ''
-- request:
-    body: bboxes=8.7137%2C49.4096%2C8.717%2C49.4119&time=2015-01-01%2C2016-01-01&filter=name%3DKrautturm+and+type%3Away
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '109'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      user-agent:
-      - ohsome-py/0.2.0
-    method: POST
-    uri: https://api.ohsome.org/v1/contributions/latest/bbox
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAA/7RSTUvEMBC9+ytCzrVN2rTb7WlhQfAgCooHxUPsjm2hbUIyi5Zlf5B/w19mm9b9
-        AgVBIZDpm9eXN7zZnBFCJaKpntdYqZaSjGx6rEfXph6+aImobRYEqrSqAV+ZIsiV7kxVlGipN5IR
-        3tCxP97JtYb2Fg0AXklNctWO6spY2pO3nntSV/dg7PQi5T5nPndiFDsNDrwAiWsDS1XXkDtzrv8y
-        wnbgPE5eT//5slVAbxlNtx/rkHyj6q6YZF0nV8qsqlbipD7h5KA6rglJ/RlPWBKF3hEs5r7gjKci
-        OYCfvJ9lBAvFP8pE8zj8hcx3Q/2RzOlQZ6fVeG+nJLVRGgxWYzK7LBe79er3Y1nKtgALeLkaSBFL
-        0lnM+S7ehbLN2KKvsgtCkaZxIvg+/wVWDViUjXakkPH4nPWH33GWRSLj/IGOroZF/gQAAP//iuWq
-        5QIAAAD//wMAVRIcMUADAAA=
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Headers:
-      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-      Access-Control-Allow-Methods:
-      - POST, GET
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Max-Age:
-      - '3600'
-      Connection:
-      - Keep-Alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/geo+json;charset=utf-8
-      Content-disposition:
-      - attachment;filename=ohsome.geojson
-      Date:
-      - Mon, 13 Nov 2023 11:27:24 GMT
-      Keep-Alive:
-      - timeout=5, max=99
       Server:
       - Apache
       Strict-Transport-Security:

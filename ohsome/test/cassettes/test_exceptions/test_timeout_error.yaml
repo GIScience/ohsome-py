@@ -18,11 +18,10 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/geometry
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAA/zyOTWoDMQyF9zmF8Lqx63F/6Jyii/QAJhEeg205kiYQQu5ezxS60ObjfU/vcQAw
-        miuKxtoNzGCm1ykcvT/6cPJ+nj7mEKwPYQpfn+HdvGzCCOsqW/rNh52MAokJ94LTgpDyDRtcV+Q7
-        ZAElghI5IeQGjNLxrAOC/ke3DbSqhe+CURDWcRGkxlKQh5IyNYjt4ojhTJFl0M2BjpzpYv+GMY6X
-        oj9c9iWLapfZudizpUWooiVO7uYdFqzYVFzCQZXv5vD8BQAA//8DAMV1dYUMAQAA
+      string: "{\n  \"timestamp\" : \"2023-11-13T16:46:37.831186401\",\n  \"status\"
+        : 413,\n  \"message\" : \"The given query is too large in respect to the given
+        timeout. Please use a smaller region and/or coarser time period.\",\n  \"requestUrl\"
+        : \"https://api.ohsome.org/v1/elements/geometry\"\n}"
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -45,65 +44,7 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Mon, 13 Nov 2023 11:26:32 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubdomains;
-      Transfer-Encoding:
-      - chunked
-      vary:
-      - accept-encoding
-    status:
-      code: 413
-      message: ''
-- request:
-    body: bboxes=8.67066%2C49.41423%2C8.68177%2C49.4204&time=2010-01-01%2F2011-01-01%2FP1Y&filter=building%3D%2A+and+type%3Away&timeout=0
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '127'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      user-agent:
-      - ohsome-py/0.2.0
-    method: POST
-    uri: https://api.ohsome.org/v1/elements/geometry
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAA/zyOQWoDMQxF9zmF8LqxY09K2jlFF+kBTCI8BttyJU0glN69nil0oc3jv6//fQAw
-        miuKxtoNzGDCKUxH749+uno/h8sczvYSgj+Ft9d387IJI6yrbOmzn3YyCiQm3AuuC0LKD2zwtSI/
-        IQsoEZTICSE3YJSONx0Q9D+6baBVLXwUjIKwjosgNZaCPJSUqUFsd0cMN4osg24OdORMd/s3jHG8
-        FP3ksi9ZVLvMzsWeLS1CFS1xcg/vsGDFpuISDqr8NIefXwAAAP//AwCSC0RTDAEAAA==
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Headers:
-      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-      Access-Control-Allow-Methods:
-      - POST, GET
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Max-Age:
-      - '3600'
-      Cache-Control:
-      - no-cache, no-store, must-revalidate
-      Connection:
-      - close
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json
-      Content-disposition:
-      - attachment;filename=ohsome.geojson
-      Date:
-      - Mon, 13 Nov 2023 11:27:24 GMT
+      - Mon, 13 Nov 2023 16:46:37 GMT
       Server:
       - Apache
       Strict-Transport-Security:

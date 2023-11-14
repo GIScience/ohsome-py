@@ -18,13 +18,18 @@ interactions:
     uri: https://api.ohsome.org/v1/elementsFullHistory/centroid
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAA/+SQ30rDMBTG732KkOvZJrWbXa8GwsALUbB4MfGitnELdD3h5EwtYw/ka/hkZmn2
-        h4pPIARCvvxyvi/f9oIxXhKhft2QhpaznG2d5tQNNvsTXxEZm8cxrCysVQS4jCswHerliiwf9TCp
-        T/L09xe7N6p9JFSK7krDKmj76YCWO3g38pZGPym0wZHLSIpI+mGcOqO8OFclbVDdQNOoyofz92+9
-        bPfMc8g6fHOItVQuMmF3+tY5/AC6pYA6vQLAWrclhdlBZyyLruUkSaajo5JOo1SKZJpkQXrx+y7Y
-        GgSjkHQ/6Gg8A7u+rb31R9nFSZpl40kqTwlm72Wj6znC2kOJkONLId0qhMj9WgzhAs7QPV1IkV+l
-        uZQL3mfynbN/UNTg938WNfnV6amoHwAAAP//iuWq5QIAAAD//wMAEd6KWBQDAAA=
+      string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
+        \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
+        : \"1.10.1\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
+        \   \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\" : \"Point\",\n
+        \     \"coordinates\" : [\n        8.716229,\n        49.4102928\n      ]\n
+        \   },\n    \"properties\" : {\n      \"@osmId\" : \"way/24885641\",\n      \"@validFrom\"
+        : \"2015-01-01T00:00:00Z\",\n      \"@validTo\" : \"2015-05-01T10:34:11Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.716229,\n        49.4102928\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"way/24885641\",\n
+        \     \"@validFrom\" : \"2015-05-01T10:34:11Z\",\n      \"@validTo\" : \"2016-01-01T00:00:00Z\"\n
+        \   }\n  }]\n}\n"
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -45,67 +50,7 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Mon, 13 Nov 2023 11:26:56 GMT
-      Keep-Alive:
-      - timeout=5, max=100
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubdomains;
-      Transfer-Encoding:
-      - chunked
-      vary:
-      - accept-encoding
-    status:
-      code: 200
-      message: ''
-- request:
-    body: bboxes=8.7137%2C49.4096%2C8.717%2C49.4119&time=2015-01-01%2C2016-01-01&filter=name%3DKrautturm+and+type%3Away
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '109'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      user-agent:
-      - ohsome-py/0.2.0
-    method: POST
-    uri: https://api.ohsome.org/v1/elementsFullHistory/centroid
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAA/+SQ30rDMBTG732KkOvZJrWbXa8GwsALUbB4MfGitnELdD3h5EwtYw/ka/hkZmn2
-        h4pPIARCvvxyvi/f9oIxXhKhft2QhpaznG2d5tQNNvsTXxEZm8cxrCysVQS4jCswHerliiwf9TCp
-        T/L09xe7N6p9JFSK7krDKmj76YCWO3g38pZGPym0wZHLSIpI+mGcOqO8OFclbVDdQNOoyofz92+9
-        bPfMc8g6fHOItVQuMmF3+tY5/AC6pYA6vQLAWrclhdlBZyyLruUkSaajo5JOo1SKZJpkQXrx+y7Y
-        GgSjkHQ/6Gg8A7u+rb31R9nFSZpl40kqTwlm72Wj6znC2kOJkONLId0qhMj9WgzhAs7QPV1IkV+l
-        uZQL3mfynbN/UNTg938WNfnV6amoHwAAAP//iuWq5QIAAAD//wMAEd6KWBQDAAA=
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Headers:
-      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-      Access-Control-Allow-Methods:
-      - POST, GET
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Max-Age:
-      - '3600'
-      Connection:
-      - Keep-Alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/geo+json;charset=utf-8
-      Content-disposition:
-      - attachment;filename=ohsome.geojson
-      Date:
-      - Mon, 13 Nov 2023 11:27:42 GMT
+      - Mon, 13 Nov 2023 16:47:29 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:

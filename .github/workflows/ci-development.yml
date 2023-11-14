@@ -6,9 +6,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: "3.10"
       - name: Install lint dependencies
@@ -23,26 +23,24 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - python-version: 3.8
-            tox: 38
-          - python-version: 3.9
-            tox: 39
           - python-version: "3.10"
             tox: 310
           - python-version: 3.11
             tox: 311
-        poetry-version: [ 1.3.2 ]
+          - python-version: 3.12
+            tox: 312
+        poetry-version: [ 1.7.0 ]
         os: [ ubuntu-22.04 ]
     runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
       - name: Set up testing Python ${{ matrix.config.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.config.python-version }}
       - name: Set up base Python 3.10
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: "3.10"
       - name: Python Poetry Action

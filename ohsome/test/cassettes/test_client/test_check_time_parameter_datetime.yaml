@@ -18,11 +18,11 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/count
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAA/4SOQQ6CMBBF95yi6RpLy8pwB+NC40LjopIJNAHaTKdGQziQ1/BkliJrkr+Zn5f3
-        Z8wY45oIzSOQsQNnFRtjF9uA3Xzxlsj5qihs620PwmJT1Na90TQteZ4vMMGLEv39sKOD4UQIQAft
-        WG2HxW7R8whPeZp05gLo/4tcCSWFSjKO4EOXZLf1FTI9eNK9S3Ap1X4nVcxZyirluv7x1F2AmZJC
-        prENRbmtYPds+gEAAP//AwCmzxy+JwEAAA==
+      string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
+        \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
+        : \"1.10.1\",\n  \"result\" : [ {\n    \"timestamp\" : \"2018-01-01T00:00:00Z\",\n
+        \   \"value\" : 0.0\n  }, {\n    \"timestamp\" : \"2018-01-02T00:00:00Z\",\n
+        \   \"value\" : 0.0\n  } ]\n}"
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -43,65 +43,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Nov 2023 11:26:20 GMT
-      Keep-Alive:
-      - timeout=5, max=100
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubdomains;
-      Transfer-Encoding:
-      - chunked
-      vary:
-      - accept-encoding
-    status:
-      code: 200
-      message: ''
-- request:
-    body: bcircles=0%3A8.678770065307615%2C49.414435400453954%2C100%7C1%3A8.697137832641602%2C49.41007968889129%2C150&time=2018-01-01T00%3A00%3A00%2C2018-01-02T00%3A00%3A00&filter=amenity%3Drestaurant+and+type%3Away
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '205'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      user-agent:
-      - ohsome-py/0.2.0
-    method: POST
-    uri: https://api.ohsome.org/v1/elements/count
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAA/4SOQQ6CMBBF95yi6RpLy8pwB+NC40LjopIJNAHaTKdGQziQ1/BkliJrkr+Zn5f3
-        Z8wY45oIzSOQsQNnFRtjF9uA3Xzxlsj5qihs620PwmJT1Na90TQteZ4vMMGLEv39sKOD4UQIQAft
-        WG2HxW7R8whPeZp05gLo/4tcCSWFSjKO4EOXZLf1FTI9eNK9S3Ap1X4nVcxZyirluv7x1F2AmZJC
-        prENRbmtYPds+gEAAP//AwCmzxy+JwEAAA==
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Headers:
-      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-      Access-Control-Allow-Methods:
-      - POST, GET
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Max-Age:
-      - '3600'
-      Cache-Control:
-      - no-transform, public, max-age=31556926
-      Connection:
-      - Keep-Alive
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 13 Nov 2023 11:27:09 GMT
+      - Mon, 13 Nov 2023 16:45:59 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
