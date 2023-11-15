@@ -3,9 +3,13 @@
 
 """OhsomeClient classes to build and handle requests to ohsome API"""
 import json
+import os
 import urllib
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
 from ohsome import OhsomeException, OhsomeResponse
 from ohsome.constants import (
     DEFAULT_LOG_DIR,
@@ -17,12 +21,9 @@ from ohsome.helper import (
     extract_error_message_from_invalid_json,
     format_boundary,
     format_time,
-    format_lists,
+    convert_arrays,
+    format_list_parameters,
 )
-import os
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
-import numpy as np
 
 
 class _OhsomeBaseClient:
@@ -355,21 +356,16 @@ class _OhsomePostClient(_OhsomeBaseClient):
         :param params: Parameters for request
         :return:
         """
-        for i in params.keys():
-            if isinstance(params[i], np.ndarray):
-                params[i] = list(params[i])
         self._parameters = params.copy()
-        try:
-            format_boundary(self._parameters)
-        except OhsomeException as e:
-            raise OhsomeException(
-                message=str(e),
-                error_code=440,
-                params=self._parameters,
-                url=self._url,
-            )
-        self._parameters = format_time(self._parameters)
-        self._parameters = format_lists(self._parameters)
+
+        self._parameters = convert_arrays(self._parameters)
+
+        self._parameters = format_boundary(self._parameters)
+
+        if self._parameters.get("time") is not None:
+            self._parameters["time"] = format_time(self._parameters.get("time"))
+
+        format_list_parameters(self._parameters)
 
     def _construct_resource_url(self, endpoint=None):
         """

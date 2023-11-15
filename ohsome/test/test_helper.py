@@ -7,11 +7,14 @@ import logging
 import os
 
 import numpy as np
+import pandas as pd
+import pytest
 
 from ohsome.helper import (
     find_groupby_names,
     extract_error_message_from_invalid_json,
-    format_lists,
+    format_time,
+    convert_arrays,
 )
 
 script_path = os.path.dirname(os.path.realpath(__file__))
@@ -51,7 +54,13 @@ def test_extract_error_message_from_invalid_json():
         invalid_response_text = src.read()
 
     expected_error_code = 500
-    expected_message = 'A broken response has been received: java.lang.RuntimeException: java.lang.RuntimeException: java.lang.RuntimeException: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.; "error" : "OK"; "timestamp" : "2020-05-19T07:07:25.356+0000"; "path" : "/elements/geometry"; "status" : 200'
+    expected_message = (
+        "A broken response has been received: java.lang.RuntimeException: "
+        "java.lang.RuntimeException: java.lang.RuntimeException: "
+        "java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request "
+        'timed out after 30000ms.; "error" : "OK"; "timestamp" : "2020-05-19T07:07:25.356+0000"; '
+        '"path" : "/elements/geometry"; "status" : 200'
+    )
 
     error_code, message = extract_error_message_from_invalid_json(invalid_response_text)
 
@@ -89,7 +98,10 @@ def test_extract_error_message_from_invalid_json_outOfMemory():
         invalid_response_text = src.read()
 
     expected_error_code = 507
-    expected_message = 'A broken response has been received: java.lang.OutOfMemoryError; "error" : "OK"; "timestamp" : "2021-06-01T11:38:52.821+0000"; "path" : "/elements/geometry"; "status" : 200'
+    expected_message = (
+        'A broken response has been received: java.lang.OutOfMemoryError; "error" : "OK"; '
+        '"timestamp" : "2021-06-01T11:38:52.821+0000"; "path" : "/elements/geometry"; "status" : 200'
+    )
 
     error_code, message = extract_error_message_from_invalid_json(invalid_response_text)
 
@@ -108,7 +120,12 @@ def test_extract_error_message_from_invalid_json_custonErrorCode():
         invalid_response_text = src.read()
 
     expected_error_code = 413
-    expected_message = 'A broken response has been received: The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser time period.; "timestamp" : "2021-06-02T10:07:46.438591"; "requestUrl" : "http://localhost:8080/elements/geometry"; "status" : 413'
+    expected_message = (
+        "A broken response has been received: The given query is too large in respect to the given "
+        'timeout. Please use a smaller region and/or coarser time period.; "timestamp" : '
+        '"2021-06-02T10:07:46.438591"; "requestUrl" : "http://localhost:8080/elements/geometry"; '
+        '"status" : 413'
+    )
 
     error_code, message = extract_error_message_from_invalid_json(invalid_response_text)
 
@@ -116,40 +133,58 @@ def test_extract_error_message_from_invalid_json_custonErrorCode():
     assert message == expected_message
 
 
-def test_format_lists():
-    """Test if the list formatter converts list of string to string."""
-    parameters = {"time": ["2022-01-01", "2022-01-02"]}
+def test_array_conversion():
+    """Tests whether numpy arrays are supported as input parameters"""
+    method_input = {"bbox": np.ones(3)}
 
-    expected_output = {"time": "2022-01-01,2022-01-02"}
+    output = convert_arrays(method_input)
 
-    output = format_lists(parameters)
-
-    assert expected_output == output
+    assert isinstance(output["bbox"], list)
 
 
-def test_format_lists_numpy_datetime():
-    """Test if the list formatter converts list of pandas datetime to string."""
-    parameters = {"time": [np.datetime64("2022-01-01"), np.datetime64("2022-01-02")]}
-
-    expected_output = {
-        "time": "2022-01-01,2022-01-02",
-    }
-
-    output = format_lists(parameters)
-
-    assert expected_output == output
+def test_convert_arrays_multi_dim():
+    """Test error raising on multi dim array."""
+    method_input = {"bbox": np.ndarray(shape=(2, 2))}
+    with pytest.raises(
+        AssertionError,
+        match="Only one dimensional arrays are supported for parameter bbox",
+    ):
+        convert_arrays(method_input)
 
 
-def test_format_lists_datetime():
-    """Test if the list formatter converts list of datatime.datetime to string."""
+def test_format_time():
+    """Test if the time formatter covers all cases."""
     parameters = {
-        "time": [datetime.datetime(2022, 1, 1), datetime.datetime(2022, 1, 2)]
+        "time_str": {"input": "2022-01-01", "output": "2022-01-01"},
+        "time_datetime": {
+            "input": datetime.datetime(2022, 1, 1),
+            "output": "2022-01-01T00:00:00",
+        },
+        "time_date": {"input": datetime.date(2022, 1, 1), "output": "2022-01-01"},
+        "time_list": {
+            "input": ["2022-01-01", "2022-01-02"],
+            "output": "2022-01-01,2022-01-02",
+        },
+        "time_pandas_index": {
+            "input": pd.date_range("2022-01-01", periods=2, freq="D"),
+            "output": "2022-01-01T00:00:00,2022-01-02T00:00:00",
+        },
+        "time_pandas_series": {
+            "input": pd.Series(["2022-01-01", "2022-01-02"]),
+            "output": "2022-01-01,2022-01-02",
+        },
     }
 
-    expected_output = {
-        "time": "2022-01-01,2022-01-02",
-    }
+    for k, v in parameters.items():
+        output = format_time(v["input"])
+        assert v["output"] == output, f"Input type {k} not correctly formatted."
 
-    output = format_lists(parameters)
 
-    assert expected_output == output
+def test_format_time_error_format_not_supported():
+    """Test weather a time with wrong type (e.g. a dict) raises an error."""
+    with pytest.raises(
+        ValueError,
+        match="The given time format <class 'dict'> is not supported. Feel free to open an "
+        "issue in the ohsome-py repository for a feature request.",
+    ):
+        format_time({})
