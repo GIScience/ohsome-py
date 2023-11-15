@@ -18,7 +18,7 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/count
   response:
     body:
-      string: "{\n  \"timestamp\" : \"2023-11-13T16:46:38.504465635\",\n  \"status\"
+      string: "{\n  \"timestamp\" : \"2023-11-15T12:04:57.04867339\",\n  \"status\"
         : 413,\n  \"message\" : \"The given query is too large in respect to the given
         timeout. Please use a smaller region and/or coarser time period.\",\n  \"requestUrl\"
         : \"https://api.ohsome.org/v1/elements/count\"\n}"
@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Nov 2023 16:46:37 GMT
+      - Wed, 15 Nov 2023 12:04:57 GMT
       Server:
       - Apache
       Strict-Transport-Security:
