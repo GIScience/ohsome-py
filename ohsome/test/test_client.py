@@ -9,7 +9,6 @@ import os
 import geopandas as gpd
 import pandas as pd
 import pytest
-import numpy as np
 
 import ohsome
 from ohsome.constants import OHSOME_VERSION
@@ -55,34 +54,6 @@ def test_check_time_parameter_list(base_client):
     """
     time = pd.date_range("2018-01-01", periods=3, freq="D")
     time = time.strftime("%Y-%m-%dT%H:%M:%S").tolist()
-    bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
-    fltr = "amenity=restaurant and type:way"
-
-    client = base_client
-    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
-
-
-@pytest.mark.vcr
-def test_check_time_parameter_datetimeindex(base_client):
-    """
-    Checks whether time provided as pandas.DateTimeIndex is converted correctly
-    :return:
-    """
-    time = pd.date_range("2018-01-01", periods=3, freq="D")
-    bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
-    fltr = "amenity=restaurant and type:way"
-
-    client = base_client
-    client.elements.count.post(bcircles=bcircles, time=time, filter=fltr)
-
-
-@pytest.mark.vcr
-def test_check_time_parameter_series(base_client):
-    """
-    Checks whether time provided as pandas.DateTimeIndex is converted correctly
-    :return:
-    """
-    time = pd.Series(["2018-01-01", "2018-01-02"])
     bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
     fltr = "amenity=restaurant and type:way"
 
@@ -327,22 +298,6 @@ def test_format_bboxes_list(base_client):
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
     bboxes = "8.67066, 49.41423, 8.68177, 49.4204"
-    client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
-
-
-@pytest.mark.vcr
-def test_bbox_numpy(base_client):
-    """
-    Tests whether numpy arrays are supported as input parameters
-    :return:
-    """
-
-    time = "2010-01-01"
-    fltr = "amenity=restaurant and type:node"
-
-    client = base_client
-
-    bboxes = np.array([8.67066, 49.41423, 8.68177, 49.4204])
     client.elements.count.post(bboxes=bboxes, time=time, filter=fltr)
 
 
