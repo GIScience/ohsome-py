@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: bcircles=0%3A8.678770065307615%2C49.414435400453954%2C100%7C1%3A8.697137832641602%2C49.41007968889129%2C150&time=2023-10-22T20%3A00Z&filter=amenity%3Drestaurant+and+type%3Away
+    body: bcircles=0%3A8.678770065307615%2C49.414435400453954%2C100%7C1%3A8.697137832641602%2C49.41007968889129%2C150&time=2023-11-11T22%3A00Z&filter=amenity%3Drestaurant+and+type%3Away
     headers:
       Accept:
       - '*/*'
@@ -20,7 +20,7 @@ interactions:
     body:
       string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
         \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
-        : \"1.10.1\",\n  \"result\" : [ {\n    \"timestamp\" : \"2023-10-22T20:00:00Z\",\n
+        : \"1.10.1\",\n  \"result\" : [ {\n    \"timestamp\" : \"2023-11-11T22:00:00Z\",\n
         \   \"value\" : 0.0\n  } ]\n}"
     headers:
       Access-Control-Allow-Credentials:
@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Nov 2023 16:46:00 GMT
+      - Wed, 15 Nov 2023 16:00:43 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:

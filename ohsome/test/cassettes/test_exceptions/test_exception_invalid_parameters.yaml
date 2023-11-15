@@ -18,7 +18,7 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/count/groupBy/tag
   response:
     body:
-      string: "{\n  \"timestamp\" : \"2023-11-13T16:46:44.714186923\",\n  \"status\"
+      string: "{\n  \"timestamp\" : \"2023-11-15T16:00:59.025301129\",\n  \"status\"
         : 400,\n  \"message\" : \"You need to give one groupByKey parameter, if you
         want to use groupBy/tag.\",\n  \"requestUrl\" : \"https://api.ohsome.org/v1/elements/count/groupBy/tag\"\n}"
     headers:
@@ -41,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 13 Nov 2023 16:46:44 GMT
+      - Wed, 15 Nov 2023 16:00:59 GMT
       Server:
       - Apache
       Strict-Transport-Security:
