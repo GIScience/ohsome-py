@@ -147,9 +147,9 @@ This package uses [poetry](https://python-poetry.org/) for dependency management
 
 ### Run Tests
 
-**Before pushing your commits**, run python tests for all supported versions.
+**Before pushing your commits**, run python tests
 
-`poetry run tox`
+`poetry run pytest`
 
 Create a **pull request to the main/master** branch once it is ready to be merged.
 
