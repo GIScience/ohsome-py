@@ -21,13 +21,11 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
 
 
-def test_start_and_end_timestamp(base_client):
-    """
-    Get start timestamp
-    :return:
-    """
-    assert base_client.start_timestamp == "2007-10-08T00:00:00Z"
-    assert isinstance(base_client.end_timestamp, str)
+def test_start_time_is_datetime(base_client):
+    """Test if the start_timestamp is in datetime format."""
+
+    assert isinstance(base_client.start_timestamp, dt.datetime)
+    assert isinstance(base_client.end_timestamp, dt.datetime)
 
 
 def test_api_version(base_client):
