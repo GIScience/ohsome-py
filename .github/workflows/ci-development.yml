@@ -5,51 +5,43 @@ jobs:
   lint:
     runs-on: ubuntu-22.04
     steps:
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: Install Python
+      - uses: actions/checkout@v4
+      - name: Install python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
       - name: Install lint dependencies
         run: |
           pip install pre-commit black
       - name: Install and run pre-commit
         uses: pre-commit/action@v3.0.0
-  linux-tests:
+  test:
+    runs-on: ubuntu-22.04
     needs:
       - lint
     strategy:
       fail-fast: false
       matrix:
-        config:
-          - python-version: "3.10"
-            tox: 310
-          - python-version: 3.11
-            tox: 311
-          - python-version: 3.12
-            tox: 312
-        poetry-version: [ 1.7.0 ]
-        os: [ ubuntu-22.04 ]
-    runs-on: ${{ matrix.os }}
+        python-version: ["3.10", "3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up testing Python ${{ matrix.config.python-version }}
+      - uses: actions/checkout@v4
+      - name: Set up testing python ${{ matrix.config.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.config.python-version }}
-      - name: Set up base Python 3.10
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-      - name: Python Poetry Action
+      - name: Install poetry
         uses: abatilo/actions-poetry@v2.3.0
-        with:
-          poetry-version: ${{ matrix.poetry-version }}
-      - name: Install dependencies
+      - name: Setup a local virtual environment for caching
         run: |
-          sudo add-apt-repository -y ppa:ubuntugis/ppa && sudo apt-get update && sudo apt-get install -y build-essential gdal-bin libgdal-dev
-          python -m pip install --upgrade pip tox
-      - name: Run tox
-        run: tox -e py${{ matrix.config.tox }}
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+      - name: Define a cache for the virtual environment based on the dependencies lock file to speed up later runs
+        uses: actions/cache@v3
+        with:
+          path: ./.venv
+          key: venv-${{ hashFiles('poetry.lock') }}
+      - name: Install dependencies
+        run: poetry install --no-root --without dev
+      - name: Pytest
+        run: poetry run pytest -x --random-order

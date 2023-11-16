@@ -41,21 +41,21 @@ client.end_timestamp # --> '2021-01-23T03:00Z'
 
 ### 1. Data Aggregation
 
-**Example:** The Number of OSM ways tagged as _landuse=farmland_ using the [/elements/count](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation#/Count/count_1) endpoint:
+**Example:** The area of OSM elements tagged as _landuse=farmland_ using the [/elements/area](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Aggregation#/Elements%20Area/area_1) endpoint:
 
 ``` python
-response = client.elements.count.post(bboxes=[8.625,49.3711,8.7334,49.4397],
+response = client.elements.area.post(bboxes=[8.625,49.3711,8.7334,49.4397],
 				      time="2014-01-01",
-				      filter="landuse=farmland and type:way")
+				      filter="landuse=farmland and geometry:polygon")
 ```
 
 The single components of the endpoint URL are appended as method calls to the `OhsomeClient` object. Use automatic code completion to find valid endpoints. Alternatively, you can define the endpoint as argument in the `.post()` method.
 
 ``` python
-response = client.post(endpoint="elements/count",
+response = client.post(endpoint="elements/area",
 		       bboxes=[8.625,49.3711,8.7334,49.4397],
 		       time="2020-01-01",
-		       filter="landuse=farmland and type:way")
+		       filter="landuse=farmland and geometry:polygon")
 ```
 
 Responses from the data aggregation endpoints can be converted to a `pandas.DataFrame` object using the `OhsomeResponse.as_dataframe()` method.
@@ -66,13 +66,13 @@ response_df = response.as_dataframe()
 
 ### 2. Data Extraction
 
-**Example:** OSM ways tagged as _landuse=farmland_ including their geometry and tags using the [/elements/geometry](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Extraction#/Data%20Extraction/elementsGeometry_1) endpoint:
+**Example:** OSM elements tagged as _landuse=farmland_ including their geometry and tags using the [/elements/geometry](https://api.ohsome.org/v1/swagger-ui.html?urls.primaryName=Data%20Extraction#/Data%20Extraction/elementsGeometry_1) endpoint:
 
 ``` python
 client = OhsomeClient()
 response = client.elements.geometry.post(bboxes=[8.625,49.3711,8.7334,49.4397],
 					 time="2020-01-01",
-					 filter="landuse=farmland and type:way",
+					 filter="landuse=farmland and geometry:polygon",
 					 properties="tags")
 response_gdf = response.as_dataframe()
 ```
@@ -147,9 +147,9 @@ This package uses [poetry](https://python-poetry.org/) for dependency management
 
 ### Run Tests
 
-**Before pushing your commits**, run python tests for all supported versions.
+**Before pushing your commits**, run python tests
 
-`poetry run tox`
+`poetry run pytest`
 
 Create a **pull request to the main/master** branch once it is ready to be merged.
 
