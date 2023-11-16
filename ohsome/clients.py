@@ -365,7 +365,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         if self._parameters.get("time") is not None:
             self._parameters["time"] = format_time(self._parameters.get("time"))
 
-        format_list_parameters(self._parameters)
+        self._parameters = format_list_parameters(self._parameters)
 
     def _construct_resource_url(self, endpoint=None):
         """
