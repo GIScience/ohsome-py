@@ -71,7 +71,7 @@ def test_extract_error_message_from_invalid_json():
 
 def test_extract_error_message_from_invalid_json_no_message():
     """
-    Test whether error code and message are extracted correctly if theres is no message in the json response
+    Test whether error code and message are extracted correctly if there is no message in the json response
     :return:
     """
 

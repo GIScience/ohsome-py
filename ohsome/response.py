@@ -3,9 +3,12 @@
 
 """Class for ohsome API response"""
 
+import json
+
 import geopandas as gpd
 import pandas as pd
-import json
+from pandas import DataFrame
+
 from ohsome.helper import find_groupby_names
 
 
@@ -138,10 +141,11 @@ class OhsomeResponse:
                 [*groupby_names, "fromTimestamp", "toTimestamp"], inplace=True
             )
 
-    def _create_groupby_dataframe(self, data, groupby_names):
+    def _create_groupby_dataframe(self, data, groupby_names) -> DataFrame:
         """
         Formats groupby results
-        :param result_df:
+        :param data:
+        :param groupby_names:
         :return:
         """
         keys = list(data[0].keys())
@@ -162,10 +166,10 @@ class OhsomeResponse:
                 record_dfs.extend(record_result)
         return pd.DataFrame().from_records(record_dfs)
 
-    def _format_timestamp(self, result_df):
+    def _format_timestamp(self, result_df: DataFrame) -> None:
         """
         Format timestamp column as datetime
-        :param dresult_dff:
+        :param result_df:
         :return:
         """
         if "timestamp" in result_df.columns:

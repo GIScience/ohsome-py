@@ -4,7 +4,7 @@
 """OhsomeClient classes to build and handle requests to ohsome API"""
 import json
 import os
-import urllib
+from urllib.parse import urljoin
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -152,7 +152,6 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
     def _query_metadata(self):
         """
         Send ohsome GET request
-        :param params: parameters of the request as in ohsome documentation
         :return:
         """
         self._url = self._base_api_url + "metadata"
@@ -225,10 +224,10 @@ class _OhsomePostClient(_OhsomeBaseClient):
         Sends request to ohsome API
 
         :param bboxes: Bounding boxes given as
-        - str e.g. "lon1,lat1,lon2,lat2|lon1,lat1,lon2,lat2|… or id1:lon1,lat1,lon2,lat2|id2:lon1,lat1,lon2,lat2|…
+        - str e.g. lon1,lat1,lon2,lat2|lon1,lat1,lon2,lat2|… or id1:lon1,lat1,lon2,lat2|id2:lon1,lat1,lon2,lat2|…
         - list e.g. [[id1:lon1,lat1,lon2,lat2],[id2:lon1,lat1,lon2,lat2],...]
-        - pandas.DataFrame with columns minx, miny, maxx, maxy. These columns can be created from a GeoDataFrame using the
-        'GeoDataFrame.bounds' method.
+        - pandas.DataFrame with columns minx, miny, maxx, maxy. These columns can be created from a GeoDataFrame using
+        the 'GeoDataFrame.bounds' method.
 
         :param bcircles: Coordinate pair and radius in meters to define a circular polygon given as
         - str e.g. lon,lat,radius|lon,lat,radius|… or id1:lon,lat,radius|id2:lon,lat,radius|…
@@ -245,18 +244,18 @@ class _OhsomePostClient(_OhsomeBaseClient):
 
         :param filter: (str) Combines several attributive filters: OSM type, geometry (simple feature) type, OSM tag
 
-        :param format: (str)  ‘json’ or ‘csv’; default: ‘json’
-
-        :param showMetadata (str, bool) add additional metadata information to the response: ‘true’, ‘false’, ‘yes’,
-        ‘no’; default: ‘false’
-
-        :param timeout (str, int) custom timeout to limit the processing time in seconds; default: dependent on server
-        settings, retrievable via the /metadata request
-
         :param filter2: (str) Combines several attributive filters. Only for ratio queries.
 
+        :param format: (str)  ‘json’ or ‘csv’; default: ‘json’
+
+        :param showMetadata: (str, bool) add additional metadata information to the response: ‘true’, ‘false’, ‘yes’,
+        ‘no’; default: ‘false’
+
+        :param timeout: (str, int) custom timeout to limit the processing time in seconds; default: dependent on server
+        settings, retrievable via the /metadata request
+
         :param groupByKey: (str) OSM key, no default value (only one groupByKey can be defined),
-        non matching objects (if any) will be summarised in a ‘remainder’ category. Only for groupByKey queries.
+        non-matching objects (if any) will be summarised in a ‘remainder’ category. Only for groupByKey queries.
 
         :param groupByKeys: (str, list) OSM key(s) given as a list and combined with the ‘AND’ operator; default: empty;
 
@@ -285,24 +284,27 @@ class _OhsomePostClient(_OhsomeBaseClient):
         :return:
         """
         ohsome_exception = None
+        response = None
 
         try:
             response = self._session().post(url=self._url, data=self._parameters)
             response.raise_for_status()
             response.json()
+
         except requests.exceptions.HTTPError as e:
             try:
                 error_message = e.response.json()["message"]
             except json.decoder.JSONDecodeError:
                 error_message = f"Invalid URL: Is {self._url} valid?"
-            finally:
-                ohsome_exception = OhsomeException(
-                    message=error_message,
-                    url=self._url,
-                    params=self._parameters,
-                    error_code=e.response.status_code,
-                    response=e.response,
-                )
+
+            ohsome_exception = OhsomeException(
+                message=error_message,
+                url=self._url,
+                params=self._parameters,
+                error_code=e.response.status_code,
+                response=e.response,
+            )
+
         except requests.exceptions.ConnectionError as e:
             ohsome_exception = OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
@@ -311,6 +313,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 params=self._parameters,
                 response=e.response,
             )
+
         except requests.exceptions.RequestException as e:
             ohsome_exception = OhsomeException(
                 message=str(e),
@@ -318,6 +321,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 params=self._parameters,
                 response=e.response,
             )
+
         except KeyboardInterrupt:
             ohsome_exception = OhsomeException(
                 message="Keyboard Interrupt: Query was interrupted by the user.",
@@ -325,8 +329,15 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 params=self._parameters,
                 error_code=440,
             )
-        except ValueError:
-            error_code, message = extract_error_message_from_invalid_json(response.text)
+
+        except ValueError as e:
+            if response:
+                error_code, message = extract_error_message_from_invalid_json(
+                    response.text
+                )
+            else:
+                message = str(e)
+                error_code = None
             ohsome_exception = OhsomeException(
                 message=message,
                 url=self._url,
@@ -334,6 +345,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 params=self._parameters,
                 response=response,
             )
+
         except AttributeError:
             ohsome_exception = OhsomeException(
                 message=f"Seems like {self._url} is not a valid endpoint.",
@@ -374,9 +386,9 @@ class _OhsomePostClient(_OhsomeBaseClient):
         :return:
         """
         if endpoint:
-            self._url = urllib.parse.urljoin(self._base_api_url, endpoint.strip("/"))
+            self._url = urljoin(self._base_api_url, endpoint.strip("/"))
         else:
-            self._url = urllib.parse.urljoin(self._base_api_url, "/".join(self._cache))
+            self._url = urljoin(self._base_api_url, "/".join(self._cache))
 
     def _(self, name):
         # Enables method chaining
@@ -599,7 +611,7 @@ class _OhsomeClientElementsAggregatedRatio(_OhsomePostClient):
 
 
 class _OhsomeClientElementsFullHistory(_OhsomeBaseClient):
-    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
+    """Subclass of _OhsomeBaseClient to define endpoints of ohsome API for full history analyses."""
 
     @property
     def bbox(self):
@@ -663,7 +675,7 @@ class _OhsomeClientContributionsAggregated(_OhsomePostClient):
 
 
 class _OhsomeClientContributionsLatest(_OhsomePostClient):
-    """Subclass of _OhsomePostClient to define endpoints of ohsome API"""
+    """Subclass of _OhsomePostClient to define endpoints of ohsome API for contribution analyses."""
 
     @property
     def bbox(self):
