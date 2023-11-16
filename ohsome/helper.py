@@ -14,7 +14,10 @@ from ohsome import OhsomeException
 
 
 def convert_arrays(params: dict) -> dict:
-    """Convert arrays to lists."""
+    """Convert arrays to lists.
+
+    params: the request parameters
+    """
     for i in params.keys():
         if isinstance(params[i], np.ndarray):
             assert (
