@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0 ohsome-py
+      - ohsome-py/0.2.0
     method: POST
     uri: https://api.ohsome.org/elements/count
   response:
@@ -38,7 +38,7 @@ interactions:
       Content-Type:
       - text/html
       Date:
-      - Thu, 16 Nov 2023 11:38:16 GMT
+      - Thu, 16 Nov 2023 11:48:04 GMT
       ETag:
       - '"25c-5c7180820e5fc"'
       Keep-Alive:

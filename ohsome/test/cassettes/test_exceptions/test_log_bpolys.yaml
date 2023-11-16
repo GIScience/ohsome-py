@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0 ohsome-py
+      - ohsome-py/0.2.0
     method: POST
     uri: https://api.ohsome.org/v1/elements/count
   response:
     body:
-      string: "{\n  \"timestamp\" : \"2023-11-16T11:38:16.894120808\",\n  \"status\"
+      string: "{\n  \"timestamp\" : \"2023-11-16T11:48:04.814966734\",\n  \"status\"
         : 413,\n  \"message\" : \"The given query is too large in respect to the given
         timeout. Please use a smaller region and/or coarser time period.\",\n  \"requestUrl\"
         : \"https://api.ohsome.org/v1/elements/count\"\n}"
@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 16 Nov 2023 11:38:15 GMT
+      - Thu, 16 Nov 2023 11:48:04 GMT
       Server:
       - Apache
       Strict-Transport-Security:
