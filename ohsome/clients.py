@@ -5,6 +5,7 @@
 import json
 import os
 import urllib
+import datetime as dt
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -120,7 +121,11 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         """
         if self._metadata is None:
             self._query_metadata()
-        return self._metadata["extractRegion"]["temporalExtent"]["fromTimestamp"]
+        return dt.datetime.fromisoformat(
+            self._metadata["extractRegion"]["temporalExtent"]["fromTimestamp"].strip(
+                "Z"
+            )
+        )
 
     @property
     def end_timestamp(self):
@@ -130,8 +135,9 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         """
         if self._metadata is None:
             self._query_metadata()
-        return self._metadata["extractRegion"]["temporalExtent"]["toTimestamp"]
-        # return dt.datetime.fromisoformat(end_timestamp.strip("Z"))
+        return dt.datetime.fromisoformat(
+            self._metadata["extractRegion"]["temporalExtent"]["toTimestamp"].strip("Z")
+        )
 
     @property
     def api_version(self):
