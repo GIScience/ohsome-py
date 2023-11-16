@@ -22,7 +22,7 @@ def convert_arrays(params: dict) -> dict:
     for i in params.keys():
         if isinstance(params[i], np.ndarray):
             assert (
-                    params[i].ndim == 1
+                params[i].ndim == 1
             ), f"Only one dimensional arrays are supported for parameter {i}"
             params[i] = list(params[i])
 
@@ -65,7 +65,7 @@ def format_boundary(params: dict) -> dict:
     else:
         raise OhsomeException(
             message="No valid boundary parameter is given. Specify one of the parameters 'bboxes', 'bpolys' or "
-                    "'bcircles'.",
+            "'bcircles'.",
             error_code=440,
             params=params,
         )

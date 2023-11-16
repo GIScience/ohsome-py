@@ -100,7 +100,7 @@ class OhsomeResponse:
             if multi_index:
                 features = features.set_index(["@osmId", "@snapshotTimestamp"])
         elif (
-                "timestamp" in features.columns and "groupByBoundaryId" in features.columns
+            "timestamp" in features.columns and "groupByBoundaryId" in features.columns
         ):
             features["timestamp"] = pd.to_datetime(
                 features["timestamp"], format="%Y-%m-%dT%H:%M:%SZ"

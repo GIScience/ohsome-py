@@ -28,12 +28,12 @@ from ohsome.helper import (
 
 class _OhsomeBaseClient:
     def __init__(
-            self,
-            base_api_url=None,
-            log=DEFAULT_LOG,
-            log_dir=DEFAULT_LOG_DIR,
-            cache=None,
-            user_agent=None,
+        self,
+        base_api_url=None,
+        log=DEFAULT_LOG,
+        log_dir=DEFAULT_LOG_DIR,
+        cache=None,
+        user_agent=None,
     ):
         """
         Initialize _OhsomeInfoClient object
@@ -86,12 +86,12 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
     """Client for metadata of ohsome API"""
 
     def __init__(
-            self,
-            base_api_url=None,
-            log=DEFAULT_LOG,
-            log_dir=DEFAULT_LOG_DIR,
-            cache=None,
-            user_agent=None,
+        self,
+        base_api_url=None,
+        log=DEFAULT_LOG,
+        log_dir=DEFAULT_LOG_DIR,
+        cache=None,
+        user_agent=None,
     ):
         """
         Initialize _OhsomeInfoClient object
@@ -161,7 +161,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         except requests.exceptions.ConnectionError:
             raise OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
-                        f"problems and that the ohsome API URL {self._url} is valid.",
+                f"problems and that the ohsome API URL {self._url} is valid.",
                 url=self._url,
                 params=self._parameters,
             )
@@ -180,12 +180,12 @@ class _OhsomePostClient(_OhsomeBaseClient):
     """Client for sending requests to ohsome API"""
 
     def __init__(
-            self,
-            base_api_url=None,
-            log=DEFAULT_LOG,
-            log_dir=DEFAULT_LOG_DIR,
-            cache=None,
-            user_agent=None,
+        self,
+        base_api_url=None,
+        log=DEFAULT_LOG,
+        log_dir=DEFAULT_LOG_DIR,
+        cache=None,
+        user_agent=None,
     ):
         """
         Initialize _OhsomePostClient object
@@ -203,22 +203,22 @@ class _OhsomePostClient(_OhsomeBaseClient):
         self._url = None
 
     def post(
-            self,
-            bboxes=None,
-            bcircles=None,
-            bpolys=None,
-            time=None,
-            filter=None,
-            filter2=None,
-            format=None,
-            showMetadata=None,
-            timeout=None,
-            groupByKey=None,
-            groupByKeys=None,
-            groupByValues=None,
-            properties=None,
-            clipGeometry=None,
-            endpoint=None,
+        self,
+        bboxes=None,
+        bcircles=None,
+        bpolys=None,
+        time=None,
+        filter=None,
+        filter2=None,
+        format=None,
+        showMetadata=None,
+        timeout=None,
+        groupByKey=None,
+        groupByKeys=None,
+        groupByValues=None,
+        properties=None,
+        clipGeometry=None,
+        endpoint=None,
     ):
         """
         Sends request to ohsome API
@@ -308,7 +308,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         except requests.exceptions.ConnectionError as e:
             ohsome_exception = OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
-                        f"problems and that the ohsome API URL {self._url} is valid.",
+                f"problems and that the ohsome API URL {self._url} is valid.",
                 url=self._url,
                 params=self._parameters,
                 response=e.response,
