@@ -41,9 +41,8 @@ def test_user_agent(base_client):
     :return:
     """
     resp = base_client._session().get(base_client._url)
-    used_user_agent = resp.request.headers["user-agent"].split("/")
-    assert used_user_agent[0] == "ohsome-py"
-    assert used_user_agent[1] == OHSOME_VERSION
+    used_user_agent = resp.request.headers["user-agent"]
+    assert used_user_agent == f"ohsome-py/{OHSOME_VERSION}"
 
 
 @pytest.mark.vcr

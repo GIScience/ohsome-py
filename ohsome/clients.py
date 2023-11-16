@@ -53,10 +53,12 @@ class _OhsomeBaseClient:
         else:
             self._base_api_url = OHSOME_BASE_API_URL
         self._cache = cache or []
+
+        agent_list = [f"ohsome-py/{OHSOME_VERSION}"]
         if user_agent is not None:
-            self.user_agent = user_agent
-        else:
-            self.user_agent = "ohsome-py/{0}".format(OHSOME_VERSION)
+            agent_list.append(user_agent)
+        self.user_agent = " ".join(agent_list)
+
         self.__session = None
 
     def _session(self):
