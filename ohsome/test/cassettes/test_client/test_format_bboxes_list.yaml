@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0
+      - ohsome-py/0.2.0 ohsome-py
     method: POST
     uri: https://api.ohsome.org/v1/elements/count
   response:
@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 16 Nov 2023 11:12:22 GMT
+      - Thu, 16 Nov 2023 11:38:13 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -70,7 +70,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0
+      - ohsome-py/0.2.0 ohsome-py
     method: POST
     uri: https://api.ohsome.org/v1/elements/count
   response:
@@ -99,7 +99,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 16 Nov 2023 11:12:22 GMT
+      - Thu, 16 Nov 2023 11:38:13 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -127,7 +127,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0
+      - ohsome-py/0.2.0 ohsome-py
     method: POST
     uri: https://api.ohsome.org/v1/elements/count
   response:
@@ -156,7 +156,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 16 Nov 2023 11:12:22 GMT
+      - Thu, 16 Nov 2023 11:38:13 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -184,7 +184,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0
+      - ohsome-py/0.2.0 ohsome-py
     method: POST
     uri: https://api.ohsome.org/v1/elements/count
   response:
@@ -213,7 +213,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 16 Nov 2023 11:12:23 GMT
+      - Thu, 16 Nov 2023 11:38:14 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -241,7 +241,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0
+      - ohsome-py/0.2.0 ohsome-py
     method: POST
     uri: https://api.ohsome.org/v1/elements/count
   response:
@@ -270,7 +270,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 16 Nov 2023 11:12:23 GMT
+      - Thu, 16 Nov 2023 11:38:14 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:

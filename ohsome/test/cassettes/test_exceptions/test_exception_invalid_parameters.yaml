@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0
+      - ohsome-py/0.2.0 ohsome-py
     method: POST
     uri: https://api.ohsome.org/v1/elements/count/groupBy/tag
   response:
     body:
-      string: "{\n  \"timestamp\" : \"2023-11-16T11:12:33.156443534\",\n  \"status\"
+      string: "{\n  \"timestamp\" : \"2023-11-16T11:38:22.991972345\",\n  \"status\"
         : 400,\n  \"message\" : \"You need to give one groupByKey parameter, if you
         want to use groupBy/tag.\",\n  \"requestUrl\" : \"https://api.ohsome.org/v1/elements/count/groupBy/tag\"\n}"
     headers:
@@ -41,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 16 Nov 2023 11:12:33 GMT
+      - Thu, 16 Nov 2023 11:38:22 GMT
       Server:
       - Apache
       Strict-Transport-Security:
