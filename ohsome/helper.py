@@ -4,35 +4,52 @@
 """Ohsome utility functions"""
 
 import datetime
+import re
 
 import geopandas as gpd
+import numpy as np
 import pandas as pd
 
 from ohsome import OhsomeException
 
-import re
 
+def convert_arrays(params: dict) -> dict:
+    """Convert arrays to lists.
 
-def format_time(params: dict) -> dict:
+    params: the request parameters
     """
-    Formats the 'time' parameter given as string, list of dates or pandas.Series or pandas.DateTimeIndex
-    :param params:
-    :return:
-    """
-    if isinstance(params["time"], pd.DatetimeIndex):
-        params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S").tolist()
-    elif isinstance(params["time"], pd.Series):
-        params["time"] = params["time"].tolist()
-    elif isinstance((params["time"]), list):
-        if isinstance((params["time"])[0], datetime.datetime):
-            params["time"] = [x.isoformat() for x in params["time"]]
-    elif isinstance(params["time"], datetime.datetime):
-        params["time"] = params["time"].strftime("%Y-%m-%dT%H:%M:%S")
+    for i in params.keys():
+        if isinstance(params[i], np.ndarray):
+            assert (
+                params[i].ndim == 1
+            ), f"Only one dimensional arrays are supported for parameter {i}"
+            params[i] = list(params[i])
 
     return params
 
 
-def format_boundary(params):
+def format_time(time: any) -> str:
+    """
+    Formats the 'time' parameter
+    :param time:
+    :return:
+    """
+    if isinstance(time, str):
+        return time
+    if isinstance(time, datetime.datetime) or isinstance(time, datetime.date):
+        return time.isoformat()
+    elif isinstance(time, list):
+        return ",".join([format_time(t) for t in time])
+    if isinstance(time, pd.DatetimeIndex) or isinstance(time, pd.Series):
+        return format_time(time.to_list())
+    else:
+        raise ValueError(
+            f"The given time format {type(time)} is not supported. Feel free to open an issue in "
+            "the ohsome-py repository for a feature request."
+        )
+
+
+def format_boundary(params: dict) -> dict:
     """
     Formats the boundary parameters 'bboxes', 'bcircles' and 'bpolys'
     :param params:
@@ -46,9 +63,13 @@ def format_boundary(params):
         params["bcircles"] = format_bcircles(params["bcircles"])
     else:
         raise OhsomeException(
-            message="No valid boundary parameter is given. Specify one of the parameters 'bboxes', 'bpolys' or 'bcircles'.",
+            message="No valid boundary parameter is given. Specify one of the parameters 'bboxes', 'bpolys' or "
+            "'bcircles'.",
             error_code=440,
+            params=params,
         )
+
+    return params
 
 
 def format_bcircles(bcircles):
@@ -168,15 +189,13 @@ def format_bpolys(bpolys):
         return bpolys
 
 
-def format_lists(parameters: dict) -> dict:
-    """
-    Converts parameters of type list to strings using ',' as seperator.
-    :param parameters: request parameters
-    :return: the modified parameters
-    """
-    for k, v in parameters.items():
-        if isinstance(v, list):
-            parameters[k] = ",".join(v)
+def format_list_parameters(parameters: dict) -> dict:
+    """Converts parameters of type list to strings using ',' as seperator."""
+    list_parameters = ["groupByKeys", "groupByValues", "properties"]
+    for param in list_parameters:
+        if isinstance(parameters.get(param), list):
+            parameters[param] = ",".join(parameters[param])
+
     return parameters
 
 

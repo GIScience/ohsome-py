@@ -75,7 +75,7 @@ def test_invalid_endpoint():
 @pytest.mark.vcr
 def test_disable_logging(base_client):
     """
-    Tests whether logging is disabled so no new log file if created if an OhsomeException occurs
+    Tests whether logging is disabled so no new log file is created if an OhsomeException occurs
     :return:
     """
     base_client.log = False
