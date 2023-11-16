@@ -15,6 +15,7 @@ from ohsome.helper import (
     extract_error_message_from_invalid_json,
     format_time,
     convert_arrays,
+    format_list_parameters,
 )
 
 script_path = os.path.dirname(os.path.realpath(__file__))
@@ -188,3 +189,22 @@ def test_format_time_error_format_not_supported():
         "issue in the ohsome-py repository for a feature request.",
     ):
         format_time({})
+
+
+def test_format_list_parameters():
+    """Test if formatting of list-like parameters works, and does not affect other parameters."""
+    method_input = {
+        "groupByKeys": ["k1", "k2"],
+        "groupByValues": ["v1", "v2"],
+        "otherParam": ["l"],
+    }
+
+    expected_output = {
+        "groupByKeys": "k1,k2",
+        "groupByValues": "v1,v2",
+        "otherParam": ["l"],
+    }
+
+    output = format_list_parameters(method_input)
+
+    assert output == expected_output

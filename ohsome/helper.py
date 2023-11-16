@@ -186,12 +186,14 @@ def format_bpolys(bpolys):
         return bpolys
 
 
-def format_list_parameters(parameters: dict) -> None:
+def format_list_parameters(parameters: dict) -> dict:
     """Converts parameters of type list to strings using ',' as seperator."""
     list_parameters = ["groupByKeys", "groupByValues"]
     for param in list_parameters:
         if isinstance(parameters.get(param), list):
             parameters[param] = ",".join(parameters[param])
+
+    return parameters
 
 
 def find_groupby_names(url):
