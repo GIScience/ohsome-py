@@ -3,12 +3,14 @@
 
 """OhsomeClient classes to build and handle requests to ohsome API"""
 import json
-import os
+from pathlib import Path
+from typing import Union
 from urllib.parse import urljoin
 
 import requests
+from requests import Session
 from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
+from urllib3 import Retry
 
 from ohsome import OhsomeException, OhsomeResponse
 from ohsome.constants import (
@@ -29,11 +31,12 @@ from ohsome.helper import (
 class _OhsomeBaseClient:
     def __init__(
         self,
-        base_api_url=None,
-        log=DEFAULT_LOG,
-        log_dir=DEFAULT_LOG_DIR,
-        cache=None,
-        user_agent=None,
+        base_api_url: str = None,
+        log: bool = DEFAULT_LOG,
+        log_dir: Union[str, Path] = DEFAULT_LOG_DIR,
+        cache: list = None,
+        user_agent: str = None,
+        retry: Retry = None,
     ):
         """
         Initialize _OhsomeInfoClient object
@@ -42,12 +45,12 @@ class _OhsomeBaseClient:
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
         :param user_agent: User agent passed with the request to the ohsome API
+        :param retry: Set a custom retry mechanism for requests
         """
         self.log = log
-        self.log_dir = log_dir
+        self.log_dir = Path(log_dir)
         if self.log:
-            if not os.path.exists(self.log_dir):
-                os.mkdir(self.log_dir)
+            self.log_dir.mkdir(parents=True, exist_ok=True)
         if base_api_url is not None:
             self._base_api_url = base_api_url.strip("/") + "/"
         else:
@@ -59,6 +62,12 @@ class _OhsomeBaseClient:
             agent_list.append(user_agent)
         self.user_agent = " ".join(agent_list)
 
+        self.__retry = retry or Retry(
+            total=3,
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods=["GET", "POST"],
+            backoff_factor=1,
+        )
         self.__session = None
 
     def _session(self):
@@ -67,14 +76,8 @@ class _OhsomeBaseClient:
         :return:
         """
         if self.__session is None:
-            retry_strategy = Retry(
-                total=3,
-                status_forcelist=[429, 500, 502, 503, 504],
-                allowed_methods=["GET", "POST"],
-                backoff_factor=1,
-            )
-            adapter = HTTPAdapter(max_retries=retry_strategy)
-            self.__session = requests.Session()
+            adapter = HTTPAdapter(max_retries=self.__retry)
+            self.__session = Session()
             self.__session.mount("https://", adapter)
             self.__session.mount("http://", adapter)
             self.__session.headers["user-agent"] = self.user_agent
@@ -89,11 +92,12 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
 
     def __init__(
         self,
-        base_api_url=None,
-        log=DEFAULT_LOG,
-        log_dir=DEFAULT_LOG_DIR,
-        cache=None,
-        user_agent=None,
+        base_api_url: str = None,
+        log: bool = DEFAULT_LOG,
+        log_dir: Path = DEFAULT_LOG_DIR,
+        cache: list = None,
+        user_agent: str = None,
+        retry: Retry = None,
     ):
         """
         Initialize _OhsomeInfoClient object
@@ -102,9 +106,10 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
         :param user_agent: User agent passed with the request to the ohsome API
+        :param retry: Set a custom retry mechanism for requests
         """
         super(_OhsomeInfoClient, self).__init__(
-            base_api_url, log, log_dir, cache, user_agent
+            base_api_url, log, log_dir, cache, user_agent, retry
         )
         self._parameters = None
         self._metadata = None
@@ -183,11 +188,12 @@ class _OhsomePostClient(_OhsomeBaseClient):
 
     def __init__(
         self,
-        base_api_url=None,
-        log=DEFAULT_LOG,
-        log_dir=DEFAULT_LOG_DIR,
-        cache=None,
-        user_agent=None,
+        base_api_url: str = None,
+        log: bool = DEFAULT_LOG,
+        log_dir: Path = DEFAULT_LOG_DIR,
+        cache: list = None,
+        user_agent: str = None,
+        retry: Retry = None,
     ):
         """
         Initialize _OhsomePostClient object
@@ -196,9 +202,10 @@ class _OhsomePostClient(_OhsomeBaseClient):
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
         :param user_agent: User agent passed with the request to the ohsome API
+        :param retry: Set a custom retry mechanism for requests
         """
         super(_OhsomePostClient, self).__init__(
-            base_api_url, log, log_dir, cache, user_agent
+            base_api_url, log, log_dir, cache, user_agent, retry
         )
         self._parameters = None
         self._metadata = None
@@ -317,6 +324,8 @@ class _OhsomePostClient(_OhsomeBaseClient):
             )
 
         except requests.exceptions.RequestException as e:
+            # if isinstance(e, RetryError):
+            #    self.
             ohsome_exception = OhsomeException(
                 message=str(e),
                 url=self._url,

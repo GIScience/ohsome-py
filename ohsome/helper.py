@@ -208,7 +208,7 @@ def find_groupby_names(url):
     return [name.strip("/") for name in url.split("groupBy")[1:]]
 
 
-def extract_error_message_from_invalid_json(responsetext) -> Tuple[int, str]:
+def extract_error_message_from_invalid_json(responsetext: str) -> Tuple[int, str]:
     """
     Extract error code and error message from invalid json returned from ohsome API
     Otherwise throws OhsomeException.
