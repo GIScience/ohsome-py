@@ -197,12 +197,14 @@ def test_format_list_parameters():
         "groupByKeys": ["k1", "k2"],
         "groupByValues": ["v1", "v2"],
         "otherParam": ["l"],
+        "properties": ["p1"],
     }
 
     expected_output = {
         "groupByKeys": "k1,k2",
         "groupByValues": "v1,v2",
         "otherParam": ["l"],
+        "properties": "p1",
     }
 
     output = format_list_parameters(method_input)

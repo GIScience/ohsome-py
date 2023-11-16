@@ -191,7 +191,7 @@ def format_bpolys(bpolys):
 
 def format_list_parameters(parameters: dict) -> dict:
     """Converts parameters of type list to strings using ',' as seperator."""
-    list_parameters = ["groupByKeys", "groupByValues"]
+    list_parameters = ["groupByKeys", "groupByValues", "properties"]
     for param in list_parameters:
         if isinstance(parameters.get(param), list):
             parameters[param] = ",".join(parameters[param])
