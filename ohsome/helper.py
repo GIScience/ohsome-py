@@ -5,6 +5,7 @@
 
 import datetime
 import re
+from typing import Tuple
 
 import geopandas as gpd
 import numpy as np
@@ -21,7 +22,7 @@ def convert_arrays(params: dict) -> dict:
     for i in params.keys():
         if isinstance(params[i], np.ndarray):
             assert (
-                params[i].ndim == 1
+                    params[i].ndim == 1
             ), f"Only one dimensional arrays are supported for parameter {i}"
             params[i] = list(params[i])
 
@@ -64,7 +65,7 @@ def format_boundary(params: dict) -> dict:
     else:
         raise OhsomeException(
             message="No valid boundary parameter is given. Specify one of the parameters 'bboxes', 'bpolys' or "
-            "'bcircles'.",
+                    "'bcircles'.",
             error_code=440,
             params=params,
         )
@@ -97,8 +98,8 @@ def format_bcircles(bcircles):
     elif isinstance(bcircles, dict):
         return "|".join(
             [
-                f"{id}:" + ",".join([str(c) for c in coords])
-                for id, coords in bcircles.items()
+                f"{bcircle_id}:" + ",".join([str(c) for c in coords])
+                for bcircle_id, coords in bcircles.items()
             ]
         )
     elif isinstance(bcircles, gpd.GeoDataFrame):
@@ -133,8 +134,8 @@ def format_bboxes(bboxes):
     bboxes: Bounding boxes given as
         string: lon1,lat1,lon2,lat2|lon1,lat1,lon2,lat2|… or id1:lon1,lat1,lon2,lat2|id2:lon1,lat1,lon2,lat2|…
         list: [[id1,lon1,lat1,lon2,lat2],[id2,lon1,lat1,lon2,lat2],...] or [lon1,lat1,lon2,lat2] if it's just one box
-        pandas.DataFrame: with columns minx, miny, maxx, maxy. These columns can be created from a GeoDataFrame using the
-        'GeoDataFrame.bounds' method.
+        pandas.DataFrame: with columns minx, miny, maxx, maxy. These columns can be created from a GeoDataFrame using
+        the 'GeoDataFrame.bounds' method.
     :return: Bounding boxes formatted as a string compliant with ohsome API
     """
     if isinstance(bboxes, list) or isinstance(bboxes, tuple):
@@ -149,8 +150,8 @@ def format_bboxes(bboxes):
     elif isinstance(bboxes, dict):
         return "|".join(
             [
-                f"{id}:" + ",".join([str(c) for c in coords])
-                for id, coords in bboxes.items()
+                f"{bbox_id}:" + ",".join([str(c) for c in coords])
+                for bbox_id, coords in bboxes.items()
             ]
         )
     elif isinstance(bboxes, str):
@@ -207,16 +208,14 @@ def find_groupby_names(url):
     return [name.strip("/") for name in url.split("groupBy")[1:]]
 
 
-def extract_error_message_from_invalid_json(responsetext):
+def extract_error_message_from_invalid_json(responsetext) -> Tuple[int, str]:
     """
     Extract error code and error message from invalid json returned from ohsome API
     Otherwise throws OhsomeException.
-    :param response:
+    :param responsetext:
     :return:
 
     """
-    # responsetext = response.text
-
     message = "A broken response has been received"
 
     m = re.search('"message" : "(.*)"', responsetext)

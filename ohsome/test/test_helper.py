@@ -71,7 +71,7 @@ def test_extract_error_message_from_invalid_json():
 
 def test_extract_error_message_from_invalid_json_no_message():
     """
-    Test whether error code and message are extracted correctly if theres is no message in the json response
+    Test whether error code and message are extracted correctly if there is no message in the json response
     :return:
     """
 
@@ -147,8 +147,8 @@ def test_convert_arrays_multi_dim():
     """Test error raising on multi dim array."""
     method_input = {"bbox": np.ndarray(shape=(2, 2))}
     with pytest.raises(
-        AssertionError,
-        match="Only one dimensional arrays are supported for parameter bbox",
+            AssertionError,
+            match="Only one dimensional arrays are supported for parameter bbox",
     ):
         convert_arrays(method_input)
 
@@ -184,9 +184,9 @@ def test_format_time():
 def test_format_time_error_format_not_supported():
     """Test weather a time with wrong type (e.g. a dict) raises an error."""
     with pytest.raises(
-        ValueError,
-        match="The given time format <class 'dict'> is not supported. Feel free to open an "
-        "issue in the ohsome-py repository for a feature request.",
+            ValueError,
+            match="The given time format <class 'dict'> is not supported. Feel free to open an "
+                  "issue in the ohsome-py repository for a feature request.",
     ):
         format_time({})
 

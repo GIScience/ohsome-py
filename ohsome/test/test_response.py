@@ -2,17 +2,17 @@
 # -*- coding: utf-8 -*-
 """Tests for ohsome API response"""
 import warnings
-import pytest
 
 import geopandas as gpd
 import pandas as pd
+import pytest
 
 
 @pytest.mark.vcr
 def test_elements_count(base_client):
     """
     Tests whether the result of elements.count is formatted correctly as a pandas.DataFrame. If this works
-    .area, .length and .permiter should work as well.
+    .area, .length and .perimeter should work as well.
     :return:
     """
     bboxes = "8.6933,49.40893,8.69797,49.41106"
