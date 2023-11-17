@@ -23,14 +23,16 @@ class OhsomeResponse:
         self.parameters = params
         self.data = response.json()
 
-    def as_dataframe(self, multi_index=True, explode_tags: Optional[tuple] = ()):
+    def as_dataframe(
+        self, multi_index: Optional[bool] = True, explode_tags: Optional[tuple] = ()
+    ):
         """
         Converts the ohsome response to a pandas.DataFrame or a geopandas.GeoDataFrame if the
         response contains geometries
         :param multi_index: If true returns the dataframe with a multi index
         :param explode_tags: By default, tags of extracted features are stored in a single dict-column. You can specify
         a tuple of tags that should be popped from this column. To disable it completely, pass None. Yet, be aware that
-        you may get a large but sparce data frame.
+        you may get a large but sparse data frame.
         :return: pandas.DataFrame or geopandas.GeoDataFrame
         """
         if "features" not in self.data.keys():
@@ -71,7 +73,9 @@ class OhsomeResponse:
 
         return result_df.sort_index()
 
-    def _as_geodataframe(self, multi_index=True, explode_tags: tuple = ()):
+    def _as_geodataframe(
+        self, multi_index: Optional[bool] = True, explode_tags: Optional[tuple] = ()
+    ):
         """
         Converts the ohsome response to a geopandas.GeoDataFrame
         :param multi_index: If true returns the dataframe with a multi index
