@@ -245,7 +245,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 List[str],
                 List[float],
                 List[List[str]],
-                List[list],
+                List[List[float]],
             ]
         ] = None,
         bcircles: Optional[
