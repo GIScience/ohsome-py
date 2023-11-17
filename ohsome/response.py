@@ -4,6 +4,7 @@
 """Class for ohsome API response"""
 
 import json
+from typing import Optional
 
 import geopandas as gpd
 import pandas as pd
@@ -22,17 +23,20 @@ class OhsomeResponse:
         self.parameters = params
         self.data = response.json()
 
-    def as_dataframe(self, multi_index=True):
+    def as_dataframe(self, multi_index=True, explode_tags: Optional[tuple] = ()):
         """
         Converts the ohsome response to a pandas.DataFrame or a geopandas.GeoDataFrame if the
         response contains geometries
         :param multi_index: If true returns the dataframe with a multi index
+        :param explode_tags: By default, tags of extracted features are stored in a single dict-column. You can specify
+        a tuple of tags that should be popped from this column. To disable it completely, pass None. Yet, be aware that
+        you may get a large but sparce data frame.
         :return: pandas.DataFrame or geopandas.GeoDataFrame
         """
         if "features" not in self.data.keys():
             return self._as_dataframe(multi_index)
         else:
-            return self._as_geodataframe(multi_index)
+            return self._as_geodataframe(multi_index, explode_tags)
 
     def _as_dataframe(self, multi_index=True):
         """
@@ -67,7 +71,7 @@ class OhsomeResponse:
 
         return result_df.sort_index()
 
-    def _as_geodataframe(self, multi_index=True):
+    def _as_geodataframe(self, multi_index=True, explode_tags: tuple = ()):
         """
         Converts the ohsome response to a geopandas.GeoDataFrame
         :param multi_index: If true returns the dataframe with a multi index
@@ -78,7 +82,25 @@ class OhsomeResponse:
             return gpd.GeoDataFrame(crs="epsg:4326", columns=["@osmId", "geometry"])
 
         try:
+            if explode_tags is not None:
+                for feature in self.data["features"]:
+                    properties = feature["properties"]
+                    tags = {}
+                    new_properties = {}
+                    for k in properties.keys():
+                        if (
+                            (k.startswith("@"))
+                            or (k == "timestamp")
+                            or (k in explode_tags)
+                        ):
+                            new_properties[k] = properties.get(k)
+                        else:
+                            tags[k] = properties.get(k)
+                    new_properties["@other_tags"] = tags
+                    feature["properties"] = new_properties
+
             features = gpd.GeoDataFrame().from_features(self.data, crs="epsg:4326")
+
         except TypeError:
             raise TypeError(
                 "This result type cannot be converted to a GeoPandas GeoDataFrame object."
