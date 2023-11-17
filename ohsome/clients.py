@@ -262,18 +262,20 @@ class _OhsomePostClient(_OhsomeBaseClient):
         bpolys: Optional[
             Union[gpd.GeoDataFrame, shapely.Polygon, shapely.MultiPolygon, str]
         ] = None,
-        time=None,
-        filter=None,
-        filter2=None,
-        format=None,
-        showMetadata=None,
-        timeout=None,
-        groupByKey=None,
-        groupByKeys=None,
-        groupByValues=None,
-        properties=None,
-        clipGeometry=None,
-        endpoint=None,
+        time: Optional[
+            Union[str, dt.datetime, dt.date, list, pd.DatetimeIndex, pd.Series]
+        ] = None,
+        filter: Optional[str] = None,
+        filter2: Optional[str] = None,
+        format: Optional[str] = None,
+        showMetadata: Optional[bool] = None,
+        timeout: Optional[int] = None,
+        groupByKey: Optional[str] = None,
+        groupByKeys: Optional[Union[str, List[str]]] = None,
+        groupByValues: Optional[Union[str, List[str]]] = None,
+        properties: Optional[Union[str, List[str]]] = None,
+        clipGeometry: Optional[bool] = None,
+        endpoint: Optional[str] = None,
     ):
         """
         Sends request to ohsome API
