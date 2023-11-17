@@ -706,8 +706,28 @@ class _OhsomeClientContributions(_OhsomeBaseClient):
 class _OhsomeClientContributionsAggregated(_OhsomePostClient):
     @property
     def density(self):
-        return _OhsomePostClient(
+        return _OhsomeClientContributionsAggregatedDensity(
             self._base_api_url, self.log, self.log_dir, self._cache + ["density"]
+        )
+
+    @property
+    def groupByBoundary(self):
+        return _OhsomePostClient(
+            self._base_api_url,
+            self.log,
+            self.log_dir,
+            self._cache + ["groupBy", "boundary"],
+        )
+
+
+class _OhsomeClientContributionsAggregatedDensity(_OhsomePostClient):
+    @property
+    def groupByBoundary(self):
+        return _OhsomePostClient(
+            self._base_api_url,
+            self.log,
+            self.log_dir,
+            self._cache + ["groupBy", "boundary"],
         )
 
 
@@ -730,6 +750,12 @@ class _OhsomeClientContributionsLatest(_OhsomePostClient):
     def geometry(self):
         return _OhsomePostClient(
             self._base_api_url, self.log, self.log_dir, self._cache + ["geometry"]
+        )
+
+    @property
+    def count(self):
+        return _OhsomeClientContributionsAggregated(
+            self._base_api_url, self.log, self.log_dir, self._cache + ["count"]
         )
 
 
