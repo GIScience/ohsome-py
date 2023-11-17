@@ -260,7 +260,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
             ]
         ] = None,
         bpolys: Optional[
-            Union[gpd.GeoDataFrame, shapely.Polygon, shapely.MultiPolygon, str]
+            Union[gpd.GeoDataFrame, gpd.GeoSeries, shapely.Polygon, shapely.MultiPolygon, str]
         ] = None,
         time: Optional[
             Union[str, dt.datetime, dt.date, list, pd.DatetimeIndex, pd.Series]
