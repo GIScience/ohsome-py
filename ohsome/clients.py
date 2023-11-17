@@ -339,7 +339,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
             )
 
         except requests.exceptions.RequestException as e:
-            if isinstance(e, RetryError) and not self.__recursion_breaker:
+            if isinstance(e, RetryError):
                 # retry one last time without retries, this will raise the original error instead of a cryptic retry
                 # error (or succeed)
                 self._OhsomeBaseClient__session = None
