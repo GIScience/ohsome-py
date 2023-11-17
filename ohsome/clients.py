@@ -276,7 +276,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         properties: Optional[Union[str, List[str]]] = None,
         clipGeometry: Optional[bool] = None,
         endpoint: Optional[str] = None,
-    ):
+    ) -> OhsomeResponse:
         """
         Sends request to ohsome API
 
