@@ -4,7 +4,7 @@
 """OhsomeClient classes to build and handle requests to ohsome API"""
 import json
 from pathlib import Path
-from typing import Union
+from typing import Union, Optional
 from urllib.parse import urljoin
 
 import requests
@@ -32,12 +32,12 @@ from ohsome.helper import (
 class _OhsomeBaseClient:
     def __init__(
         self,
-        base_api_url: str = None,
-        log: bool = DEFAULT_LOG,
-        log_dir: Union[str, Path] = DEFAULT_LOG_DIR,
-        cache: list = None,
-        user_agent: str = None,
-        retry: Retry = None,
+        base_api_url: Optional[str] = None,
+        log: Optional[bool] = DEFAULT_LOG,
+        log_dir: Optional[Union[str, Path]] = DEFAULT_LOG_DIR,
+        cache: Optional[list] = None,
+        user_agent: Optional[str] = None,
+        retry: Optional[Retry] = None,
     ):
         """
         Initialize _OhsomeInfoClient object
@@ -101,12 +101,12 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
 
     def __init__(
         self,
-        base_api_url: str = None,
-        log: bool = DEFAULT_LOG,
-        log_dir: Path = DEFAULT_LOG_DIR,
-        cache: list = None,
-        user_agent: str = None,
-        retry: Retry = None,
+        base_api_url: Optional[str] = None,
+        log: Optional[bool] = DEFAULT_LOG,
+        log_dir: Optional[Union[str, Path]] = DEFAULT_LOG_DIR,
+        cache: Optional[list] = None,
+        user_agent: Optional[str] = None,
+        retry: Optional[Retry] = None,
     ):
         """
         Initialize _OhsomeInfoClient object
@@ -197,12 +197,12 @@ class _OhsomePostClient(_OhsomeBaseClient):
 
     def __init__(
         self,
-        base_api_url: str = None,
-        log: bool = DEFAULT_LOG,
-        log_dir: Path = DEFAULT_LOG_DIR,
-        cache: list = None,
-        user_agent: str = None,
-        retry: Retry = None,
+        base_api_url: Optional[str] = None,
+        log: Optional[bool] = DEFAULT_LOG,
+        log_dir: Optional[Union[str, Path]] = DEFAULT_LOG_DIR,
+        cache: Optional[list] = None,
+        user_agent: Optional[str] = None,
+        retry: Optional[Retry] = None,
     ):
         """
         Initialize _OhsomePostClient object
