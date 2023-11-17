@@ -118,12 +118,44 @@ def test_log_bpolys(base_client_without_log, tmpdir):
         base_client_without_log.elements.count.post(
             bpolys=bpolys, time=time, filter=fltr, timeout=timeout
         )
-    log_file_patterns = ["ohsome_*_bpolys.geojson", "ohsome_*.json", "ohsome_*raw.txt"]
+    log_file_patterns = [
+        "ohsome_*_bpolys.geojson",
+        "ohsome_*_curl.sh",
+        "ohsome_*.json",
+        "ohsome_*raw.txt",
+    ]
     for p in log_file_patterns:
         log_file = list(Path(base_client_without_log.log_dir).glob(p))
         assert len(log_file) == 1, f"Log file {p} not found"
         logger.info(f"Found log file: {log_file[0].name}")
         log_file[0].unlink()
+
+
+@pytest.mark.vcr
+def test_log_curl(base_client_without_log, tmpdir):
+    """
+    Test whether log file containing curl command is created when request fails
+    :return:
+    """
+
+    base_client_without_log.log = True
+    base_client_without_log.log_dir = tmpdir.mkdir("logs").strpath
+
+    bboxes = [8.67555, 49.39885, 8.69637, 49.41122]
+    timeout = 0.001
+
+    with pytest.raises(ohsome.OhsomeException):
+        base_client_without_log.elements.count.post(bboxes=bboxes, timeout=timeout)
+
+    log_file = list(Path(base_client_without_log.log_dir).glob("ohsome_*_curl.sh"))
+    with open(log_file[0]) as file:
+        assert file.read() == (
+            'curl -X POST -H "user-agent: ohsome-py/0.2.0" -H "Accept-Encoding: gzip, '
+            'deflate" -H "Accept: */*" -H "Connection: keep-alive" -H "Content-Length: 60" '
+            '-H "Content-Type: application/x-www-form-urlencoded" '
+            "-d 'bboxes=8.67555%2C49.39885%2C8.69637%2C49.41122&timeout=0.001' "
+            "https://api.ohsome.org/v1/elements/count"
+        )
 
 
 def test_metadata_invalid_baseurl(custom_client_with_wrong_url):
