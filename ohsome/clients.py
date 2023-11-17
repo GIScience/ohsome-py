@@ -46,7 +46,9 @@ class _OhsomeBaseClient:
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
         :param user_agent: User agent passed with the request to the ohsome API
-        :param retry: Set a custom retry mechanism for requests
+        :param retry: Set a custom retry mechanism for requests. Be aware that ohsome-py will call the API once more
+        after all retries have failed. This overcomes the problem that the cause of the retries is shadowed behind a
+        RetryError by the underlying library.
         """
         self.log = log
         self.log_dir = Path(log_dir)
@@ -115,7 +117,9 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
         :param user_agent: User agent passed with the request to the ohsome API
-        :param retry: Set a custom retry mechanism for requests
+        :param retry: Set a custom retry mechanism for requests. Be aware that ohsome-py will call the API once more
+        after all retries have failed. This overcomes the problem that the cause of the retries is shadowed behind a
+        RetryError by the underlying library.
         """
         super(_OhsomeInfoClient, self).__init__(
             base_api_url, log, log_dir, cache, user_agent, retry
@@ -211,7 +215,9 @@ class _OhsomePostClient(_OhsomeBaseClient):
         :param log_dir: Directory for log files, default: ./ohsome_log
         :param cache: Cache for endpoint components
         :param user_agent: User agent passed with the request to the ohsome API
-        :param retry: Set a custom retry mechanism for requests
+        :param retry: Set a custom retry mechanism for requests. Be aware that ohsome-py will call the API once more
+        after all retries have failed. This overcomes the problem that the cause of the retries is shadowed behind a
+        RetryError by the underlying library.
         """
         super(_OhsomePostClient, self).__init__(
             base_api_url, log, log_dir, cache, user_agent, retry
