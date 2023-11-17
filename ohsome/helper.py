@@ -4,12 +4,14 @@
 """Ohsome utility functions"""
 
 import datetime
+import json
 import re
-from typing import Tuple
+from typing import Tuple, Union, List
 
 import geopandas as gpd
 import numpy as np
 import pandas as pd
+import shapely
 
 from ohsome import OhsomeException
 
@@ -73,7 +75,11 @@ def format_boundary(params: dict) -> dict:
     return params
 
 
-def format_bcircles(bcircles):
+def format_bcircles(
+    bcircles: Union[
+        str, List[list], List[float], List[str], dict, gpd.GeoDataFrame, pd.DataFrame
+    ]
+) -> str:
     """
     Formats bcircles parameter to comply with ohsome API
     :param
@@ -103,9 +109,12 @@ def format_bcircles(bcircles):
             ]
         )
     elif isinstance(bcircles, gpd.GeoDataFrame):
-        if bcircles.geometry.geom_type.unique() != ["Point"]:
+        if (bcircles.geometry.geom_type.unique() != ["Point"]) or (
+            "radius" not in bcircles.columns
+        ):
             raise OhsomeException(
-                message="The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types."
+                message="The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types and "
+                "requires a 'radius' column."
             )
         formatted = bcircles.apply(
             lambda r: f"{int(r.name)}:{r.geometry.x},{r.geometry.y},{r['radius']}",
@@ -127,7 +136,11 @@ def format_bcircles(bcircles):
         raise OhsomeException(message="'bcircles' parameter has invalid format.")
 
 
-def format_bboxes(bboxes):
+def format_bboxes(
+    bboxes: Union[
+        str, dict, pd.DataFrame, List[str], List[float], List[List[str]], List[list]
+    ]
+) -> str:
     """
     Formats bboxes parameter to comply with ohsome API
     :param
@@ -177,17 +190,31 @@ def format_bboxes(bboxes):
         )
 
 
-def format_bpolys(bpolys):
+def format_bpolys(
+    bpolys: Union[gpd.GeoDataFrame, shapely.Polygon, shapely.MultiPolygon, str]
+) -> str:
     """
     Formats bpolys parameter to comply with ohsome API
     :param
     bpolys: Polygons given as geopandas.GeoDataFrame or string formatted as GeoJSON FeatureCollection.
     :return:
     """
-    if isinstance(bpolys, gpd.GeoDataFrame):
+    if isinstance(bpolys, gpd.GeoDataFrame) or isinstance(bpolys, gpd.GeoSeries):
         return bpolys.to_json(na="drop")
+    elif isinstance(bpolys, shapely.Polygon) or isinstance(
+        bpolys, shapely.MultiPolygon
+    ):
+        return format_bpolys(gpd.GeoDataFrame(geometry=[bpolys]))
+    elif isinstance(bpolys, str):
+        try:
+            return format_bpolys(gpd.GeoDataFrame.from_features(json.loads(bpolys)))
+        except Exception as e:
+            raise OhsomeException(message="Invalid geojson.") from e
     else:
-        return bpolys
+        raise OhsomeException(
+            message="bpolys must be a geojson string, a shapely polygonal object or a geopandas "
+            "object"
+        )
 
 
 def format_list_parameters(parameters: dict) -> dict:

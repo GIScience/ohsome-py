@@ -4,6 +4,7 @@
     {
       "type": "Feature",
       "properties": {},
+      "id": "0",
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -35,6 +36,7 @@
     {
       "type": "Feature",
       "properties": {},
+      "id": "1",
       "geometry": {
         "type": "Polygon",
         "coordinates": [

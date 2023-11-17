@@ -5,10 +5,13 @@
 import datetime as dt
 import json
 from pathlib import Path
-from typing import Union, Optional
+from typing import Union, Optional, List
 from urllib.parse import urljoin
 
+import geopandas as gpd
+import pandas as pd
 import requests
+import shapely
 from requests import Session
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RetryError
@@ -234,9 +237,31 @@ class _OhsomePostClient(_OhsomeBaseClient):
 
     def post(
         self,
-        bboxes=None,
-        bcircles=None,
-        bpolys=None,
+        bboxes: Optional[
+            Union[
+                str,
+                dict,
+                pd.DataFrame,
+                List[str],
+                List[float],
+                List[List[str]],
+                List[list],
+            ]
+        ] = None,
+        bcircles: Optional[
+            Union[
+                str,
+                List[list],
+                List[float],
+                List[str],
+                dict,
+                gpd.GeoDataFrame,
+                pd.DataFrame,
+            ]
+        ] = None,
+        bpolys: Optional[
+            Union[gpd.GeoDataFrame, shapely.Polygon, shapely.MultiPolygon, str]
+        ] = None,
         time=None,
         filter=None,
         filter2=None,
@@ -266,7 +291,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         - pandas.DataFrame with columns 'lon', 'lat' and 'radius'
         - geopandas.GeoDataFrame with geometry column with Point geometries only and a column 'radius'.
 
-        :param bpolys: Polygons given as geopandas.GeoDataFrame, GeoJSON FeatureCollection or str
+        :param bpolys: Polygons given as geopandas.GeoDataFrame, geopandas.GeoSeries, shapely.Polygon, shapely.MultiPolygon, GeoJSON FeatureCollection or str
         e.g. "8.65821,49.41129,8.65821,49.41825,8.70053,8.65821|8.67817,49.42147,8.67817,49.4342,8.67817"
 
         :param time: One or more ISO-8601 conform timestring(s) given as str, list, pandas.Series, pandas.DateTimeIndex,
