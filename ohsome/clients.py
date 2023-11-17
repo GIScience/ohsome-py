@@ -303,7 +303,6 @@ class _OhsomePostClient(_OhsomeBaseClient):
         """
         ohsome_exception = None
         response = None
-        self.__recursion_breaker = False
 
         try:
             response = self._session().post(url=self._url, data=self._parameters)
@@ -339,8 +338,6 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 # error (or succeed)
                 self._OhsomeBaseClient__session = None
                 self._OhsomeBaseClient__retry = False
-                # this should never happen because we set retry to False but just to be sure...
-                self.__recursion_breaker = True
                 self._handle_request()
 
             ohsome_exception = OhsomeException(
