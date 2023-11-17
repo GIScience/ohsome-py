@@ -86,16 +86,16 @@ class OhsomeResponse:
 
         if "@validFrom" in features.columns:
             features["@validFrom"] = pd.to_datetime(
-                features["@validFrom"], format="%Y-%m-%dT%H:%M:%SZ"
+                features["@validFrom"], format="ISO8601"
             )
             features["@validTo"] = pd.to_datetime(
-                features["@validTo"], format="%Y-%m-%dT%H:%M:%SZ"
+                features["@validTo"], format="ISO8601"
             )
             if multi_index:
                 features = features.set_index(["@osmId", "@validFrom", "@validTo"])
         elif "@snapshotTimestamp" in features.columns:
             features["@snapshotTimestamp"] = pd.to_datetime(
-                features["@snapshotTimestamp"], format="%Y-%m-%dT%H:%M:%SZ"
+                features["@snapshotTimestamp"], format="ISO8601"
             )
             if multi_index:
                 features = features.set_index(["@osmId", "@snapshotTimestamp"])
@@ -103,13 +103,13 @@ class OhsomeResponse:
             "timestamp" in features.columns and "groupByBoundaryId" in features.columns
         ):
             features["timestamp"] = pd.to_datetime(
-                features["timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
+                features["timestamp"], format="ISO8601"
             )
             if multi_index:
                 features = features.set_index(["groupByBoundaryId", "timestamp"])
         elif "@timestamp" in features.columns:
             features["@timestamp"] = pd.to_datetime(
-                features["@timestamp"], format="%Y-%m-%dT%H:%M:%SZ"
+                features["@timestamp"], format="ISO8601"
             )
             if multi_index:
                 features = features.set_index(["@timestamp"])
