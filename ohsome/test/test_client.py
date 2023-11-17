@@ -9,25 +9,21 @@ import os
 import geopandas as gpd
 import pandas as pd
 import pytest
-import responses
-from responses import registries
-from urllib3 import Retry
 
 import ohsome
-from ohsome import OhsomeClient, OhsomeException
 from ohsome.constants import OHSOME_VERSION
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
 
 
-def test_start_and_end_timestamp(base_client):
-    """
-    Get start timestamp
-    :return:
-    """
-    assert base_client.start_timestamp == "2007-10-08T00:00:00Z"
-    assert isinstance(base_client.end_timestamp, str)
+def test_start_end_time_is_datetime(base_client):
+    """Test if the start_ end end_timestamp is in datetime format without timezone."""
+
+    assert isinstance(base_client.start_timestamp, dt.datetime)
+    assert isinstance(base_client.end_timestamp, dt.datetime)
+    assert base_client.start_timestamp.tzinfo is None
+    assert base_client.end_timestamp.tzinfo is None
 
 
 def test_api_version(base_client):
