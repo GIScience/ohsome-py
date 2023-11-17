@@ -134,7 +134,7 @@ def test_log_bpolys(base_client_without_log, tmpdir):
 @pytest.mark.vcr
 def test_log_curl(base_client_without_log, tmpdir):
     """
-    Test whether three log files are created when request fails (*bpolys.geojson, *.json and *_raw.txt)
+    Test whether log file containing curl command is created when request fails
     :return:
     """
 
