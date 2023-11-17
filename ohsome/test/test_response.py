@@ -6,6 +6,7 @@ import warnings
 import geopandas as gpd
 import pandas as pd
 import pytest
+import datetime as dt
 
 
 @pytest.mark.vcr
@@ -361,3 +362,26 @@ def test_empty_geodataframe(base_client):
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert result.empty
+
+
+def test_check_timestamp_groupBy_boundary_and_geometry(base_client):
+    """Tests whether the format of count.groupBy.Boundary is a timestamp format with timezone"""
+    input = dt.datetime(2008, 1, 1)
+
+    bbox = "8.67,49.39,8.71,49.42"
+    time = "2008-01-01/2023-01-01/P1Y"
+    fltr = "amenity=cafe and type:node"
+    client = base_client
+
+    response_groupBy = client.elements.count.groupByBoundary.post(
+        bboxes=bbox, time=time, filter=fltr
+    )
+    result_groupBy = response_groupBy.as_dataframe().index.levels[1][0]
+
+    response_geometry = client.elements.geometry.post(
+        bboxes=bbox, time=time, filter=fltr
+    )
+    result_geometry = response_geometry.as_dataframe().index.levels[1][0]
+
+    assert result_groupBy == input
+    assert result_geometry == input
