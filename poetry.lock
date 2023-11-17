@@ -515,6 +515,17 @@ traitlets = ">=4"
 test = ["pytest"]
 
 [[package]]
+name = "curlify2"
+version = "2.0.0"
+description = "Library to convert python requests and httpx object to curl command."
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "curlify2-2.0.0-py3-none-any.whl", hash = "sha256:23878b13fa33ed92ae5dff0476e5b881b39fc79a5fcb37e6726f96239a136474"},
+    {file = "curlify2-2.0.0.tar.gz", hash = "sha256:6c3a98dc8603b76da990f58754b18ec4e9bfe5b881fc52d33ddf9d9096568809"},
+]
+
+[[package]]
 name = "debugpy"
 version = "1.8.0"
 description = "An implementation of the Debug Adapter Protocol for Python"
@@ -3005,4 +3016,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "a88b70fa86e8b500ab8e2ab90a07bbf00091c7dbfb75eaa1410c96ef8574aa71"
+content-hash = "1f9dcaf124ff252719359a924e1dc99c248a0839434b194fdaabda7c5662e65b"
