@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 """OhsomeClient classes to build and handle requests to ohsome API"""
+import datetime as dt
 import json
 from pathlib import Path
 from typing import Union, Optional
 from urllib.parse import urljoin
-import datetime as dt
 
 import requests
 from requests import Session
