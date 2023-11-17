@@ -144,9 +144,9 @@ def test_format_bcircles_list(base_client):
 
 
 @pytest.mark.vcr
-def test_format_bcircles_geodataframe(base_client):
+def test_format_bcircles_pandas(base_client):
     """
-    Test whether a GeoDataFrame object given as 'bcircles' is formatted correctly.
+    Test whether a pandas.DataFrame object given as 'bcircles' is formatted correctly.
     :return:
     """
     bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
@@ -175,8 +175,8 @@ def test_format_bcircles_geodataframe_geometry_error(base_client):
             bcircles=bcircles, time=time, filter=fltr
         )
     assert (
-        "The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types."
-        in e_info.value.message
+        "The geometry of the 'bcircles' GeoDataFrame may only include 'Point' geometry types and requires a 'radius' "
+        "column." in e_info.value.message
     )
     del client
 
@@ -251,17 +251,11 @@ def test_format_bboxes_geodataframe(base_client):
     client = base_client
     with pytest.raises(ohsome.OhsomeException) as e_info:
         client.elements.count.post(bboxes=data, time=time, filter=fltr)
-    if "occurred at index 0" in e_info.value.message:
-        # Python 3.6 does some weird stuff with the output. So it differs a bit.
-        assert (
-            "Column ('minx', 'occurred at index 0') is missing in the dataframe provided as 'bboxes'."
-            in e_info.value.message
-        )
-    else:
-        assert (
-            "Use the 'bpolys' parameter to specify the boundaries using a "
-            "geopandas.GeoDataFrame." in e_info.value.message
-        )
+
+    assert (
+        "Use the 'bpolys' parameter to specify the boundaries using a "
+        "geopandas.GeoDataFrame." in e_info.value.message
+    )
 
 
 @pytest.mark.vcr

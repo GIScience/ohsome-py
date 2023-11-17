@@ -5,6 +5,7 @@
  - support for python 3.12
  - custom [retry](https://urllib3.readthedocs.io/en/latest/reference/urllib3.util.html#urllib3.util.Retry) configuration
  - start and end timestamp meta information of the client are now datetime objects
+ - accept shapely Polygon and MultiPolygon for `bpolys` input parameter
  - if a request fails a bash script containing the respective `curl` command is logged (if possible). This allows for easier debugging and sharing of failed requests.
 
 ### Removed
