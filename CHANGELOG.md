@@ -4,6 +4,7 @@
 
  - support for python 3.12
  - custom [retry](https://urllib3.readthedocs.io/en/latest/reference/urllib3.util.html#urllib3.util.Retry) configuration
+ - start and end timestamp meta information of the client are now datetime objects
 
 ### Removed
 
