@@ -71,7 +71,12 @@ class _OhsomeBaseClient:
                 backoff_factor=1,
             )
         else:
-            self.__retry = retry
+            self.__retry = retry or Retry(
+                total=3,
+                status_forcelist=[429, 500, 502, 503, 504],
+                allowed_methods=["GET", "POST"],
+                backoff_factor=1,
+            )
         self.__session = None
 
     def _session(self):
