@@ -251,7 +251,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         bcircles: Optional[
             Union[
                 str,
-                List[list],
+                List[str],
                 List[float],
                 List[List[str]],
                 List[List[float]],
@@ -261,7 +261,13 @@ class _OhsomePostClient(_OhsomeBaseClient):
             ]
         ] = None,
         bpolys: Optional[
-            Union[gpd.GeoDataFrame, gpd.GeoSeries, shapely.Polygon, shapely.MultiPolygon, str]
+            Union[
+                gpd.GeoDataFrame,
+                gpd.GeoSeries,
+                shapely.Polygon,
+                shapely.MultiPolygon,
+                str,
+            ]
         ] = None,
         time: Optional[
             Union[str, dt.datetime, dt.date, list, pd.DatetimeIndex, pd.Series]

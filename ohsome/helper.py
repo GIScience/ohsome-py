@@ -77,7 +77,14 @@ def format_boundary(params: dict) -> dict:
 
 def format_bcircles(
     bcircles: Union[
-        str, List[list], List[float], List[str], dict, gpd.GeoDataFrame, pd.DataFrame
+        str,
+        List[str],
+        List[float],
+        List[List[str]],
+        List[List[float]],
+        dict,
+        gpd.GeoDataFrame,
+        pd.DataFrame,
     ]
 ) -> str:
     """
@@ -138,7 +145,13 @@ def format_bcircles(
 
 def format_bboxes(
     bboxes: Union[
-        str, dict, pd.DataFrame, List[str], List[float], List[List[str]], List[list]
+        str,
+        dict,
+        pd.DataFrame,
+        List[str],
+        List[float],
+        List[List[str]],
+        List[List[float]],
     ]
 ) -> str:
     """
