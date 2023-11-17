@@ -146,7 +146,7 @@ def test_format_bcircles_list(base_client):
 @pytest.mark.vcr
 def test_format_bcircles_pandas(base_client):
     """
-    Test whether a GeoDataFrame object given as 'bcircles' is formatted correctly.
+    Test whether a pandas.DataFrame object given as 'bcircles' is formatted correctly.
     :return:
     """
     bcircles = gpd.read_file(f"{script_path}/data/points.geojson")
