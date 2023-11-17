@@ -5,7 +5,7 @@
 
 import datetime as dt
 import json
-import os
+from pathlib import Path
 
 
 class OhsomeException(Exception):
@@ -24,7 +24,7 @@ class OhsomeException(Exception):
         self.response = response
         self.timestamp = dt.datetime.now().isoformat()
 
-    def log(self, log_dir):
+    def log(self, log_dir: Path):
         """
         Logs OhsomeException
         :return:
@@ -34,30 +34,25 @@ class OhsomeException(Exception):
         self.log_parameter(log_dir, log_file_name)
         if self.response is not None:
             self.log_response(log_dir, log_file_name)
-        # self.log_query(log_dir, log_file_name)
 
-    def log_response(self, log_dir, log_file_name):
+    def log_response(self, log_dir: Path, log_file_name: str):
         """
         Log raw response. This may duplicate much data but is helpful for debugging to know the exact raw answer by the
         ohsome-api.
         """
-        log_file = os.path.join(
-            log_dir,
-            f"{log_file_name}_raw.txt",
-        )
-        with open(log_file, "w") as dst:
+        log_file = log_dir / f"{log_file_name}_raw.txt"
+        with log_file.open(mode="w") as dst:
             dst.write(self.response.text)
 
-    def log_parameter(self, log_dir, log_file_name):
+    def log_parameter(self, log_dir: Path, log_file_name: str) -> None:
         """
         Log query parameters to file
         :param log_dir:
+        :param log_file_name:
         :return:
         """
-        log_file = os.path.join(
-            log_dir,
-            f"{log_file_name}.json",
-        )
+        log_file = log_dir / f"{log_file_name}.json"
+
         log = {
             "timestamp": self.timestamp,
             "status": self.error_code,
@@ -65,22 +60,19 @@ class OhsomeException(Exception):
             "requestUrl": self.url,
             "parameters": self.parameters,
         }
-        with open(log_file, "w") as dst:
+        with log_file.open(mode="w") as dst:
             json.dump(obj=log, fp=dst, indent=4)
 
-    def log_bpolys(self, log_dir, log_file_name):
+    def log_bpolys(self, log_dir: Path, log_file_name: str) -> None:
         """
         Log bpolys parameter to geojson file if it is included in the query
         :params log_file: Path to geojson file which should contain bpolys parameter
         :return:
         """
         if "bpolys" in self.parameters:
-            log_file_bpolys = os.path.join(
-                log_dir,
-                f"{log_file_name}_bpolys.geojson",
-            )
+            log_file_bpolys = log_dir / f"{log_file_name}_bpolys.geojson"
             bpolys = self.parameters.pop("bpolys")
-            with open(log_file_bpolys, "w") as dst:
+            with log_file_bpolys.open(mode="w") as dst:
                 json.dump(obj=json.loads(bpolys), fp=dst, indent=4)
 
     def __str__(self):

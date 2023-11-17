@@ -9,9 +9,13 @@ from unittest.mock import patch, MagicMock
 
 import geopandas as gpd
 import pytest
+import responses
 from requests.exceptions import RequestException
+from responses import registries
+from urllib3 import Retry
 
 import ohsome
+from ohsome import OhsomeClient, OhsomeException
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 logger = logging.getLogger(__name__)
@@ -173,3 +177,53 @@ def test_exception_connection_reset(base_client):
             base_client.elements.count.post(bpolys=bpolys, time=time, filter=fltr)
 
         mock_func.assert_not_called()
+
+
+@responses.activate
+def test_connection_error():
+    """Test if the connection error response is correctly given."""
+    url = "https://mock.com/"
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+
+    responses.add(
+        responses.PUT,
+        url,
+        status=503,
+    )
+
+    client = OhsomeClient(base_api_url=url, retry=False)
+
+    with pytest.raises(OhsomeException) as e:
+        client.post(bboxes=bboxes)
+
+    assert e.value.message == (
+        "Connection Error: Query could not be sent. Make sure there are no network problems "
+        f"and that the ohsome API URL {url} is valid."
+    )
+
+
+@responses.activate(registry=registries.OrderedRegistry)
+def test_max_retry_error():
+    """Test if the retry mechnaism can be set and works as expected.
+
+    Especially if a last retry is done, does not shadow its cause or enter an infinite recursion loop.
+    """
+    url = "https://mock.com"
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+
+    rsp1 = responses.post(url, json={"message": "Try: ignored"}, status=500)
+    rsp2 = responses.post(url, json={"message": "Retry 1: ignored"}, status=500)
+    rsp3 = responses.post(url, json={"message": "Final try: raised"}, status=500)
+
+    client = OhsomeClient(
+        base_api_url=url,
+        retry=Retry(total=1, status_forcelist=[500], allowed_methods=["GET", "POST"]),
+    )
+
+    with pytest.raises(OhsomeException, match="Final try: raised") as e:
+        client.post(bboxes=bboxes)
+
+    assert e.value.error_code == 500
+    assert rsp1.call_count == 1
+    assert rsp2.call_count == 1
+    assert rsp3.call_count == 1
