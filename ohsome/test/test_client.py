@@ -9,8 +9,12 @@ import os
 import geopandas as gpd
 import pandas as pd
 import pytest
+import responses
+from responses import registries
+from urllib3 import Retry
 
 import ohsome
+from ohsome import OhsomeClient, OhsomeException
 from ohsome.constants import OHSOME_VERSION
 
 script_path = os.path.dirname(os.path.realpath(__file__))
