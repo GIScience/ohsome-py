@@ -7,6 +7,7 @@
  - start and end timestamp meta information of the client are now datetime objects
  - accept shapely Polygon and MultiPolygon for `bpolys` input parameter
  - if a request fails a bash script containing the respective `curl` command is logged (if possible). This allows for easier debugging and sharing of failed requests.
+ - geodataframes now contain a `@other_tags` colum containing all OSM tags. This behaviour can be adapted using the `explode_tags` parameter that allows to specify tags that should be in a separate column or to disable the feature completely. The latter will result in a potentially wide but sparse data frame.
 
 ### Removed
 
