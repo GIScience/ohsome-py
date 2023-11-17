@@ -10,6 +10,7 @@ from urllib.parse import urljoin
 import requests
 from requests import Session
 from requests.adapters import HTTPAdapter
+from requests.exceptions import RetryError
 from urllib3 import Retry
 
 from ohsome import OhsomeException, OhsomeResponse
@@ -62,12 +63,15 @@ class _OhsomeBaseClient:
             agent_list.append(user_agent)
         self.user_agent = " ".join(agent_list)
 
-        self.__retry = retry or Retry(
-            total=3,
-            status_forcelist=[429, 500, 502, 503, 504],
-            allowed_methods=["GET", "POST"],
-            backoff_factor=1,
-        )
+        if retry is None:
+            self.__retry = Retry(
+                total=3,
+                status_forcelist=[429, 500, 502, 503, 504],
+                allowed_methods=["GET", "POST"],
+                backoff_factor=1,
+            )
+        else:
+            self.__retry = retry
         self.__session = None
 
     def _session(self):
@@ -294,6 +298,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         """
         ohsome_exception = None
         response = None
+        self.__recursion_breaker = False
 
         try:
             response = self._session().post(url=self._url, data=self._parameters)
@@ -324,8 +329,15 @@ class _OhsomePostClient(_OhsomeBaseClient):
             )
 
         except requests.exceptions.RequestException as e:
-            # if isinstance(e, RetryError):
-            #    self.
+            if isinstance(e, RetryError) and not self.__recursion_breaker:
+                # retry one last time without retries, this will raise the original error instead of a cryptic retry
+                # error (or succeed)
+                self._OhsomeBaseClient__session = None
+                self._OhsomeBaseClient__retry = False
+                # this should never happen because we set retry to False but just to be sure...
+                self.__recursion_breaker = True
+                self._handle_request()
+
             ohsome_exception = OhsomeException(
                 message=str(e),
                 url=self._url,
