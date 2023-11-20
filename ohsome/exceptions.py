@@ -7,6 +7,8 @@ import datetime as dt
 import json
 from pathlib import Path
 
+from curlify2 import Curlify
+
 
 class OhsomeException(Exception):
     """Exception to handle ohsome API errors"""
@@ -33,7 +35,16 @@ class OhsomeException(Exception):
         self.log_bpolys(log_dir, log_file_name)
         self.log_parameter(log_dir, log_file_name)
         if self.response is not None:
+            self.log_curl(log_dir, log_file_name)
             self.log_response(log_dir, log_file_name)
+
+    def log_curl(self, log_dir: Path, log_file_name: str) -> None:
+        """Log the respective curl command for the request for easy debugging and sharing."""
+        log_file = log_dir / f"{log_file_name}_curl.sh"
+        curl = Curlify(self.response.request)
+        curl_command = curl.to_curl()
+        with log_file.open(mode="w") as dst:
+            dst.write(curl_command)
 
     def log_response(self, log_dir: Path, log_file_name: str):
         """

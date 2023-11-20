@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: bboxes=8.67066%2C49.41423%2C8.68177%2C49.4204&time=2010-01-01%2F2011-01-01%2FP1Y&filter=building%3D%2A+and+type%3Away&timeout=0
+    body: bboxes=8.67555%2C49.39885%2C8.69637%2C49.41122&timeout=0.001
     headers:
       Accept:
       - '*/*'
@@ -9,19 +9,19 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '127'
+      - '60'
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
       - ohsome-py/0.2.0
     method: POST
-    uri: https://api.ohsome.org/v1/elements/geometry
+    uri: https://api.ohsome.org/v1/elements/count
   response:
     body:
-      string: "{\n  \"timestamp\" : \"2023-11-17T15:37:19.028799445\",\n  \"status\"
+      string: "{\n  \"timestamp\" : \"2023-11-17T12:28:28.06766606\",\n  \"status\"
         : 413,\n  \"message\" : \"The given query is too large in respect to the given
         timeout. Please use a smaller region and/or coarser time period.\",\n  \"requestUrl\"
-        : \"https://api.ohsome.org/v1/elements/geometry\"\n}"
+        : \"https://api.ohsome.org/v1/elements/count\"\n}"
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -41,10 +41,8 @@ interactions:
       - gzip
       Content-Type:
       - application/json
-      Content-disposition:
-      - attachment;filename=ohsome.geojson
       Date:
-      - Fri, 17 Nov 2023 15:37:19 GMT
+      - Fri, 17 Nov 2023 12:28:27 GMT
       Server:
       - Apache
       Strict-Transport-Security:

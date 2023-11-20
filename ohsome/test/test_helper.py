@@ -3,19 +3,23 @@
 
 """Tests for utility functions"""
 import datetime
+import json
 import logging
 import os
 
 import numpy as np
 import pandas as pd
 import pytest
+from shapely import Polygon
 
+from ohsome import OhsomeException
 from ohsome.helper import (
     find_groupby_names,
     extract_error_message_from_invalid_json,
     format_time,
     convert_arrays,
     format_list_parameters,
+    format_bpolys,
 )
 
 script_path = os.path.dirname(os.path.realpath(__file__))
@@ -210,3 +214,24 @@ def test_format_list_parameters():
     output = format_list_parameters(method_input)
 
     assert output == expected_output
+
+
+def test_format_bpolys():
+    """Test if the formatting of bounding polys works correctly."""
+    with pytest.raises(OhsomeException) as e:
+        format_bpolys({})
+        assert (
+            e.value.message
+            == "bolys must be a geojson string, a shapely polygonal object or a geopandas object"
+        )
+
+    with open(f"{script_path}/data/polygons.geojson") as geojson:
+        json_str = geojson.read()
+        assert json.loads(format_bpolys(json_str)) == json.loads(json_str)
+
+    polygon = Polygon(((0.0, 0.0), (0.0, 1.0), (1.0, 1.0), (1.0, 0.0), (0.0, 0.0)))
+    assert format_bpolys(polygon) == (
+        '{"type": "FeatureCollection", "features": [{"id": "0", "type": "Feature", '
+        '"properties": {}, "geometry": {"type": "Polygon", "coordinates": [[[0.0, '
+        "0.0], [0.0, 1.0], [1.0, 1.0], [1.0, 0.0], [0.0, 0.0]]]}}]}"
+    )

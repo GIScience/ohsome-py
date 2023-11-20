@@ -5,11 +5,14 @@
 import datetime as dt
 import json
 from pathlib import Path
-from typing import Union, Optional
+from typing import Union, Optional, List
 from urllib.parse import urljoin
 import datetime as dt
 
+import geopandas as gpd
+import pandas as pd
 import requests
+import shapely
 from requests import Session
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RetryError
@@ -235,22 +238,53 @@ class _OhsomePostClient(_OhsomeBaseClient):
 
     def post(
         self,
-        bboxes=None,
-        bcircles=None,
-        bpolys=None,
-        time=None,
-        filter=None,
-        filter2=None,
-        format=None,
-        showMetadata=None,
-        timeout=None,
-        groupByKey=None,
-        groupByKeys=None,
-        groupByValues=None,
-        properties=None,
-        clipGeometry=None,
-        endpoint=None,
-    ):
+        bboxes: Optional[
+            Union[
+                str,
+                dict,
+                pd.DataFrame,
+                List[str],
+                List[float],
+                List[List[str]],
+                List[List[float]],
+            ]
+        ] = None,
+        bcircles: Optional[
+            Union[
+                str,
+                List[str],
+                List[float],
+                List[List[str]],
+                List[List[float]],
+                dict,
+                gpd.GeoDataFrame,
+                pd.DataFrame,
+            ]
+        ] = None,
+        bpolys: Optional[
+            Union[
+                gpd.GeoDataFrame,
+                gpd.GeoSeries,
+                shapely.Polygon,
+                shapely.MultiPolygon,
+                str,
+            ]
+        ] = None,
+        time: Optional[
+            Union[str, dt.datetime, dt.date, list, pd.DatetimeIndex, pd.Series]
+        ] = None,
+        filter: Optional[str] = None,
+        filter2: Optional[str] = None,
+        format: Optional[str] = None,
+        showMetadata: Optional[bool] = None,
+        timeout: Optional[int] = None,
+        groupByKey: Optional[str] = None,
+        groupByKeys: Optional[Union[str, List[str]]] = None,
+        groupByValues: Optional[Union[str, List[str]]] = None,
+        properties: Optional[Union[str, List[str]]] = None,
+        clipGeometry: Optional[bool] = None,
+        endpoint: Optional[str] = None,
+    ) -> OhsomeResponse:
         """
         Sends request to ohsome API
 
@@ -267,7 +301,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
         - pandas.DataFrame with columns 'lon', 'lat' and 'radius'
         - geopandas.GeoDataFrame with geometry column with Point geometries only and a column 'radius'.
 
-        :param bpolys: Polygons given as geopandas.GeoDataFrame, GeoJSON FeatureCollection or str
+        :param bpolys: Polygons given as geopandas.GeoDataFrame, geopandas.GeoSeries, shapely.Polygon, shapely.MultiPolygon, GeoJSON FeatureCollection or str
         e.g. "8.65821,49.41129,8.65821,49.41825,8.70053,8.65821|8.67817,49.42147,8.67817,49.4342,8.67817"
 
         :param time: One or more ISO-8601 conform timestring(s) given as str, list, pandas.Series, pandas.DateTimeIndex,
