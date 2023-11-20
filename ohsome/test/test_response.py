@@ -266,6 +266,28 @@ def test_elements_geometry(base_client):
 
 
 @pytest.mark.vcr
+def test_extra_tags_argument(base_client):
+    """
+    Tests whether the result of elements.geometry is converted to a geopandas.GeoDataFrame
+    :return:
+    """
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2016-01-01"
+    flter = "name=Krautturm and type:way"
+
+    response = base_client.elements.geometry.post(
+        bboxes=bboxes, time=time, filter=flter, properties="tags,metadata"
+    )
+    result = response.as_dataframe()
+
+    assert "@other_tags" in result.columns
+    assert "@version" in result.columns
+
+    assert result["@other_tags"].to_list() == [{"building": "yes", "name": "Krautturm"}]
+    assert result["@version"].to_list() == [4]
+
+
+@pytest.mark.vcr
 def test_elementsFullHistory_geometry(base_client):
     """
     Tests whether the result of elementsFullHistory.centroid is converted to a geopandas.GeoDataFrame
