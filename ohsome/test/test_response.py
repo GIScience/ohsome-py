@@ -365,7 +365,7 @@ def test_empty_geodataframe(base_client):
 
 
 def test_check_timestamp_groupBy_boundary_and_geometry_for_user(base_client):
-    """Tests whether the format of count.groupBy.Boundary is a timestamp format with timezone"""
+    """Tests whether the format of count.groupBy.Boundary and elements.geometry is a timestamp format without timezone"""
 
     bbox = "8.67,49.39,8.71,49.42"
     time = "2008-01-01/2023-01-01/P1Y"
@@ -376,11 +376,69 @@ def test_check_timestamp_groupBy_boundary_and_geometry_for_user(base_client):
         bboxes=bbox, time=time, filter=fltr
     )
     result_groupBy = response_groupBy.as_dataframe().index.levels[1][0]
-
     response_geometry = client.elements.geometry.post(
         bboxes=bbox, time=time, filter=fltr
     )
     result_geometry = response_geometry.as_dataframe().index.levels[1][0]
 
-    assert result_groupBy.tz == dt.timezone.utc
-    assert result_geometry.tz == dt.timezone.utc
+    assert result_groupBy.tz is None
+    assert result_geometry.tz is None
+
+
+def test_all_columns_with_timestamps_to_be_without_timezone(base_client):
+    """Test whether all the columns with timestamp like 'timestamp', '@timestamp','@validFrom', '@validTo',
+    'fromTimestamp', 'toTimestamp' and '@snapshotTimestamp' are without timezone
+    """
+    bbox = "8.67,49.39,8.71,49.42"
+    time = "2008-01-01/2023-01-01/P1Y"
+    time2iso = "2020-02-01,2020-06-29"
+    fltr = "amenity=cafe and type:node"
+    client = base_client
+
+    fromTimestamp = (
+        client.contributions.count.density.post(time=time, bboxes=bbox, filter=fltr)
+        .as_dataframe()
+        .index.levels[0][0]
+    )
+    toTimestamp = (
+        client.contributions.count.density.post(time=time, bboxes=bbox, filter=fltr)
+        .as_dataframe()
+        .index.levels[0][1]
+    )
+    at_validFrom = (
+        client.elementsFullHistory.geometry.post(
+            time=time2iso, bboxes=bbox, filter=fltr
+        )
+        .as_dataframe()
+        .index.levels[1][0]
+    )
+    at_validTo = (
+        client.elementsFullHistory.geometry.post(
+            time=time2iso, bboxes=bbox, filter=fltr
+        )
+        .as_dataframe()
+        .index.levels[2][0]
+    )
+    at_timestamp = (
+        client.contributions.geometry.post(time=time2iso, bboxes=bbox, filter=fltr)
+        .as_dataframe()
+        .index[0]
+    )
+    timestamp = (
+        client.elements.count.groupByBoundary.post(bboxes=bbox, time=time, filter=fltr)
+        .as_dataframe()
+        .index.levels[1][0]
+    )
+    at_snapshotTimestamp = (
+        client.elements.geometry.post(bboxes=bbox, time=time, filter=fltr)
+        .as_dataframe()
+        .index.levels[1][0]
+    )
+
+    assert fromTimestamp.tz is None
+    assert toTimestamp.tz is None
+    assert at_validFrom.tz is None
+    assert at_validTo.tz is None
+    assert at_timestamp.tz is None
+    assert timestamp.tz is None
+    assert at_snapshotTimestamp.tz is None

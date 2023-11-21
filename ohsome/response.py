@@ -85,6 +85,8 @@ class OhsomeResponse:
             )
 
         if "@validFrom" in features.columns:
+            features["@validFrom"] = features["@validFrom"].str.replace("Z", "")
+            features["@validTo"] = features["@validTo"].str.replace("Z", "")
             features["@validFrom"] = pd.to_datetime(
                 features["@validFrom"], format="ISO8601"
             )
@@ -94,6 +96,9 @@ class OhsomeResponse:
             if multi_index:
                 features = features.set_index(["@osmId", "@validFrom", "@validTo"])
         elif "@snapshotTimestamp" in features.columns:
+            features["@snapshotTimestamp"] = features["@snapshotTimestamp"].str.replace(
+                "Z", ""
+            )
             features["@snapshotTimestamp"] = pd.to_datetime(
                 features["@snapshotTimestamp"], format="ISO8601"
             )
@@ -102,12 +107,14 @@ class OhsomeResponse:
         elif (
             "timestamp" in features.columns and "groupByBoundaryId" in features.columns
         ):
+            features["timestamp"] = features["timestamp"].str.replace("Z", "")
             features["timestamp"] = pd.to_datetime(
                 features["timestamp"], format="ISO8601"
             )
             if multi_index:
                 features = features.set_index(["groupByBoundaryId", "timestamp"])
         elif "@timestamp" in features.columns:
+            features["@timestamp"] = features["@timestamp"].str.replace("Z", "")
             features["@timestamp"] = pd.to_datetime(
                 features["@timestamp"], format="ISO8601"
             )
@@ -173,13 +180,16 @@ class OhsomeResponse:
         :return:
         """
         if "timestamp" in result_df.columns:
+            result_df["timestamp"] = result_df["timestamp"].str.replace("Z", "")
             result_df["timestamp"] = pd.to_datetime(
                 result_df["timestamp"], format="ISO8601"
             )
         else:
+            result_df["fromTimestamp"] = result_df["fromTimestamp"].str.replace("Z", "")
             result_df["fromTimestamp"] = pd.to_datetime(
                 result_df["fromTimestamp"], format="ISO8601"
             )
+            result_df["toTimestamp"] = result_df["toTimestamp"].str.replace("Z", "")
             result_df["toTimestamp"] = pd.to_datetime(
                 result_df["toTimestamp"], format="ISO8601"
             )
