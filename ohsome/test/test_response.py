@@ -354,12 +354,12 @@ def test_contributions_count_density_groupbyboundary(base_client):
     filter = "name=Krautturm and type:way"
 
     client = base_client
-    response = client.contributions.count.density.post(
+    response = client.contributions.count.density.groupByBoundary.post(
         bboxes=bboxes, time=time, filter=filter
     )
     result = response.as_dataframe()
 
-    assert isinstance(result, gpd.GeoDataFrame)
+    assert isinstance(result, pd.DataFrame)
     assert len(result) == 1
 
 
@@ -381,27 +381,6 @@ def test_empty_geodataframe(base_client):
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert result.empty
-
-
-def test_check_timestamp_groupBy_boundary_and_geometry_for_user(base_client):
-    """Tests whether the format of count.groupBy.Boundary and elements.geometry is a timestamp format without timezone"""
-
-    bbox = "8.67,49.39,8.71,49.42"
-    time = "2008-01-01/2023-01-01/P1Y"
-    fltr = "amenity=cafe and type:node"
-    client = base_client
-
-    response_groupBy = client.elements.count.groupByBoundary.post(
-        bboxes=bbox, time=time, filter=fltr
-    )
-    result_groupBy = response_groupBy.as_dataframe().index.levels[1][0]
-    response_geometry = client.elements.geometry.post(
-        bboxes=bbox, time=time, filter=fltr
-    )
-    result_geometry = response_geometry.as_dataframe().index.levels[1][0]
-
-    assert result_groupBy.tz is None
-    assert result_geometry.tz is None
 
 
 def test_all_columns_with_timestamps_to_be_without_timezone(base_client):
