@@ -7,7 +7,6 @@ import json
 from pathlib import Path
 from typing import Union, Optional, List
 from urllib.parse import urljoin
-import datetime as dt
 
 import geopandas as gpd
 import pandas as pd
