@@ -128,6 +128,11 @@ time = ['2018-01-01', '2018-02-01', '2018-03-01']
 time = datetime.datetime(year=2018, month=3, day=1)
 time = pandas.date_range("2018-01-01", periods=3, freq="M")
 ```
+## Citation
+
+When using [ohsome-py](https://github.com/GIScience/ohsome-py) e.g. for a publication or elsewhere, please cite it using the reference given in the [ohsome-api](https://github.com/GIScience/ohsome-api/blob/master/README.md#how-to-cite) like
+
+> M. Raifer, R. Troilo, F.-B. Mocnikand M. Schott, ‘OSHDB - OpenStreetMap History Data Analysis version 1.2.1 accessed via the ohsome-py library version 0.2.0’. Zenodo, Sep. 29, 2023. doi: 10.5281/zenodo.8391737.
 
 ## Contribution Guidelines
 
