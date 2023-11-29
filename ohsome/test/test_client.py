@@ -19,7 +19,6 @@ logger = logging.getLogger(__name__)
 
 def test_start_end_time_is_datetime(base_client):
     """Test if the start_ end end_timestamp is in datetime format without timezone."""
-
     assert isinstance(base_client.start_timestamp, dt.datetime)
     assert isinstance(base_client.end_timestamp, dt.datetime)
     assert base_client.start_timestamp.tzinfo is None
