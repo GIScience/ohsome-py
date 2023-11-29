@@ -346,6 +346,7 @@ def test_contributions_centroid(base_client):
     assert len(result) == 1
 
 
+@pytest.mark.vcr
 def test_contributions_count_density_groupbyboundary(base_client):
     """
     Tests whether the result of contributions.count.density.groupbyboundary.post is converted to a pandas.DataFrame
