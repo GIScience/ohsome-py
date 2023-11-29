@@ -7,6 +7,7 @@
  - start and end timestamp meta information of the client are now datetime objects
  - accept shapely Polygon and MultiPolygon for `bpolys` input parameter
  - if a request fails a bash script containing the respective `curl` command is logged (if possible). This allows for easier debugging and sharing of failed requests.
+ - timestamps are converted without timezone information. Deviates from Ohsome API
 
 ### Removed
 
