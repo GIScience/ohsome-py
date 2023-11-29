@@ -131,11 +131,11 @@ time = pandas.date_range("2018-01-01", periods=3, freq="M")
 
 ## Contribution Guidelines
 
-The easiest way to contribute is to file a comprehensive [issue](https://github.com/GIScience/ohsome-py/issues) with a reproducible example. Pull requests are always welcome, so if you want to contribute to this project, please fork the repository or create a new branch containing your changes. Follow the steps below to make sure that your contributed code follows the code style and does not break any functionality. Create a **pull request to the main/master** branch once it is ready to be merged.
+The easiest way to contribute is to file a comprehensive [issue](https://github.com/GIScience/ohsome-py/issues) with a reproducible example. Pull requests are always welcome, so if you want to contribute to this project, please fork the repository or create a new branch containing your changes.
+
+This package uses [poetry](https://python-poetry.org/) for dependency management.
 
 ### Install Package
-
-This package uses [poetry](https://python-poetry.org/) for dependency management. To install all packages necessary for testing and development run
 
 `poetry install`
 
@@ -147,9 +147,11 @@ This package uses [poetry](https://python-poetry.org/) for dependency management
 
 ### Run Tests
 
-**Before pushing your commits**, run the python unit tests
+**Before pushing your commits**, run python tests
 
 `poetry run pytest`
+
+Create a **pull request to the main/master** branch once it is ready to be merged.
 
 #### VCR
 
