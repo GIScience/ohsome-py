@@ -346,6 +346,25 @@ def test_contributions_centroid(base_client):
     assert len(result) == 1
 
 
+def test_contributions_count_density_groupbyboundary(base_client):
+    """
+    Tests whether the result of contributions.count.density.groupbyboundary.post is converted to a pandas.DataFrame
+    :return:
+    """
+    bboxes = "8.7137,49.4096,8.717,49.4119"
+    time = "2015-01-01,2016-01-01"
+    filter = "name=Krautturm and type:way"
+
+    client = base_client
+    response = client.contributions.count.density.groupByBoundary.post(
+        bboxes=bboxes, time=time, filter=filter
+    )
+    result = response.as_dataframe()
+
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 1
+
+
 @pytest.mark.vcr
 def test_contributions_latest(base_client):
     """
