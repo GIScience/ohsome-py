@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0
+      - ohsome-py/0.3.0
     method: POST
     uri: https://api.ohsome.org/v1/elements/geometry
   response:
@@ -79,7 +79,101 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Wed, 29 Nov 2023 14:34:12 GMT
+      - Mon, 04 Dec 2023 15:08:52 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Transfer-Encoding:
+      - chunked
+      vary:
+      - accept-encoding
+    status:
+      code: 200
+      message: ''
+- request:
+    body: bboxes=8.7137%2C49.4096%2C8.717%2C49.4119&time=2016-01-01&filter=name%3DKrautturm+and+type%3Away
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '96'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.3.0
+    method: POST
+    uri: https://api.ohsome.org/v1/elements/geometry
+  response:
+    body:
+      string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
+        \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
+        : \"1.10.1\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
+        \   \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\" : \"Polygon\",\n
+        \     \"coordinates\" : [\n        [\n          [\n            8.7160632,\n
+        \           49.4102899\n          ],\n          [\n            8.7160749,\n
+        \           49.4103121\n          ],\n          [\n            8.7160827,\n
+        \           49.4103235\n          ],\n          [\n            8.7160963,\n
+        \           49.4103374\n          ],\n          [\n            8.716121,\n
+        \           49.4103549\n          ],\n          [\n            8.7161392,\n
+        \           49.4103691\n          ],\n          [\n            8.7161626,\n
+        \           49.4103819\n          ],\n          [\n            8.716186,\n
+        \           49.4103894\n          ],\n          [\n            8.716225,\n
+        \           49.4103952\n          ],\n          [\n            8.7162679,\n
+        \           49.4103926\n          ],\n          [\n            8.7162893,\n
+        \           49.4103882\n          ],\n          [\n            8.7163176,\n
+        \           49.410378\n          ],\n          [\n            8.7163507,\n
+        \           49.4103615\n          ],\n          [\n            8.7163829,\n
+        \           49.4103317\n          ],\n          [\n            8.7163975,\n
+        \           49.4103057\n          ],\n          [\n            8.7164024,\n
+        \           49.4102791\n          ],\n          [\n            8.7164004,\n
+        \           49.4102506\n          ],\n          [\n            8.7163868,\n
+        \           49.4102277\n          ],\n          [\n            8.7162815,\n
+        \           49.4102258\n          ],\n          [\n            8.7162659,\n
+        \           49.4102189\n          ],\n          [\n            8.7162503,\n
+        \           49.4102144\n          ],\n          [\n            8.7162289,\n
+        \           49.4102106\n          ],\n          [\n            8.7162113,\n
+        \           49.4102093\n          ],\n          [\n            8.7161987,\n
+        \           49.4101992\n          ],\n          [\n            8.7161665,\n
+        \           49.4101992\n          ],\n          [\n            8.7161519,\n
+        \           49.4101954\n          ],\n          [\n            8.7161343,\n
+        \           49.4101846\n          ],\n          [\n            8.7161119,\n
+        \           49.4101967\n          ],\n          [\n            8.7160934,\n
+        \           49.4102119\n          ],\n          [\n            8.7160807,\n
+        \           49.4102277\n          ],\n          [\n            8.7160719,\n
+        \           49.4102449\n          ],\n          [\n            8.7160671,\n
+        \           49.4102594\n          ],\n          [\n            8.7160641,\n
+        \           49.4102753\n          ],\n          [\n            8.7160632,\n
+        \           49.4102899\n          ]\n        ]\n      ]\n    },\n    \"properties\"
+        : {\n      \"@osmId\" : \"way/24885641\",\n      \"@snapshotTimestamp\" :
+        \"2016-01-01T00:00:00Z\"\n    }\n  }]\n}\n"
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+      Access-Control-Allow-Methods:
+      - POST, GET
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Max-Age:
+      - '3600'
+      Connection:
+      - Keep-Alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/geo+json;charset=utf-8
+      Content-disposition:
+      - attachment;filename=ohsome.geojson
+      Date:
+      - Mon, 04 Dec 2023 15:23:54 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:

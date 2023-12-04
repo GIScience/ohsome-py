@@ -13,7 +13,7 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0
+      - ohsome-py/0.3.0
     method: POST
     uri: https://api.ohsome.org/elements/count
   response:
@@ -38,7 +38,62 @@ interactions:
       Content-Type:
       - text/html
       Date:
-      - Wed, 29 Nov 2023 14:34:00 GMT
+      - Mon, 04 Dec 2023 15:08:38 GMT
+      ETag:
+      - '"25c-5c7180820e5fc"'
+      Keep-Alive:
+      - timeout=5, max=100
+      Last-Modified:
+      - Wed, 14 Jul 2021 16:41:53 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubdomains;
+      Upgrade:
+      - h2
+    status:
+      code: 404
+      message: Not Found
+- request:
+    body: bboxes=8.7137%2C49.4096%2C8.717%2C49.4119&time=2018-01-01&filter=name%3DKrautturm+and+type%3Away
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '96'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      user-agent:
+      - ohsome-py/0.3.0
+    method: POST
+    uri: https://api.ohsome.org/elements/count
+  response:
+    body:
+      string: "<!DOCTYPE html>\n<html>\n    <head>\n        <title>Couldn't find the
+        requested file</title>\n        <meta http-equiv=\"Content-Type\" content=\"text/html;
+        charset=UTF-8\">\n        <style>\n        h1 { font-size: 50px; }\n        body
+        { text-align:center; font: 20px Helvetica, sans-serif; color: #333; }\n        </style>\n
+        \   </head>\n    <body>\n        <h1>Couldn't find the requested file</h1>\n\t<p><img
+        src=\"/maintenance.jpg\" style=\"max-width: 100%; width: 800px\"></p>\n\t<p>Sorry
+        for the inconvenience, it seems like you requested the wrong file or the backend
+        experiences some problems.</p>\n    </body>\n</html>\n"
+    headers:
+      Accept-Ranges:
+      - bytes
+      Cache-Control:
+      - max-age=0, no-store
+      Connection:
+      - Upgrade, Keep-Alive
+      Content-Length:
+      - '604'
+      Content-Type:
+      - text/html
+      Date:
+      - Mon, 04 Dec 2023 15:23:40 GMT
       ETag:
       - '"25c-5c7180820e5fc"'
       Keep-Alive:
