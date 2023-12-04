@@ -165,7 +165,7 @@ This package uses [poetry](https://python-poetry.org/) for dependency management
 
 **Install the pre-commit hooks** in our local git repo before committing to ensure homogenous code style.
 
-`poertry run pre-commit install`
+`poetry run pre-commit install`
 
 ### Run Tests
 
