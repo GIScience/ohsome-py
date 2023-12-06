@@ -18,7 +18,7 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/count/groupBy/tag
   response:
     body:
-      string: "{\n  \"timestamp\" : \"2023-12-04T15:08:44.961590895\",\n  \"status\"
+      string: "{\n  \"timestamp\" : \"2023-12-06T08:19:32.5042067\",\n  \"status\"
         : 400,\n  \"message\" : \"You need to give one groupByKey parameter, if you
         want to use groupBy/tag.\",\n  \"requestUrl\" : \"https://api.ohsome.org/v1/elements/count/groupBy/tag\"\n}"
     headers:
@@ -41,61 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 04 Dec 2023 15:08:44 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubdomains;
-      Transfer-Encoding:
-      - chunked
-      vary:
-      - accept-encoding
-    status:
-      code: 400
-      message: ''
-- request:
-    body: bboxes=8.6577%2C49.3958%2C8.7122%2C49.4296&time=2010-01-01%2F2020-01-01%2FP1M&filter=highway%3D%2A+and+type%3Away
-    headers:
-      Accept:
-      - '*/*'
-      Accept-Encoding:
-      - gzip, deflate
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '113'
-      Content-Type:
-      - application/x-www-form-urlencoded
-      user-agent:
-      - ohsome-py/0.3.0
-    method: POST
-    uri: https://api.ohsome.org/v1/elements/count/groupBy/tag
-  response:
-    body:
-      string: "{\n  \"timestamp\" : \"2023-12-04T15:23:47.430712653\",\n  \"status\"
-        : 400,\n  \"message\" : \"You need to give one groupByKey parameter, if you
-        want to use groupBy/tag.\",\n  \"requestUrl\" : \"https://api.ohsome.org/v1/elements/count/groupBy/tag\"\n}"
-    headers:
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Headers:
-      - Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-      Access-Control-Allow-Methods:
-      - POST, GET
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Max-Age:
-      - '3600'
-      Cache-Control:
-      - no-cache, no-store, must-revalidate
-      Connection:
-      - close
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 04 Dec 2023 15:23:47 GMT
+      - Wed, 06 Dec 2023 08:19:32 GMT
       Server:
       - Apache
       Strict-Transport-Security:
