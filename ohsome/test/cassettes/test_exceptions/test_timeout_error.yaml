@@ -13,12 +13,12 @@ interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       user-agent:
-      - ohsome-py/0.2.0
+      - ohsome-py/0.3.0
     method: POST
     uri: https://api.ohsome.org/v1/elements/geometry
   response:
     body:
-      string: "{\n  \"timestamp\" : \"2023-11-29T14:34:00.219799634\",\n  \"status\"
+      string: "{\n  \"timestamp\" : \"2023-12-06T08:19:24.649051175\",\n  \"status\"
         : 413,\n  \"message\" : \"The given query is too large in respect to the given
         timeout. Please use a smaller region and/or coarser time period.\",\n  \"requestUrl\"
         : \"https://api.ohsome.org/v1/elements/geometry\"\n}"
@@ -44,7 +44,7 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Wed, 29 Nov 2023 14:34:00 GMT
+      - Wed, 06 Dec 2023 08:19:24 GMT
       Server:
       - Apache
       Strict-Transport-Security:

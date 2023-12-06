@@ -128,6 +128,28 @@ time = ['2018-01-01', '2018-02-01', '2018-03-01']
 time = datetime.datetime(year=2018, month=3, day=1)
 time = pandas.date_range("2018-01-01", periods=3, freq="M")
 ```
+## Citation
+
+When using [ohsome-py](https://github.com/GIScience/ohsome-py) e.g. for a publication or elsewhere, please cite the ohsome-api as described in their [citation recommendation](https://github.com/GIScience/ohsome-api/blob/master/README.md#how-to-cite) for example like
+
+> M. Raifer, R. Troilo, F.-B. Mocnikand M. Schott, ‘OSHDB - OpenStreetMap History Data Analysis version 1.2.1 accessed via the ohsome-py library version 0.3.0’. Zenodo, Sep. 29, 2023. doi: 10.5281/zenodo.8391737.
+
+
+```bibtex
+@software{raifer_2023_7713347,
+  author       = {Raifer, Martin and
+                  Troilo, Rafael and
+                  Mocnik, Franz-Benjamin and
+                  Schott, Moritz},
+  title        = {OSHDB - OpenStreetMap History Data Analysis version 1.2.1 accessed via the ohsome-py library version 0.3.0},
+  month        = sep,
+  year         = 2023,
+  publisher    = {Zenodo},
+  version      = {1.2.1},
+  doi          = {10.5281/zenodo.8391737},
+  url          = {https://doi.org/10.5281/zenodo.8391737}
+}
+```
 
 ## Contribution Guidelines
 
@@ -143,7 +165,7 @@ This package uses [poetry](https://python-poetry.org/) for dependency management
 
 **Install the pre-commit hooks** in our local git repo before committing to ensure homogenous code style.
 
-`poertry run pre-commit install`
+`poetry run pre-commit install`
 
 ### Run Tests
 

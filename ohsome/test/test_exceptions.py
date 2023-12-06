@@ -150,7 +150,7 @@ def test_log_curl(base_client_without_log, tmpdir):
     log_file = list(Path(base_client_without_log.log_dir).glob("ohsome_*_curl.sh"))
     with open(log_file[0]) as file:
         assert file.read() == (
-            'curl -X POST -H "user-agent: ohsome-py/0.2.0" -H "Accept-Encoding: gzip, '
+            'curl -X POST -H "user-agent: ohsome-py/0.3.0" -H "Accept-Encoding: gzip, '
             'deflate" -H "Accept: */*" -H "Connection: keep-alive" -H "Content-Length: 60" '
             '-H "Content-Type: application/x-www-form-urlencoded" '
             "-d 'bboxes=8.67555%2C49.39885%2C8.69637%2C49.41122&timeout=0.001' "
