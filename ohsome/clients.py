@@ -142,12 +142,8 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         Returns the temporal extent of the current ohsome API
         :return:
         """
-        if self._metadata is None:
-            self._query_metadata()
         return dt.datetime.fromisoformat(
-            self._metadata["extractRegion"]["temporalExtent"]["fromTimestamp"].strip(
-                "Z"
-            )
+            self.metadata["extractRegion"]["temporalExtent"]["fromTimestamp"].strip("Z")
         )
 
     @property
@@ -156,10 +152,8 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         Returns the temporal extent of the current ohsome API
         :return:
         """
-        if self._metadata is None:
-            self._query_metadata()
         return dt.datetime.fromisoformat(
-            self._metadata["extractRegion"]["temporalExtent"]["toTimestamp"].strip("Z")
+            self.metadata["extractRegion"]["temporalExtent"]["toTimestamp"].strip("Z")
         )
 
     @property
@@ -168,9 +162,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         Returns the version of the ohsome API
         :return:
         """
-        if self._metadata is None:
-            self._query_metadata()
-        return self._metadata["apiVersion"]
+        return self.metadata["apiVersion"]
 
     @property
     def metadata(self):
