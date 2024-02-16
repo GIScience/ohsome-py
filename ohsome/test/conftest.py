@@ -77,8 +77,7 @@ def custom_client_with_wrong_url(tmpdir_factory):
     """Session-wide test client."""
     temp_directory = tmpdir_factory.mktemp("base_client").mkdir("logs").strpath
     client = ohsome.OhsomeClient(
-        base_api_url="https://imwrong",
-        log_dir=temp_directory,
+        base_api_url="https://imwrong", log_dir=temp_directory, retry=Retry(total=0)
     )
     yield client
 
