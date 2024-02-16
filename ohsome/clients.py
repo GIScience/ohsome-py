@@ -130,7 +130,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         )
         self._parameters = None
         self._metadata = None
-        self._url = None
+        self._metadata_url = self.base_api_url + "metadata"
 
     @property
     def base_api_url(self):
@@ -183,21 +183,20 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         Send ohsome GET request
         :return:
         """
-        self._url = self._base_api_url + "metadata"
         try:
-            response = self._session().get(self._url)
+            response = self._session().get(self._metadata_url)
             response.raise_for_status()
         except requests.exceptions.ConnectionError:
             raise OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
-                f"problems and that the ohsome API URL {self._url} is valid.",
-                url=self._url,
+                f"problems and that the ohsome API URL {self._metadata_url} is valid.",
+                url=self._metadata_url,
                 params=self._parameters,
             )
         except requests.exceptions.HTTPError as e:
             raise OhsomeException(
                 message=e.response.json()["message"],
-                url=self._url,
+                url=self._metadata_url,
                 params=self._parameters,
                 error_code=e.response.status_code,
             )

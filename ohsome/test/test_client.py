@@ -39,7 +39,7 @@ def test_user_agent(base_client):
     Checks user agent set by ohsome-py
     :return:
     """
-    resp = base_client._session().get(base_client._url)
+    resp = base_client._session().get(base_client._metadata_url)
     used_user_agent = resp.request.headers["user-agent"]
     assert used_user_agent == f"ohsome-py/{OHSOME_VERSION}"
 
