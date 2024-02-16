@@ -8,8 +8,8 @@ import ohsome
 logger = logging.getLogger(__name__)
 
 
-@pytest.fixture(scope="session")
-def base_client(tmpdir_factory):
+@pytest.fixture
+def base_client(mocked_metadata, tmpdir_factory):
     """Session-wide test client."""
     temp_directory = tmpdir_factory.mktemp("base_client").mkdir("logs").strpath
     client = ohsome.OhsomeClient(log_dir=temp_directory)
@@ -17,15 +17,15 @@ def base_client(tmpdir_factory):
     yield client
 
 
-@pytest.fixture(scope="session")
-def base_client_without_log():
+@pytest.fixture
+def base_client_without_log(mocked_metadata):
     """Session-wide test client."""
     client = ohsome.OhsomeClient(log=False)
     assert client.metadata  # call metadata once to ensure it is cached
     yield client
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def custom_client_with_wrong_url(tmpdir_factory):
     """Session-wide test client."""
     temp_directory = tmpdir_factory.mktemp("base_client").mkdir("logs").strpath
