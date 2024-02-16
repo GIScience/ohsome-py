@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.1
+
+### Changed
+
+ - relaxed dependency requirement for `urllib3` to >=2.0.2
+
+### Fixed
+
+ - prevent an exception if the `log_dir` for the `OhsomeClient` was set to `None`
+ - improved and sped up testing (first steps towards [#139](https://github.com/GIScience/ohsome-py/issues/139))
+
 ## 0.3.0
 
 ### Added
