@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+ - relaxed dependency requirement for `urllib3` to >=2.0.2
+
 ## 0.3.0
 
 ### Added
