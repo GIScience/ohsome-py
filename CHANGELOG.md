@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+ - prevent an exception if the `log_dir` for the `OhsomeClient` was set to `None`
+
 ## 0.3.0
 
 ### Added
