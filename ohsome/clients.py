@@ -4,6 +4,7 @@
 """OhsomeClient classes to build and handle requests to ohsome API"""
 import datetime as dt
 import json
+from functools import cached_property
 from pathlib import Path
 from typing import Union, Optional, List
 from urllib.parse import urljoin
@@ -129,8 +130,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
             base_api_url, log, log_dir, cache, user_agent, retry
         )
         self._parameters = None
-        self._metadata = None
-        self._metadata_url = self.base_api_url + "metadata"
+        self._metadata_url = f"{self.base_api_url}metadata"
 
     @property
     def base_api_url(self):
@@ -164,13 +164,8 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         """
         return self.metadata["apiVersion"]
 
-    @property
+    @cached_property
     def metadata(self):
-        if self._metadata is None:
-            self._query_metadata()
-        return self._metadata
-
-    def _query_metadata(self):
         """
         Send ohsome GET request
         :return:
@@ -193,7 +188,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
                 error_code=e.response.status_code,
             )
         else:
-            self._metadata = response.json()
+            return response.json()
 
 
 class _OhsomePostClient(_OhsomeBaseClient):
@@ -223,7 +218,6 @@ class _OhsomePostClient(_OhsomeBaseClient):
             base_api_url, log, log_dir, cache, user_agent, retry
         )
         self._parameters = None
-        self._metadata = None
         self._url = None
 
     def post(
