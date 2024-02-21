@@ -130,7 +130,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         )
         self._parameters = None
         self._metadata = None
-        self._metadata_url = self.base_api_url + "metadata"
+        self._metadata_url = f"{self.base_api_url}metadata"
 
     @property
     def base_api_url(self):
