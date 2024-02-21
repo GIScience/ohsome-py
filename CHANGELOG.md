@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+ - improved and sped up testing (first steps towards [#139](https://github.com/GIScience/ohsome-py/issues/139))
+ - move metadata property from singleton to `chached_property`
+
+### Fixed
+
+ - removed time-dependency of unit tests that would cause them to fail at any time after the cassettes were recorded
+
 ## 0.3.0
 
 ### Added
