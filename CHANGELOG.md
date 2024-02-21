@@ -5,6 +5,7 @@
 ### Changed
 
  - improved and sped up testing (first steps towards [#139](https://github.com/GIScience/ohsome-py/issues/139))
+ - move metadata property from singleton to `chached_property`
 
 ### Fixed
 
