@@ -4,6 +4,7 @@
 """OhsomeClient classes to build and handle requests to ohsome API"""
 import datetime as dt
 import json
+from functools import cached_property
 from pathlib import Path
 from typing import Union, Optional, List
 from urllib.parse import urljoin
@@ -55,7 +56,7 @@ class _OhsomeBaseClient:
         RetryError by the underlying library.
         """
         self.log = log
-        self.log_dir = Path(log_dir)
+        self.log_dir = Path(log_dir or DEFAULT_LOG_DIR)
         if self.log:
             self.log_dir.mkdir(parents=True, exist_ok=True)
         if base_api_url is not None:
@@ -129,8 +130,7 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
             base_api_url, log, log_dir, cache, user_agent, retry
         )
         self._parameters = None
-        self._metadata = None
-        self._url = None
+        self._metadata_url = f"{self.base_api_url}metadata"
 
     @property
     def base_api_url(self):
@@ -142,12 +142,8 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         Returns the temporal extent of the current ohsome API
         :return:
         """
-        if self._metadata is None:
-            self._query_metadata()
         return dt.datetime.fromisoformat(
-            self._metadata["extractRegion"]["temporalExtent"]["fromTimestamp"].strip(
-                "Z"
-            )
+            self.metadata["extractRegion"]["temporalExtent"]["fromTimestamp"].strip("Z")
         )
 
     @property
@@ -156,10 +152,8 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         Returns the temporal extent of the current ohsome API
         :return:
         """
-        if self._metadata is None:
-            self._query_metadata()
         return dt.datetime.fromisoformat(
-            self._metadata["extractRegion"]["temporalExtent"]["toTimestamp"].strip("Z")
+            self.metadata["extractRegion"]["temporalExtent"]["toTimestamp"].strip("Z")
         )
 
     @property
@@ -168,41 +162,33 @@ class _OhsomeInfoClient(_OhsomeBaseClient):
         Returns the version of the ohsome API
         :return:
         """
-        if self._metadata is None:
-            self._query_metadata()
-        return self._metadata["apiVersion"]
+        return self.metadata["apiVersion"]
 
-    @property
+    @cached_property
     def metadata(self):
-        if self._metadata is None:
-            self._query_metadata()
-        return self._metadata
-
-    def _query_metadata(self):
         """
         Send ohsome GET request
         :return:
         """
-        self._url = self._base_api_url + "metadata"
         try:
-            response = self._session().get(self._url)
+            response = self._session().get(self._metadata_url)
             response.raise_for_status()
         except requests.exceptions.ConnectionError:
             raise OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
-                f"problems and that the ohsome API URL {self._url} is valid.",
-                url=self._url,
+                f"problems and that the ohsome API URL {self._metadata_url} is valid.",
+                url=self._metadata_url,
                 params=self._parameters,
             )
         except requests.exceptions.HTTPError as e:
             raise OhsomeException(
                 message=e.response.json()["message"],
-                url=self._url,
+                url=self._metadata_url,
                 params=self._parameters,
                 error_code=e.response.status_code,
             )
         else:
-            self._metadata = response.json()
+            return response.json()
 
 
 class _OhsomePostClient(_OhsomeBaseClient):
@@ -232,7 +218,6 @@ class _OhsomePostClient(_OhsomeBaseClient):
             base_api_url, log, log_dir, cache, user_agent, retry
         )
         self._parameters = None
-        self._metadata = None
         self._url = None
 
     def post(
