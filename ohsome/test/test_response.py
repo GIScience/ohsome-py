@@ -6,7 +6,6 @@ import warnings
 import geopandas as gpd
 import pandas as pd
 import pytest
-import datetime as dt
 
 
 @pytest.mark.vcr
@@ -406,6 +405,7 @@ def test_empty_geodataframe(base_client):
     assert result.empty
 
 
+@pytest.mark.vcr
 def test_all_columns_with_timestamps_to_be_without_timezone(base_client):
     """Test whether all the columns with timestamp like 'timestamp', '@timestamp','@validFrom', '@validTo',
     'fromTimestamp', 'toTimestamp' and '@snapshotTimestamp' are without timezone

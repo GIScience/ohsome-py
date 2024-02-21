@@ -11,6 +11,7 @@ import pandas as pd
 import pytest
 
 import ohsome
+from ohsome import OhsomeClient
 from ohsome.constants import OHSOME_VERSION
 
 script_path = os.path.dirname(os.path.realpath(__file__))
@@ -39,7 +40,7 @@ def test_user_agent(base_client):
     Checks user agent set by ohsome-py
     :return:
     """
-    resp = base_client._session().get(base_client._url)
+    resp = base_client._session().get(base_client._metadata_url)
     used_user_agent = resp.request.headers["user-agent"]
     assert used_user_agent == f"ohsome-py/{OHSOME_VERSION}"
 
@@ -318,3 +319,15 @@ def test_post_with_endpoint_string(base_client):
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert len(result) == 1
+
+
+def test_none_init():
+    """Test if the input parameters can set to None explicitly."""
+    assert OhsomeClient(
+        base_api_url=None,
+        log=None,
+        log_dir=None,
+        cache=None,
+        user_agent=None,
+        retry=None,
+    )
