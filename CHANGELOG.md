@@ -4,7 +4,7 @@
 
 ### Changed
 
- - relaxed dependency requirement for `urllib3` to >=2.0.2
+ - relaxed dependency requirement for `urllib3` to >=2.0.2 to prevent ohsome-py from becoming a 'diamond-dependency'
 
 ## 0.3.0
 
