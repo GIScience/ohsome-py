@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+
+## 0.3.1
+
 ### Fixed
 
  - prevent an exception if the `log_dir` for the `OhsomeClient` was set to `None`
