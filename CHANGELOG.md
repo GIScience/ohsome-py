@@ -2,15 +2,16 @@
 
 ## Unreleased
 
+### Fixed
+
+ - prevent an exception if the `log_dir` for the `OhsomeClient` was set to `None`
+ - removed time-dependency of unit tests that would cause them to fail at any time after the cassettes were recorded
+
 ### Changed
 
  - relaxed dependency requirement for `urllib3` to >=2.0.2 to prevent ohsome-py from becoming a 'diamond-dependency'
  - improved and sped up testing (first steps towards [#139](https://github.com/GIScience/ohsome-py/issues/139))
  - move metadata property from singleton to `chached_property`
-
-### Fixed
-
- - removed time-dependency of unit tests that would cause them to fail at any time after the cassettes were recorded
 
 ## 0.3.0
 

@@ -56,7 +56,7 @@ class _OhsomeBaseClient:
         RetryError by the underlying library.
         """
         self.log = log
-        self.log_dir = Path(log_dir)
+        self.log_dir = Path(log_dir or DEFAULT_LOG_DIR)
         if self.log:
             self.log_dir.mkdir(parents=True, exist_ok=True)
         if base_api_url is not None:
