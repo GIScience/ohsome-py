@@ -90,7 +90,7 @@ class OhsomeResponse:
                 for feature in self.data["features"]:
                     properties = feature["properties"]
                     tags = {}
-                    new_properties = {}
+                    new_properties = {k: None for k in explode_tags}
                     for k in properties.keys():
                         if (
                             (k.startswith("@"))
