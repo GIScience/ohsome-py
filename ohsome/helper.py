@@ -204,7 +204,9 @@ def format_bboxes(
 
 
 def format_bpolys(
-    bpolys: Union[gpd.GeoDataFrame, shapely.Polygon, shapely.MultiPolygon, str]
+    bpolys: Union[
+        gpd.GeoDataFrame, gpd.GeoSeries, shapely.Polygon, shapely.MultiPolygon, str
+    ]
 ) -> str:
     """
     Formats bpolys parameter to comply with ohsome API
