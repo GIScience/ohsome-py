@@ -4,10 +4,14 @@
 import logging
 from unittest.mock import patch, PropertyMock
 
+import geopandas as gpd
 import pytest
+from requests import Response
+from shapely import Point
 from urllib3 import Retry
 
 import ohsome
+from ohsome import OhsomeResponse
 
 logger = logging.getLogger(__name__)
 
@@ -95,3 +99,21 @@ def vcr_config():
             "headers",
         ]
     }
+
+
+@pytest.fixture()
+def dummy_ohsome_response() -> OhsomeResponse:
+    """Mocked ohsome response with a single point geometry."""
+    test_gdf = gpd.GeoDataFrame(
+        data={
+            "highway": ["primary"],
+            "width": ["10"],
+            "@snapshotTimestamp": ["2024-01-01"],
+            "@osmId": ["node/1234"],
+        },
+        geometry=[Point(0, 0)],
+        crs="EPSG:4326",
+    )
+    response = Response()
+    response._content = test_gdf.to_json().encode()
+    return OhsomeResponse(response=response)

@@ -2,10 +2,13 @@
 # -*- coding: utf-8 -*-
 """Tests for ohsome API response"""
 import warnings
+from datetime import datetime
 
 import geopandas as gpd
 import pandas as pd
 import pytest
+from geopandas.testing import assert_geodataframe_equal
+from shapely import Point
 
 
 @pytest.mark.vcr
@@ -463,3 +466,80 @@ def test_all_columns_with_timestamps_to_be_without_timezone(base_client):
     assert at_timestamp.tz is None
     assert timestamp.tz is None
     assert at_snapshotTimestamp.tz is None
+
+
+def test_explode_tags(dummy_ohsome_response):
+    """Test if the explode_tags parameter explodes tags."""
+    expected_df = gpd.GeoDataFrame(
+        data={
+            "highway": ["primary"],
+            "@other_tags": [{"width": "10"}],
+            "@snapshotTimestamp": [datetime(2024, 1, 1)],
+            "@osmId": ["node/1234"],
+        },
+        geometry=[Point(0, 0)],
+        crs="EPSG:4326",
+    )
+
+    computed_df = dummy_ohsome_response.as_dataframe(
+        explode_tags=("highway",), multi_index=False
+    )
+
+    assert_geodataframe_equal(computed_df, expected_df, check_like=True)
+
+
+def test_explode_tags_none(dummy_ohsome_response):
+    """Test if the explode_tags parameter can be set to explode all (to get previous behaviour)."""
+    expected_df = gpd.GeoDataFrame(
+        data={
+            "highway": ["primary"],
+            "width": ["10"],
+            "@snapshotTimestamp": [datetime(2024, 1, 1)],
+            "@osmId": ["node/1234"],
+        },
+        geometry=[Point(0, 0)],
+        crs="EPSG:4326",
+    )
+
+    computed_df = dummy_ohsome_response.as_dataframe(
+        explode_tags=None, multi_index=False
+    )
+
+    assert_geodataframe_equal(computed_df, expected_df, check_like=True)
+
+
+def test_explode_tags_empy(dummy_ohsome_response):
+    """Test if explode_tags parameter can be disabled."""
+    expected_df = gpd.GeoDataFrame(
+        data={
+            "@other_tags": [{"width": "10", "highway": "primary"}],
+            "@snapshotTimestamp": [datetime(2024, 1, 1)],
+            "@osmId": ["node/1234"],
+        },
+        geometry=[Point(0, 0)],
+        crs="EPSG:4326",
+    )
+
+    computed_df = dummy_ohsome_response.as_dataframe(explode_tags=(), multi_index=False)
+
+    assert_geodataframe_equal(computed_df, expected_df, check_like=True)
+
+
+def test_explode_tags_missing_in_response(dummy_ohsome_response):
+    """Test if the explode_tags keys are always present in the result, even if they are not part of the response."""
+    expected_df = gpd.GeoDataFrame(
+        data={
+            "this_key_does_not_exist": [None],
+            "@other_tags": [{"width": "10", "highway": "primary"}],
+            "@snapshotTimestamp": [datetime(2024, 1, 1)],
+            "@osmId": ["node/1234"],
+        },
+        geometry=[Point(0, 0)],
+        crs="EPSG:4326",
+    )
+
+    computed_df = dummy_ohsome_response.as_dataframe(
+        explode_tags=("this_key_does_not_exist",), multi_index=False
+    )
+
+    assert_geodataframe_equal(computed_df, expected_df, check_like=True)
