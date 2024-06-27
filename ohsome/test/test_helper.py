@@ -7,6 +7,7 @@ import json
 import logging
 import os
 
+import geopandas as gpd
 import numpy as np
 import pandas as pd
 import pytest
@@ -225,13 +226,40 @@ def test_format_bpolys():
             == "bolys must be a geojson string, a shapely polygonal object or a geopandas object"
         )
 
-    with open(f"{script_path}/data/polygons.geojson") as geojson:
-        json_str = geojson.read()
-        assert json.loads(format_bpolys(json_str)) == json.loads(json_str)
+    geojson = json.dumps(
+        {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "id": "0",
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            [[0.0, 0.0], [0.0, 1.0], [1.0, 1.0], [1.0, 0.0], [0.0, 0.0]]
+                        ],
+                    },
+                }
+            ],
+        }
+    )
+
+    assert format_bpolys(geojson) == geojson
 
     polygon = Polygon(((0.0, 0.0), (0.0, 1.0), (1.0, 1.0), (1.0, 0.0), (0.0, 0.0)))
-    assert format_bpolys(polygon) == (
-        '{"type": "FeatureCollection", "features": [{"id": "0", "type": "Feature", '
-        '"properties": {}, "geometry": {"type": "Polygon", "coordinates": [[[0.0, '
-        "0.0], [0.0, 1.0], [1.0, 1.0], [1.0, 0.0], [0.0, 0.0]]]}}]}"
+    assert format_bpolys(polygon) == geojson
+
+    polygon = gpd.GeoSeries(
+        [Polygon(((0.0, 0.0), (0.0, 1.0), (1.0, 1.0), (1.0, 0.0), (0.0, 0.0)))],
+        crs="EPSG:4326",
     )
+    assert format_bpolys(polygon) == geojson
+
+    polygon = gpd.GeoDataFrame(
+        geometry=[
+            Polygon(((0.0, 0.0), (0.0, 1.0), (1.0, 1.0), (1.0, 0.0), (0.0, 0.0)))
+        ],
+        crs="EPSG:4326",
+    )
+    assert format_bpolys(polygon) == geojson
