@@ -114,29 +114,17 @@ class OhsomeResponse:
                 "This result type cannot be converted to a GeoPandas GeoDataFrame object."
             )
 
-        if "@validFrom" in features.columns:
-            features["@validFrom"] = pd.to_datetime(
-                features["@validFrom"].str.replace("Z", ""), format="ISO8601"
-            )
-            features["@validTo"] = pd.to_datetime(
-                features["@validTo"].str.replace("Z", ""), format="ISO8601"
-            )
-            if multi_index:
-                features = features.set_index(["@osmId", "@validFrom", "@validTo"])
-        elif "@snapshotTimestamp" in features.columns:
-            features["@snapshotTimestamp"] = pd.to_datetime(
-                features["@snapshotTimestamp"].str.replace("Z", ""), format="ISO8601"
-            )
-            if multi_index:
-                features = features.set_index(["@osmId", "@snapshotTimestamp"])
-        elif "@timestamp" in features.columns:
-            features["@timestamp"] = pd.to_datetime(
-                features["@timestamp"].str.replace("Z", ""), format="ISO8601"
-            )
-            if multi_index:
-                features = features.set_index(["@timestamp"])
-        else:
-            raise TypeError("This result type is not implemented.")
+        time_columns = ["@validFrom", "@validTo", "@snapshotTimestamp", "@timestamp"]
+        existing_time_columns = features.columns.intersection(time_columns)
+        features[existing_time_columns] = features[existing_time_columns].apply(
+            self._format_timestamp
+        )
+
+        if multi_index:
+            index_columns = features.columns.intersection(
+                ["@osmId"] + time_columns
+            ).to_list()
+            features = features.set_index(index_columns)
 
         return features.sort_index()
 
