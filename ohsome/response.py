@@ -67,7 +67,11 @@ class OhsomeResponse:
         else:
             raise TypeError("This result type is not implemented.")
 
-        self._format_timestamp(result_df)
+        time_columns = result_df.columns.intersection(
+            ["timestamp", "fromTimestamp", "toTimestamp"]
+        )
+        result_df[time_columns] = result_df[time_columns].apply(self._format_timestamp)
+
         if multi_index:
             self._set_index(result_df, groupby_names)
 
@@ -184,20 +188,11 @@ class OhsomeResponse:
                 record_dfs.extend(record_result)
         return pd.DataFrame().from_records(record_dfs)
 
-    def _format_timestamp(self, result_df: DataFrame) -> None:
+    @staticmethod
+    def _format_timestamp(dt: pd.Series) -> pd.Series:
         """
         Format timestamp column as datetime
-        :param result_df:
+        :param dt:
         :return:
         """
-        if "timestamp" in result_df.columns:
-            result_df["timestamp"] = pd.to_datetime(
-                result_df["timestamp"].str.replace("Z", ""), format="ISO8601"
-            )
-        else:
-            result_df["fromTimestamp"] = pd.to_datetime(
-                result_df["fromTimestamp"].str.replace("Z", ""), format="ISO8601"
-            )
-            result_df["toTimestamp"] = pd.to_datetime(
-                result_df["toTimestamp"].str.replace("Z", ""), format="ISO8601"
-            )
+        return pd.to_datetime(dt.str.replace("Z", ""), format="ISO8601")
