@@ -250,16 +250,14 @@ def test_format_bpolys():
     polygon = Polygon(((0.0, 0.0), (0.0, 1.0), (1.0, 1.0), (1.0, 0.0), (0.0, 0.0)))
     assert format_bpolys(polygon) == geojson
 
-    polygon = gpd.GeoSeries(
-        [Polygon(((0.0, 0.0), (0.0, 1.0), (1.0, 1.0), (1.0, 0.0), (0.0, 0.0)))],
+    series = gpd.GeoSeries(
+        data=[polygon],
         crs="EPSG:4326",
     )
-    assert format_bpolys(polygon) == geojson
+    assert format_bpolys(series) == geojson
 
-    polygon = gpd.GeoDataFrame(
-        geometry=[
-            Polygon(((0.0, 0.0), (0.0, 1.0), (1.0, 1.0), (1.0, 0.0), (0.0, 0.0)))
-        ],
+    df = gpd.GeoDataFrame(
+        geometry=[polygon],
         crs="EPSG:4326",
     )
-    assert format_bpolys(polygon) == geojson
+    assert format_bpolys(df) == geojson
