@@ -211,7 +211,7 @@ def format_bpolys(
     """
     Formats bpolys parameter to comply with ohsome API
     :param
-    bpolys: Polygons given as geopandas.GeoDataFrame or string formatted as GeoJSON FeatureCollection.
+    bpolys: Polygons given as geopandas.GeoDataFrame, geopandas.GeoSeries, Shapely.Polygon or GeoJSON FeatureCollection as string.
     :return:
     """
     if isinstance(bpolys, gpd.GeoDataFrame):
