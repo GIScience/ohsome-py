@@ -182,9 +182,9 @@ def format_bboxes(
         )
     elif isinstance(bboxes, str):
         return bboxes
-    elif isinstance(bboxes, gpd.GeoDataFrame):
+    elif isinstance(bboxes, gpd.GeoDataFrame) or isinstance(bboxes, gpd.GeoSeries):
         raise OhsomeException(
-            message="Use the 'bpolys' parameter to specify the boundaries using a geopandas.GeoDataFrame."
+            message="Use the 'bpolys' parameter to specify the boundaries using a geopandas object."
         )
     elif isinstance(bboxes, pd.DataFrame):
         try:
@@ -204,29 +204,34 @@ def format_bboxes(
 
 
 def format_bpolys(
-    bpolys: Union[gpd.GeoDataFrame, shapely.Polygon, shapely.MultiPolygon, str]
+    bpolys: Union[
+        gpd.GeoDataFrame, gpd.GeoSeries, shapely.Polygon, shapely.MultiPolygon, str
+    ]
 ) -> str:
     """
     Formats bpolys parameter to comply with ohsome API
     :param
-    bpolys: Polygons given as geopandas.GeoDataFrame or string formatted as GeoJSON FeatureCollection.
+    bpolys: Polygons given as geopandas.GeoDataFrame, geopandas.GeoSeries, Shapely.Polygon or GeoJSON FeatureCollection as string.
     :return:
     """
-    if isinstance(bpolys, gpd.GeoDataFrame) or isinstance(bpolys, gpd.GeoSeries):
-        return bpolys.to_json(na="drop")
+    if isinstance(bpolys, gpd.GeoDataFrame):
+        return bpolys.to_json(na="drop", show_bbox=False, drop_id=False, to_wgs84=True)
+    elif isinstance(bpolys, gpd.GeoSeries):
+        return format_bpolys(bpolys.to_frame("geometry"))
     elif isinstance(bpolys, shapely.Polygon) or isinstance(
         bpolys, shapely.MultiPolygon
     ):
-        return format_bpolys(gpd.GeoDataFrame(geometry=[bpolys]))
+        return format_bpolys(gpd.GeoDataFrame(geometry=[bpolys], crs="EPSG:4326"))
     elif isinstance(bpolys, str):
         try:
-            return format_bpolys(gpd.GeoDataFrame.from_features(json.loads(bpolys)))
+            return format_bpolys(
+                gpd.GeoDataFrame.from_features(json.loads(bpolys), crs="EPSG:4326")
+            )
         except Exception as e:
             raise OhsomeException(message="Invalid geojson.") from e
     else:
         raise OhsomeException(
-            message="bpolys must be a geojson string, a shapely polygonal object or a geopandas "
-            "object"
+            message="bpolys must be a geojson string, a shapely polygonal object or a geopandas object"
         )
 
 

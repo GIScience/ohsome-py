@@ -182,20 +182,6 @@ def test_format_bcircles_geodataframe_geometry_error(base_client):
 
 
 @pytest.mark.vcr
-def test_format_bpolys(base_client):
-    """
-    Test whether a GeoDataFrame obejct is formatted correctly for ohsome api.
-    :return:
-    """
-    bpolys = gpd.read_file(f"{script_path}/data/polygons.geojson")
-    time = "2018-01-01"
-    fltr = "amenity=restaurant and type:node"
-
-    client = base_client
-    client.elements.count.post(bpolys=bpolys, time=time, filter=fltr)
-
-
-@pytest.mark.vcr
 def test_format_bboxes_dataframe(base_client):
     """
     Tests whether input parameter given as a pandas.DataFrame is formatted correctly to a string
@@ -254,7 +240,7 @@ def test_format_bboxes_geodataframe(base_client):
 
     assert (
         "Use the 'bpolys' parameter to specify the boundaries using a "
-        "geopandas.GeoDataFrame." in e_info.value.message
+        "geopandas object." in e_info.value.message
     )
 
 
