@@ -443,7 +443,7 @@ def test_all_columns_with_timestamps_to_be_without_timezone(base_client):
     at_timestamp = (
         client.contributions.geometry.post(time=time2iso, bboxes=bbox, filter=fltr)
         .as_dataframe()
-        .index[0]
+        .index[0][1]
     )
     timestamp = (
         client.elements.count.groupByBoundary.post(bboxes=bbox, time=time, filter=fltr)

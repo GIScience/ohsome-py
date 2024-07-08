@@ -67,7 +67,11 @@ class OhsomeResponse:
         else:
             raise TypeError("This result type is not implemented.")
 
-        self._format_timestamp(result_df)
+        time_columns = result_df.columns.intersection(
+            ["timestamp", "fromTimestamp", "toTimestamp"]
+        )
+        result_df[time_columns] = result_df[time_columns].apply(self._format_timestamp)
+
         if multi_index:
             self._set_index(result_df, groupby_names)
 
@@ -110,37 +114,17 @@ class OhsomeResponse:
                 "This result type cannot be converted to a GeoPandas GeoDataFrame object."
             )
 
-        if "@validFrom" in features.columns:
-            features["@validFrom"] = pd.to_datetime(
-                features["@validFrom"].str.replace("Z", ""), format="ISO8601"
-            )
-            features["@validTo"] = pd.to_datetime(
-                features["@validTo"].str.replace("Z", ""), format="ISO8601"
-            )
-            if multi_index:
-                features = features.set_index(["@osmId", "@validFrom", "@validTo"])
-        elif "@snapshotTimestamp" in features.columns:
-            features["@snapshotTimestamp"] = pd.to_datetime(
-                features["@snapshotTimestamp"].str.replace("Z", ""), format="ISO8601"
-            )
-            if multi_index:
-                features = features.set_index(["@osmId", "@snapshotTimestamp"])
-        elif (
-            "timestamp" in features.columns and "groupByBoundaryId" in features.columns
-        ):
-            features["timestamp"] = pd.to_datetime(
-                features["timestamp"].str.replace("Z", ""), format="ISO8601"
-            )
-            if multi_index:
-                features = features.set_index(["groupByBoundaryId", "timestamp"])
-        elif "@timestamp" in features.columns:
-            features["@timestamp"] = pd.to_datetime(
-                features["@timestamp"].str.replace("Z", ""), format="ISO8601"
-            )
-            if multi_index:
-                features = features.set_index(["@timestamp"])
-        else:
-            raise TypeError("This result type is not implemented.")
+        time_columns = ["@validFrom", "@validTo", "@snapshotTimestamp", "@timestamp"]
+        existing_time_columns = features.columns.intersection(time_columns)
+        features[existing_time_columns] = features[existing_time_columns].apply(
+            self._format_timestamp
+        )
+
+        if multi_index:
+            index_columns = features.columns.intersection(
+                ["@osmId"] + time_columns
+            ).to_list()
+            features = features.set_index(index_columns)
 
         return features.sort_index()
 
@@ -192,20 +176,7 @@ class OhsomeResponse:
                 record_dfs.extend(record_result)
         return pd.DataFrame().from_records(record_dfs)
 
-    def _format_timestamp(self, result_df: DataFrame) -> None:
-        """
-        Format timestamp column as datetime
-        :param result_df:
-        :return:
-        """
-        if "timestamp" in result_df.columns:
-            result_df["timestamp"] = pd.to_datetime(
-                result_df["timestamp"].str.replace("Z", ""), format="ISO8601"
-            )
-        else:
-            result_df["fromTimestamp"] = pd.to_datetime(
-                result_df["fromTimestamp"].str.replace("Z", ""), format="ISO8601"
-            )
-            result_df["toTimestamp"] = pd.to_datetime(
-                result_df["toTimestamp"].str.replace("Z", ""), format="ISO8601"
-            )
+    @staticmethod
+    def _format_timestamp(dt: pd.Series) -> pd.Series:
+        """Format timestamp column as datetime."""
+        return pd.to_datetime(dt.str.replace("Z", ""), format="ISO8601")
