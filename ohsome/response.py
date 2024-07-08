@@ -180,7 +180,5 @@ class OhsomeResponse:
     def _format_timestamp(dt: pd.Series) -> pd.Series:
         """
         Format timestamp column as datetime
-        :param dt:
-        :return:
         """
         return pd.to_datetime(dt.str.replace("Z", ""), format="ISO8601")
