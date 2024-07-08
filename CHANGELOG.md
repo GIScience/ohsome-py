@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 0.3.2
+
+### Fixed
+
+- GeoSeries supplied as `bpolys` input raising exception ([#155](https://github.com/GIScience/ohsome-py/issues/155))
+
+### Changed
+
+- if tags are supplied for explosion in `response.as_dataframe`, the respective column will always be present in the resulting Geodataframe, even if the tags were not part of the result. In that case the column will be all-None ([#149](https://github.com/GIScience/ohsome-py/issues/149)).
+
 
 ## 0.3.1
 
@@ -14,7 +24,7 @@
 
  - relaxed dependency requirement for `urllib3` to >=2.0.2 to prevent ohsome-py from becoming a 'diamond-dependency'
  - improved and sped up testing (first steps towards [#139](https://github.com/GIScience/ohsome-py/issues/139))
- - move metadata property from singleton to `chached_property`
+ - move metadata property from singleton to `cached_property`
 
 ## 0.3.0
 
