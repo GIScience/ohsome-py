@@ -178,7 +178,5 @@ class OhsomeResponse:
 
     @staticmethod
     def _format_timestamp(dt: pd.Series) -> pd.Series:
-        """
-        Format timestamp column as datetime
-        """
+        """Format timestamp column as datetime."""
         return pd.to_datetime(dt.str.replace("Z", ""), format="ISO8601")
