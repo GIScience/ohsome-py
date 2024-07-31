@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+ - Ordering of exception handling to correctly parse a broken response
+
 ## 0.3.2
 
 ### Fixed
