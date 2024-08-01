@@ -8,7 +8,10 @@ import geopandas as gpd
 import pandas as pd
 import pytest
 from geopandas.testing import assert_geodataframe_equal
+from requests import Response
 from shapely import Point
+
+from ohsome import OhsomeResponse
 
 
 @pytest.mark.vcr
@@ -406,6 +409,7 @@ def test_empty_geodataframe(base_client):
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert result.empty
+    assert result.columns == ["@osmId", "geometry", "@other_tags"]
 
 
 @pytest.mark.vcr
@@ -540,6 +544,25 @@ def test_explode_tags_missing_in_response(dummy_ohsome_response):
 
     computed_df = dummy_ohsome_response.as_dataframe(
         explode_tags=("this_key_does_not_exist",), multi_index=False
+    )
+
+    assert_geodataframe_equal(computed_df, expected_df, check_like=True)
+
+
+def test_explode_tags_present_on_empty_result():
+    """Test if exploded tags are present in an empty results."""
+    expected_df = gpd.GeoDataFrame(
+        columns=["@osmId", "some_key", "some_other_key", "@other_tags", "geometry"],
+        crs="EPSG:4326",
+    )
+
+    response = Response()
+    response._content = (
+        '{"attribution":{"url":"https://ohsome.org/copyrights","text":"© OpenStreetMap contributors"},'
+        '"apiVersion":"1.10.1","type":"FeatureCollection","features":[]}'
+    ).encode()
+    computed_df = OhsomeResponse(response=response).as_dataframe(
+        explode_tags=("some_key", "some_other_key")
     )
 
     assert_geodataframe_equal(computed_df, expected_df, check_like=True)
