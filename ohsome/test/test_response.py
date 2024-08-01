@@ -409,7 +409,7 @@ def test_empty_geodataframe(base_client):
 
     assert isinstance(result, gpd.GeoDataFrame)
     assert result.empty
-    assert result.columns == ["@osmId", "geometry", "@other_tags"]
+    assert result.columns.to_list() == ["@osmId", "geometry", "@other_tags"]
 
 
 @pytest.mark.vcr

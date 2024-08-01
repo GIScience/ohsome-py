@@ -87,7 +87,15 @@ class OhsomeResponse:
         """
 
         if len(self.data["features"]) == 0:
-            return gpd.GeoDataFrame(crs="epsg:4326", columns=["@osmId", "geometry"])
+            return gpd.GeoDataFrame(
+                crs="epsg:4326",
+                columns=["@osmId", "geometry"]
+                + (
+                    list(explode_tags) + ["@other_tags"]
+                    if explode_tags is not None
+                    else []
+                ),
+            )
 
         try:
             if explode_tags is not None:
