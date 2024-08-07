@@ -43,7 +43,7 @@ def test_timeout_error(base_client):
     )
 
 
-def test_borken_response_timeout_error(base_client):
+def test_broken_response_timeout_error(base_client):
     """
     Test whether an OhsomeException is raised, if the ohsome API contains a JSONDecodeError
     :return:
