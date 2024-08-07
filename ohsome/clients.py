@@ -15,7 +15,7 @@ import requests
 import shapely
 from requests import Session
 from requests.adapters import HTTPAdapter
-from requests.exceptions import RetryError
+from requests.exceptions import RetryError, JSONDecodeError
 from urllib3 import Retry
 
 from ohsome import OhsomeException, OhsomeResponse
@@ -363,6 +363,22 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 response=e.response,
             )
 
+        except (ValueError, JSONDecodeError) as e:
+            if response:
+                error_code, message = extract_error_message_from_invalid_json(
+                    response.text
+                )
+            else:
+                message = str(e)
+                error_code = None
+            ohsome_exception = OhsomeException(
+                message=message,
+                url=self._url,
+                error_code=error_code,
+                params=self._parameters,
+                response=response,
+            )
+
         except requests.exceptions.RequestException as e:
             if isinstance(e, RetryError):
                 # retry one last time without retries, this will raise the original error instead of a cryptic retry
@@ -384,22 +400,6 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 url=self._url,
                 params=self._parameters,
                 error_code=440,
-            )
-
-        except ValueError as e:
-            if response:
-                error_code, message = extract_error_message_from_invalid_json(
-                    response.text
-                )
-            else:
-                message = str(e)
-                error_code = None
-            ohsome_exception = OhsomeException(
-                message=message,
-                url=self._url,
-                error_code=error_code,
-                params=self._parameters,
-                response=response,
             )
 
         except AttributeError:
