@@ -41,12 +41,6 @@ class OhsomeResponse:
             return self._as_geodataframe(multi_index, explode_tags)
 
     def _as_dataframe(self, multi_index=True):
-        """
-        Converts the ohsome response to a pandas.DataFrame
-        :param multi_index: If true returns the dataframe with a multi index
-        :return: pandas.DataFrame
-        """
-
         groupby_names = []
         if "result" in self.data.keys():
             result_df = pd.DataFrame().from_records(self.data["result"])
@@ -80,12 +74,6 @@ class OhsomeResponse:
     def _as_geodataframe(
         self, multi_index: Optional[bool] = True, explode_tags: Optional[tuple] = ()
     ):
-        """
-        Converts the ohsome response to a geopandas.GeoDataFrame
-        :param multi_index: If true returns the dataframe with a multi index
-        :return: geopandas.GeoDataFrame
-        """
-
         if len(self.data["features"]) == 0:
             return gpd.GeoDataFrame(
                 crs="epsg:4326",
