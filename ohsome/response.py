@@ -124,7 +124,7 @@ class OhsomeResponse:
 
         return features.sort_index()
 
-    def to_json(self, outfile) -> dict:
+    def to_json(self, outfile) -> None:
         """
         Write response to json file
         :return:
