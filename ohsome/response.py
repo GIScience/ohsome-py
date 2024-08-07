@@ -4,7 +4,7 @@
 """Class for ohsome API response"""
 
 import json
-from typing import Optional
+from typing import Optional, Union
 
 import geopandas as gpd
 import pandas as pd
@@ -25,7 +25,7 @@ class OhsomeResponse:
 
     def as_dataframe(
         self, multi_index: Optional[bool] = True, explode_tags: Optional[tuple] = ()
-    ):
+    ) -> Union[pd.DataFrame, gpd.GeoDataFrame]:
         """
         Converts the ohsome response to a pandas.DataFrame or a geopandas.GeoDataFrame if the
         response contains geometries
@@ -40,7 +40,7 @@ class OhsomeResponse:
         else:
             return self._as_geodataframe(multi_index, explode_tags)
 
-    def _as_dataframe(self, multi_index=True):
+    def _as_dataframe(self, multi_index=True) -> pd.DataFrame:
         groupby_names = []
         if "result" in self.data.keys():
             result_df = pd.DataFrame().from_records(self.data["result"])
@@ -73,7 +73,7 @@ class OhsomeResponse:
 
     def _as_geodataframe(
         self, multi_index: Optional[bool] = True, explode_tags: Optional[tuple] = ()
-    ):
+    ) -> gpd.GeoDataFrame:
         if len(self.data["features"]) == 0:
             return gpd.GeoDataFrame(
                 crs="epsg:4326",
@@ -124,7 +124,7 @@ class OhsomeResponse:
 
         return features.sort_index()
 
-    def to_json(self, outfile):
+    def to_json(self, outfile) -> dict:
         """
         Write response to json file
         :return:
@@ -133,7 +133,7 @@ class OhsomeResponse:
         with open(outfile, "w", encoding="utf-8") as dst:
             json.dump(self.data, dst, indent=2, ensure_ascii=False)
 
-    def _set_index(self, result_df, groupby_names):
+    def _set_index(self, result_df, groupby_names) -> None:
         """
         Set multi-index based on groupby names and time
         :param result_df:
