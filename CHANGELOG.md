@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Assert that the expected columns are also present if the result is empty
+
 ## 0.3.2
 
 ### Fixed
