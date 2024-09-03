@@ -347,6 +347,13 @@ class _OhsomePostClient(_OhsomeBaseClient):
     def _post_request(self) -> Response:
         try:
             response = self._session().post(url=self._url, data=self._parameters)
+        except KeyboardInterrupt:
+            raise OhsomeException(
+                message="Keyboard Interrupt: Query was interrupted by the user.",
+                url=self._url,
+                params=self._parameters,
+                error_code=440,
+            )
         except requests.exceptions.ConnectionError as e:
             raise OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
@@ -386,14 +393,6 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 params=self._parameters,
                 error_code=e.response.status_code,
                 response=e.response,
-            )
-
-        except KeyboardInterrupt:
-            raise OhsomeException(
-                message="Keyboard Interrupt: Query was interrupted by the user.",
-                url=self._url,
-                params=self._parameters,
-                error_code=440,
             )
 
     def _get_response_data(self, response: Response) -> dict:
