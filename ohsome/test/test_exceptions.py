@@ -219,7 +219,7 @@ def test_exception_connection_reset(base_client):
     """
 
     with patch(
-        "requests.Response.raise_for_status",
+        "requests.sessions.Session.post",
         MagicMock(
             side_effect=RequestException(
                 "This request was failed on purpose without response!"
