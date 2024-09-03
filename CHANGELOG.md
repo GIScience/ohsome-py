@@ -7,6 +7,14 @@
 - Ordering of exception handling to correctly parse a broken response
 - Assert that the expected columns are also present if the result is empty
 
+### Removed
+
+- unused attributes `response` and `parameters`/`params` from `OhsomeResponse`
+
+### Added
+
+- init variable `data` to `OhsomeResponse`
+
 ## 0.3.2
 
 ### Fixed
