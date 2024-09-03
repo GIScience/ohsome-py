@@ -13,7 +13,7 @@ import geopandas as gpd
 import pandas as pd
 import requests
 import shapely
-from requests import Session
+from requests import Session, Response
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RetryError, JSONDecodeError
 from urllib3 import Retry
@@ -332,53 +332,29 @@ class _OhsomePostClient(_OhsomeBaseClient):
         Handles request to ohsome API
         :return:
         """
-        ohsome_exception = None
-        response = None
 
         try:
+            response = self._post_request()
+            self._check_response(response)
+            data = self._get_response_data(response)
+        except OhsomeException as ohsome_exception:
+            if self.log:
+                ohsome_exception.log(self.log_dir)
+            raise ohsome_exception
+
+        return OhsomeResponse(data=data, url=self._url)
+
+    def _post_request(self) -> Response:
+        try:
             response = self._session().post(url=self._url, data=self._parameters)
-            response.raise_for_status()
-            response.json()
-
-        except requests.exceptions.HTTPError as e:
-            try:
-                error_message = e.response.json()["message"]
-            except json.decoder.JSONDecodeError:
-                error_message = f"Invalid URL: Is {self._url} valid?"
-
-            ohsome_exception = OhsomeException(
-                message=error_message,
-                url=self._url,
-                params=self._parameters,
-                error_code=e.response.status_code,
-                response=e.response,
-            )
-
         except requests.exceptions.ConnectionError as e:
-            ohsome_exception = OhsomeException(
+            raise OhsomeException(
                 message="Connection Error: Query could not be sent. Make sure there are no network "
                 f"problems and that the ohsome API URL {self._url} is valid.",
                 url=self._url,
                 params=self._parameters,
                 response=e.response,
             )
-
-        except (ValueError, JSONDecodeError) as e:
-            if response:
-                error_code, message = extract_error_message_from_invalid_json(
-                    response.text
-                )
-            else:
-                message = str(e)
-                error_code = None
-            ohsome_exception = OhsomeException(
-                message=message,
-                url=self._url,
-                error_code=error_code,
-                params=self._parameters,
-                response=response,
-            )
-
         except requests.exceptions.RequestException as e:
             if isinstance(e, RetryError):
                 # retry one last time without retries, this will raise the original error instead of a cryptic retry
@@ -387,36 +363,64 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 self._OhsomeBaseClient__retry = False
                 self._handle_request()
 
-            ohsome_exception = OhsomeException(
+            raise OhsomeException(
                 message=str(e),
                 url=self._url,
                 params=self._parameters,
                 response=e.response,
             )
+        return response
+
+    def _check_response(self, response: Response) -> None:
+        try:
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            try:
+                error_message = e.response.json()["message"]
+            except json.decoder.JSONDecodeError:
+                error_message = f"Invalid URL: Is {self._url} valid?"
+
+            raise OhsomeException(
+                message=error_message,
+                url=self._url,
+                params=self._parameters,
+                error_code=e.response.status_code,
+                response=e.response,
+            )
 
         except KeyboardInterrupt:
-            ohsome_exception = OhsomeException(
+            raise OhsomeException(
                 message="Keyboard Interrupt: Query was interrupted by the user.",
                 url=self._url,
                 params=self._parameters,
                 error_code=440,
             )
 
+    def _get_response_data(self, response: Response) -> dict:
+        try:
+            return response.json()
+        except (ValueError, JSONDecodeError) as e:
+            if response:
+                error_code, message = extract_error_message_from_invalid_json(
+                    response.text
+                )
+            else:
+                message = str(e)
+                error_code = None
+            raise OhsomeException(
+                message=message,
+                url=self._url,
+                error_code=error_code,
+                params=self._parameters,
+                response=response,
+            )
         except AttributeError:
-            ohsome_exception = OhsomeException(
+            raise OhsomeException(
                 message=f"Seems like {self._url} is not a valid endpoint.",
                 url=self._url,
                 error_code=404,
                 params=self._parameters,
             )
-
-        # If there has been an error and logging is enabled, write it to file
-        if ohsome_exception:
-            if self.log:
-                ohsome_exception.log(self.log_dir)
-            raise ohsome_exception
-
-        return OhsomeResponse(data=data, url=self._url)
 
     def _format_parameters(self, params):
         """
