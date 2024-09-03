@@ -416,7 +416,7 @@ class _OhsomePostClient(_OhsomeBaseClient):
                 ohsome_exception.log(self.log_dir)
             raise ohsome_exception
 
-        return OhsomeResponse(response, url=self._url, params=self._parameters)
+        return OhsomeResponse(data=data, url=self._url)
 
     def _format_parameters(self, params):
         """

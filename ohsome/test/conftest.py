@@ -116,4 +116,4 @@ def dummy_ohsome_response() -> OhsomeResponse:
     )
     response = Response()
     response._content = test_gdf.to_json().encode()
-    return OhsomeResponse(response=response)
+    return OhsomeResponse(data=response.json())

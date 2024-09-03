@@ -16,12 +16,10 @@ from ohsome.helper import find_groupby_names
 class OhsomeResponse:
     """Contains the response of the request to the ohsome API"""
 
-    def __init__(self, response=None, url=None, params=None):
+    def __init__(self, data: dict, url: str = None):
         """Initialize the OhsomeResponse class."""
-        self.response = response
+        self.data = data
         self.url = url
-        self.parameters = params
-        self.data = response.json()
 
     def as_dataframe(
         self, multi_index: Optional[bool] = True, explode_tags: Optional[tuple] = ()
