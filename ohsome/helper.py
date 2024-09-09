@@ -6,7 +6,7 @@
 import datetime
 import json
 import re
-from typing import Tuple, Union, List
+from typing import Tuple, Union, List, Optional
 
 import geopandas as gpd
 import numpy as np
@@ -245,12 +245,12 @@ def format_list_parameters(parameters: dict) -> dict:
     return parameters
 
 
-def find_groupby_names(url):
+def find_groupby_names(url: Optional[str]) -> List[str]:
     """
     Get the groupBy names
     :return:
     """
-    return [name.strip("/") for name in url.split("groupBy")[1:]]
+    return [name.strip("/") for name in url.split("groupBy")[1:]] if url else []
 
 
 def extract_error_message_from_invalid_json(responsetext: str) -> Tuple[int, str]:

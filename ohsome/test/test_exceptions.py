@@ -43,6 +43,31 @@ def test_timeout_error(base_client):
     )
 
 
+def test_broken_response_timeout_error(base_client):
+    """Test whether an OhsomeException is raised in case of a JSONDecodeError."""
+
+    bboxes = "8.67066,49.41423,8.68177,49.4204"
+    time = "2010-01-01/2011-01-01/P1Y"
+    fltr = "building=* and type:way"
+    timeout = 30
+
+    client = base_client
+    with pytest.raises(ohsome.OhsomeException) as e_info:
+        with responses.RequestsMock() as rsps:
+            rsps.post(
+                "https://api.ohsome.org/v1/elements/geometry",
+                body=b'{\n  "attribution" : {\n    "url" : "https://ohsome.org/copyrights",\n    "text" : "\xc2\xa9 OpenStreetMap contributors"\n  },\n  "apiVersion" : "1.10.3",\n  "type" : "FeatureCollection",\n  "features" : [{\n  "timestamp" : "2024-07-31T10:37:31.603661767",\n  "status" : 413,\n  "message" : "The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser time period.",\n  "requestUrl" : "https://api.ohsome.org/v1/elements/geometry"\n}',
+            )
+            client.elements.geometry.post(
+                bboxes=bboxes, time=time, filter=fltr, timeout=timeout
+            )
+    assert (
+        "The given query is too large in respect to the given timeout. Please use a smaller region and/or coarser "
+        "time period." in e_info.value.message
+    )
+    assert e_info.value.error_code == 413
+
+
 @pytest.mark.vcr
 def test_invalid_url():
     """
@@ -194,7 +219,7 @@ def test_exception_connection_reset(base_client):
     """
 
     with patch(
-        "requests.Response.raise_for_status",
+        "requests.sessions.Session.post",
         MagicMock(
             side_effect=RequestException(
                 "This request was failed on purpose without response!"

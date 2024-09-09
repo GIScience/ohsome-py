@@ -561,7 +561,7 @@ def test_explode_tags_present_on_empty_result():
         '{"attribution":{"url":"https://ohsome.org/copyrights","text":"© OpenStreetMap contributors"},'
         '"apiVersion":"1.10.1","type":"FeatureCollection","features":[]}'
     ).encode()
-    computed_df = OhsomeResponse(response=response).as_dataframe(
+    computed_df = OhsomeResponse(data=response.json()).as_dataframe(
         explode_tags=("some_key", "some_other_key")
     )
 
