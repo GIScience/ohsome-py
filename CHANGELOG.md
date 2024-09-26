@@ -1,8 +1,12 @@
 # Changelog
 
-## Unreleased
+## [Unreleased](https://github.com/GIScience/ohsome-py/compare/v0.3.3..master)
 
-## 0.3.3
+### Fixed
+
+- the module configuring the root logger on import causing users to be forced to overwrite the configuration.
+
+## [0.3.3](https://github.com/GIScience/ohsome-py/releases/tag/v0.3.3)
 
 ### Fixed
 
@@ -17,7 +21,7 @@
 
 - init variable `data` to `OhsomeResponse`
 
-## 0.3.2
+## [0.3.2](https://github.com/GIScience/ohsome-py/releases/tag/v0.3.2)
 
 ### Fixed
 
@@ -28,7 +32,7 @@
 - if tags are supplied for explosion in `response.as_dataframe`, the respective column will always be present in the resulting Geodataframe, even if the tags were not part of the result. In that case the column will be all-None ([#149](https://github.com/GIScience/ohsome-py/issues/149)).
 
 
-## 0.3.1
+## [0.3.1](https://github.com/GIScience/ohsome-py/releases/tag/v0.3.1)
 
 ### Fixed
 
@@ -41,7 +45,7 @@
  - improved and sped up testing (first steps towards [#139](https://github.com/GIScience/ohsome-py/issues/139))
  - move metadata property from singleton to `cached_property`
 
-## 0.3.0
+## [0.3.0](https://github.com/GIScience/ohsome-py/releases/tag/v0.3.0)
 
 ### Added
 
@@ -63,7 +67,7 @@
  - support for pandas < 2.1
  - support for urllib3 < 2.1
 
-## 0.2.0
+## [0.2.0](https://github.com/GIScience/ohsome-py/releases/tag/v0.2.0)
 
 ### Added
 
