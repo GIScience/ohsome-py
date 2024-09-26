@@ -3,6 +3,7 @@
 
 """Ohsome API client for Python"""
 
-from .clients import OhsomeClient  # noqa
+# The order of imports here must remain to prevent circular imports
 from .exceptions import OhsomeException  # noqa
 from .response import OhsomeResponse  # noqa
+from .clients import OhsomeClient  # noqa
