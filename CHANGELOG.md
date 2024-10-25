@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/GIScience/ohsome-py/compare/v0.3.3..master)
 
+### Changed
+
+- updated `numpy` and `geopandas` dependency to the latest major versions
+
 ### Fixed
 
 - the module configuring the root logger on import causing users to be forced to overwrite the configuration.
