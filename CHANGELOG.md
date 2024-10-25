@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/GIScience/ohsome-py/compare/v0.3.3..master)
 
+## [0.4.0](https://github.com/GIScience/ohsome-py/releases/tag/v0.4.0)
+
 ### Changed
 
 - updated `numpy` and `geopandas` dependency to the latest major versions
