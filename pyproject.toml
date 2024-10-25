@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ohsome"
-version = "0.3.3"
+version = "0.4.0"
 description = "A Python client for the ohsome API"
 authors = ["HeiGIT ohsome team <ohsome@heigit.org>", "GIScience Research Group, Heidelberg University"]
 repository = "https://github.com/GIScience/ohsome-py"
