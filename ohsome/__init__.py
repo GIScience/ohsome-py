@@ -3,10 +3,7 @@
 
 """Ohsome API client for Python"""
 
-from .exceptions import OhsomeException
-from .response import OhsomeResponse
-from .clients import OhsomeClient
-import logging
-
-log_format = "%(asctime)s  %(module)8s  %(levelname)5s:  %(message)s"
-logging.basicConfig(level="INFO", format=log_format)
+# The order of imports here must remain to prevent circular imports
+from .exceptions import OhsomeException  # noqa
+from .response import OhsomeResponse  # noqa
+from .clients import OhsomeClient  # noqa
