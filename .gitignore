@@ -138,3 +138,6 @@ setup.py
 
 # project files
 **/ohsome_log/
+
+# default testing script file
+playground.py
