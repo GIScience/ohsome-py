@@ -218,14 +218,17 @@ def test_exception_connection_reset(base_client):
     :return:
     """
 
-    with patch(
-        "requests.sessions.Session.post",
-        MagicMock(
-            side_effect=RequestException(
-                "This request was failed on purpose without response!"
-            )
+    with (
+        patch(
+            "requests.sessions.Session.post",
+            MagicMock(
+                side_effect=RequestException(
+                    "This request was failed on purpose without response!"
+                )
+            ),
         ),
-    ), patch("ohsome.OhsomeException.log_response", MagicMock()) as mock_func:
+        patch("ohsome.OhsomeException.log_response", MagicMock()) as mock_func,
+    ):
         bpolys = gpd.read_file(f"{script_path}/data/polygons.geojson")
         time = "2018-01-01"
         fltr = "name=Krautturm and type:way"

@@ -2,6 +2,14 @@
 
 ## [Unreleased](https://github.com/GIScience/ohsome-py/compare/v0.3.3..master)
 
+### Removed
+
+- support for python 3.10 (it probably still works, we just don't assert it anymore)
+
+### Added
+
+- support for python 3.13
+
 ## [0.4.0](https://github.com/GIScience/ohsome-py/releases/tag/v0.4.0)
 
 ### Changed
