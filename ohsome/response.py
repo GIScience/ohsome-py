@@ -22,7 +22,10 @@ class OhsomeResponse:
         self.url = url
 
     def as_dataframe(
-        self, multi_index: Optional[bool] = True, explode_tags: Optional[tuple] = ()
+        self,
+        multi_index: Optional[bool] = True,
+        explode_tags: Optional[tuple] = (),
+        geometry_filter: Optional[list[str]] = None,
     ) -> Union[pd.DataFrame, gpd.GeoDataFrame]:
         """
         Converts the ohsome response to a pandas.DataFrame or a geopandas.GeoDataFrame if the
@@ -31,12 +34,14 @@ class OhsomeResponse:
         :param explode_tags: By default, tags of extracted features are stored in a single dict-column. You can specify
         a tuple of tags that should be popped from this column. To disable it completely, pass None. Yet, be aware that
         you may get a large but sparse data frame.
+        :param geometry_filter: Limit the output geometries to the specified types to prevent
+        https://github.com/GIScience/ohsome-api/issues/339
         :return: pandas.DataFrame or geopandas.GeoDataFrame
         """
         if "features" not in self.data.keys():
             return self._as_dataframe(multi_index)
         else:
-            return self._as_geodataframe(multi_index, explode_tags)
+            return self._as_geodataframe(multi_index, explode_tags, geometry_filter)
 
     def _as_dataframe(self, multi_index=True) -> pd.DataFrame:
         groupby_names = []
@@ -70,7 +75,10 @@ class OhsomeResponse:
         return result_df.sort_index()
 
     def _as_geodataframe(
-        self, multi_index: Optional[bool] = True, explode_tags: Optional[tuple] = ()
+        self,
+        multi_index: Optional[bool] = True,
+        explode_tags: Optional[tuple] = (),
+        geom_filter: Optional[list[str]] = None,
     ) -> gpd.GeoDataFrame:
         if len(self.data["features"]) == 0:
             return gpd.GeoDataFrame(
@@ -107,6 +115,9 @@ class OhsomeResponse:
             raise TypeError(
                 "This result type cannot be converted to a GeoPandas GeoDataFrame object."
             )
+
+        if geom_filter is not None:
+            features = features[features.geom_type.isin(geom_filter)]
 
         time_columns = ["@validFrom", "@validTo", "@snapshotTimestamp", "@timestamp"]
         existing_time_columns = features.columns.intersection(time_columns)

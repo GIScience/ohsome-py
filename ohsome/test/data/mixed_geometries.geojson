@@ -1,0 +1,46 @@
+{
+  "attribution": {
+    "url": "https://ohsome.org/copyrights",
+    "text": "\u00a9 OpenStreetMap contributors"
+  },
+  "apiVersion": "1.10.4",
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          [
+            12.30001864618336,
+            48.220125234580934
+          ],
+          [
+            12.30022996627983,
+            48.22026810127991
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "@osmId": "way/26936052",
+        "@snapshotTimestamp": "2016-01-01T00:00:00Z",
+        "c": "d"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          12.3003682566372,
+          48.22021116170123
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "@osmId": "way/26936051",
+        "@snapshotTimestamp": "2016-01-01T00:00:00Z",
+        "a": "b"
+      }
+    }
+  ]
+}

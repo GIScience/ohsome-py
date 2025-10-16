@@ -3,12 +3,16 @@
 
 """Tests for ohsome client"""
 import datetime as dt
+import json
 import logging
 import os
+from copy import deepcopy
+from pathlib import Path
 
 import geopandas as gpd
 import pandas as pd
 import pytest
+import responses
 
 import ohsome
 from ohsome import OhsomeClient
@@ -317,3 +321,22 @@ def test_none_init():
         user_agent=None,
         retry=None,
     )
+
+
+def test_accepted_geom_type(base_client):
+    """Test geom-type filtering in case https://github.com/GIScience/ohsome-api/issues/339 is experienced."""
+    client = deepcopy(base_client)
+    with responses.RequestsMock() as rsps:
+        data = Path(f"{script_path}/data/mixed_geometries.geojson")
+        rsps.post(
+            "https://api.ohsome.org/v1/elements/geometry",
+            json=json.loads(data.read_text()),
+        )
+
+        bboxes = "8.7137,49.4096,8.717,49.4119"
+        time = "2015-01-01"
+        flt = "geometry:line"
+
+        response = client.elements.geometry.post(bboxes=bboxes, time=time, filter=flt)
+        result = response.as_dataframe(geometry_filter=["LineString"])
+        assert result.geometry.type.to_list() == ["LineString"]

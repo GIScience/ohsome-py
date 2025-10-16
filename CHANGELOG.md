@@ -8,6 +8,7 @@
 
 ### Added
 
+- functionality to filter the output geometry types ([#178](https://github.com/GIScience/ohsome-py/issues/178))
 - support for python 3.13
 
 ## [0.4.0](https://github.com/GIScience/ohsome-py/releases/tag/v0.4.0)
