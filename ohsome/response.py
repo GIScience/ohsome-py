@@ -88,7 +88,7 @@ class OhsomeResponse:
                 for feature in self.data["features"]:
                     properties = feature["properties"]
                     tags = {}
-                    new_properties = {k: None for k in explode_tags}
+                    new_properties = dict.fromkeys(explode_tags, None)
                     for k in properties.keys():
                         if (
                             (k.startswith("@"))
