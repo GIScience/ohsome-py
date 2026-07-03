@@ -68,6 +68,30 @@ def test_broken_response_timeout_error(base_client):
     assert e_info.value.error_code == 413
 
 
+def test_broken_response_max_retries_exceeded(base_client):
+    """Test whether an OhsomeException is raised in case of too many 503 error responses."""
+
+    bboxes = "8.67066,49.41423,8.68177,49.4204"
+    time = "2010-01-01/2011-01-01/P1Y"
+    fltr = "building=* and type:way"
+    timeout = 30
+
+    client = base_client
+    with pytest.raises(
+        ohsome.OhsomeException,
+        match=r"503 Server Error: Service Unavailable for url: https://api.ohsome.org/v1/elements/geometry",
+    ):
+        with responses.RequestsMock() as rsps:
+            rsps.post(
+                "https://api.ohsome.org/v1/elements/geometry",
+                status=503,
+                json={},
+            )
+            client.elements.geometry.post(
+                bboxes=bboxes, time=time, filter=fltr, timeout=timeout
+            )
+
+
 @pytest.mark.vcr
 def test_invalid_url():
     """
