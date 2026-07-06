@@ -383,7 +383,11 @@ class _OhsomePostClient(_OhsomeBaseClient):
             response.raise_for_status()
         except requests.exceptions.HTTPError as e:
             try:
-                error_message = e.response.json()["message"]
+                json_response = e.response.json()
+                if "message" in json_response:
+                    error_message = e.response.json()["message"]
+                else:
+                    error_message = str(e)
             except json.decoder.JSONDecodeError:
                 error_message = f"Invalid URL: Is {self._url} valid?"
 
