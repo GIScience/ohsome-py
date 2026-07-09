@@ -1,5 +1,12 @@
 # ohsome-py: A Python client for the ohsome API
 
+
+> [!WARNING]
+> The ohsome API v1 is reaching end of life in October 2026.
+> This library currently only supports ohsome API v1.
+> The fate of the ohsome-py library is not yet decided, a newer version MAY support ohsome-API V2.
+> To move to Ohsome-API V2 independently please see the migration instructions at https://api.heigit.org/ohsome-api-staging/v2/docs.
+
 [![status: active](https://github.com/GIScience/badges/raw/master/status/active.svg)](https://github.com/GIScience/badges#active)
 
 The *ohsome-py* package helps you extract and analyse OpenStreetMap history data using the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and Python. It handles queries to the [ohsome API](https://docs.ohsome.org/ohsome-api/v1/) and converts its responses to [Pandas](https://pandas.pydata.org/) and [GeoPandas](https://geopandas.org/) data frames to facilitate easy data handling and analysis.
