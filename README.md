@@ -1,3 +1,9 @@
+> [!CAUTION]
+> After September 2026, `ohsome-py` will no longer function.
+>
+> ohsome API v1 is reaching end-of-life in September 2026. Therefore, the `ohsome-py` library is deprecated.
+> To migrate to ohsome API v2, refer to the [official documentation](https://docs.ohsome.org/ohsome-api/).
+
 # ohsome-py: A Python client for the ohsome API
 
 [![status: active](https://github.com/GIScience/badges/raw/master/status/active.svg)](https://github.com/GIScience/badges#active)
