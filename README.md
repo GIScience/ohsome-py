@@ -2,10 +2,11 @@
 
 
 > [!CAUTION]
-> The ohsome API v1 is reaching end of life in October 2026.
-> This library currently only supports ohsome API v1.
+> After October 2026, this version of `ohsome-py` will no longer work.
+
+> The ohsome API v1 is reaching end-of-life in October 2026.
 > The fate of the ohsome-py library is not yet decided, a newer version MAY support ohsome-API V2.
-> To move to Ohsome-API V2 independently please see the migration instructions at https://api.heigit.org/ohsome-api-staging/v2/docs.
+> To migrate independently of the `ohsome-py` library to the new ohsome API v2, please refer to the [official documentation](https://docs.ohsome.org/ohsome-api/).
 
 [![status: active](https://github.com/GIScience/badges/raw/master/status/active.svg)](https://github.com/GIScience/badges#active)
 
