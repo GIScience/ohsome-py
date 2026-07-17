@@ -1,7 +1,7 @@
 # ohsome-py: A Python client for the ohsome API
 
 
-> [!WARNING]
+> [!CAUTION]
 > The ohsome API v1 is reaching end of life in October 2026.
 > This library currently only supports ohsome API v1.
 > The fate of the ohsome-py library is not yet decided, a newer version MAY support ohsome-API V2.
