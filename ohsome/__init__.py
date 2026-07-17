@@ -4,11 +4,10 @@
 """Ohsome API client for Python"""
 import warnings
 
-from .clients import OhsomeClient  # noqa
-
 # The order of imports here must remain to prevent circular imports
 from .exceptions import OhsomeException  # noqa
 from .response import OhsomeResponse  # noqa
+from .clients import OhsomeClient  # noqa
 
 warnings.warn(
     message="After October 2026, this version of `ohsome-py` will no longer work. "
