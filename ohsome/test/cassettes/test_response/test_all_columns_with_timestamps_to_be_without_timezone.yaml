@@ -20,7 +20,7 @@ interactions:
     body:
       string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
         \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
-        : \"1.10.4\",\n  \"result\" : [ {\n    \"fromTimestamp\" : \"2008-01-01T00:00:00Z\",\n
+        : \"1.10.1\",\n  \"result\" : [ {\n    \"fromTimestamp\" : \"2008-01-01T00:00:00Z\",\n
         \   \"toTimestamp\" : \"2009-01-01T00:00:00Z\",\n    \"value\" : 1.03\n  },
         {\n    \"fromTimestamp\" : \"2009-01-01T00:00:00Z\",\n    \"toTimestamp\"
         : \"2010-01-01T00:00:00Z\",\n    \"value\" : 4.03\n  }, {\n    \"fromTimestamp\"
@@ -66,11 +66,11 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 09:41:41 GMT
+      - Fri, 16 Feb 2024 09:19:09 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:
@@ -101,7 +101,7 @@ interactions:
     body:
       string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
         \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
-        : \"1.10.4\",\n  \"result\" : [ {\n    \"fromTimestamp\" : \"2008-01-01T00:00:00Z\",\n
+        : \"1.10.1\",\n  \"result\" : [ {\n    \"fromTimestamp\" : \"2008-01-01T00:00:00Z\",\n
         \   \"toTimestamp\" : \"2009-01-01T00:00:00Z\",\n    \"value\" : 1.03\n  },
         {\n    \"fromTimestamp\" : \"2009-01-01T00:00:00Z\",\n    \"toTimestamp\"
         : \"2010-01-01T00:00:00Z\",\n    \"value\" : 4.03\n  }, {\n    \"fromTimestamp\"
@@ -147,11 +147,11 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 09:41:41 GMT
+      - Fri, 16 Feb 2024 09:19:09 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:
@@ -182,7 +182,7 @@ interactions:
     body:
       string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
         \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
-        : \"1.10.4\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
+        : \"1.10.1\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
         \   \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\" : \"Point\",\n
         \     \"coordinates\" : [\n        8.678372,\n        49.4128139\n      ]\n
         \   },\n    \"properties\" : {\n      \"@osmId\" : \"node/305963168\",\n      \"@validFrom\"
@@ -664,11 +664,11 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Tue, 21 Jul 2026 09:41:43 GMT
+      - Fri, 16 Feb 2024 09:19:11 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:
@@ -699,11 +699,111 @@ interactions:
     body:
       string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
         \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
-        : \"1.10.4\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
+        : \"1.10.1\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
         \   \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\" : \"Point\",\n
-        \     \"coordinates\" : [\n        8.678372,\n        49.4128139\n      ]\n
-        \   },\n    \"properties\" : {\n      \"@osmId\" : \"node/305963168\",\n      \"@validFrom\"
-        : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \     \"coordinates\" : [\n        8.6920206,\n        49.4145419\n      ]\n
+        \   },\n    \"properties\" : {\n      \"@osmId\" : \"node/305963241\",\n      \"@validFrom\"
+        : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-03-06T00:50:10Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6920206,\n        49.4145419\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/305963241\",\n
+        \     \"@validFrom\" : \"2020-03-06T00:50:10Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6921207,\n        49.4092377\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/309428981\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-05-08T20:32:29Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6921207,\n        49.4092377\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/309428981\",\n
+        \     \"@validFrom\" : \"2020-05-08T20:32:29Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6989136,\n        49.409259\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1029572767\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-22T10:54:06Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6988928,\n        49.4092533\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1029572767\",\n
+        \     \"@validFrom\" : \"2020-04-22T10:54:06Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6972661,\n        49.4104756\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1029572867\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-05T13:15:56Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6964023,\n        49.4103231\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1537481770\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-02-16T23:49:06Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.7062625,\n        49.4117537\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1539815077\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-05T13:15:56Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.7062625,\n        49.4117537\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1539815077\",\n
+        \     \"@validFrom\" : \"2020-04-05T13:15:56Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6828398,\n        49.4034233\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1908083093\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-12T23:32:30Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6828398,\n        49.4034233\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1908083093\",\n
+        \     \"@validFrom\" : \"2020-04-12T23:32:30Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.708396,\n        49.4118521\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/2884170736\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-05T13:15:56Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.70779,\n        49.4116291\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/2884170748\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-02-13T02:08:17Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.70779,\n        49.4116291\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/2884170748\",\n
+        \     \"@validFrom\" : \"2020-02-13T02:08:17Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6875742,\n        49.4056433\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/2985005489\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-03-02T19:42:03Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6875742,\n        49.4056433\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/2985005489\",\n
+        \     \"@validFrom\" : \"2020-03-02T19:42:03Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6880787,\n        49.4082317\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/3216803596\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-02-29T16:24:29Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6880787,\n        49.4082317\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/3216803596\",\n
+        \     \"@validFrom\" : \"2020-02-29T16:24:29Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6920378,\n        49.4141465\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/4182673477\",\n
+        \     \"@validFrom\" : \"2020-03-06T00:50:11Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.702827,\n        49.4095172\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/4347096061\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-22T10:54:09Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6995116,\n        49.4093458\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/5025869822\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-22T10:54:09Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6995116,\n        49.4093458\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/5025869822\",\n
+        \     \"@validFrom\" : \"2020-04-22T10:54:09Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6946089,\n        49.4100739\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/6825308418\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-05T13:15:56Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.6946089,\n        49.4100739\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/6825308418\",\n
+        \     \"@validFrom\" : \"2020-04-05T13:15:56Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
+        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
+        : \"Point\",\n      \"coordinates\" : [\n        8.678372,\n        49.4128139\n
+        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/305963168\",\n
+        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
         \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
         : \"Point\",\n      \"coordinates\" : [\n        8.6856817,\n        49.41254\n
         \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/305963178\",\n
@@ -1060,106 +1160,6 @@ interactions:
         : \"Point\",\n      \"coordinates\" : [\n        8.7086955,\n        49.4113728\n
         \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/7057272772\",\n
         \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6920206,\n        49.4145419\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/305963241\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-03-06T00:50:10Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6920206,\n        49.4145419\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/305963241\",\n
-        \     \"@validFrom\" : \"2020-03-06T00:50:10Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6921207,\n        49.4092377\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/309428981\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-05-08T20:32:29Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6921207,\n        49.4092377\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/309428981\",\n
-        \     \"@validFrom\" : \"2020-05-08T20:32:29Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6989136,\n        49.409259\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1029572767\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-22T10:54:06Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6988928,\n        49.4092533\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1029572767\",\n
-        \     \"@validFrom\" : \"2020-04-22T10:54:06Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6972661,\n        49.4104756\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1029572867\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-05T13:15:56Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6964023,\n        49.4103231\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1537481770\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-02-16T23:49:06Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.7062625,\n        49.4117537\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1539815077\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-05T13:15:56Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.7062625,\n        49.4117537\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1539815077\",\n
-        \     \"@validFrom\" : \"2020-04-05T13:15:56Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6828398,\n        49.4034233\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1908083093\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-12T23:32:30Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6828398,\n        49.4034233\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/1908083093\",\n
-        \     \"@validFrom\" : \"2020-04-12T23:32:30Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.708396,\n        49.4118521\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/2884170736\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-05T13:15:56Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.70779,\n        49.4116291\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/2884170748\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-02-13T02:08:17Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.70779,\n        49.4116291\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/2884170748\",\n
-        \     \"@validFrom\" : \"2020-02-13T02:08:17Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6875742,\n        49.4056433\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/2985005489\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-03-02T19:42:03Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6875742,\n        49.4056433\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/2985005489\",\n
-        \     \"@validFrom\" : \"2020-03-02T19:42:03Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6880787,\n        49.4082317\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/3216803596\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-02-29T16:24:29Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6880787,\n        49.4082317\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/3216803596\",\n
-        \     \"@validFrom\" : \"2020-02-29T16:24:29Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6920378,\n        49.4141465\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/4182673477\",\n
-        \     \"@validFrom\" : \"2020-03-06T00:50:11Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.702827,\n        49.4095172\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/4347096061\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-22T10:54:09Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6995116,\n        49.4093458\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/5025869822\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-22T10:54:09Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6995116,\n        49.4093458\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/5025869822\",\n
-        \     \"@validFrom\" : \"2020-04-22T10:54:09Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6946089,\n        49.4100739\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/6825308418\",\n
-        \     \"@validFrom\" : \"2020-02-01T00:00:00Z\",\n      \"@validTo\" : \"2020-04-05T13:15:56Z\"\n
-        \   }\n  }, {\n    \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\"
-        : \"Point\",\n      \"coordinates\" : [\n        8.6946089,\n        49.4100739\n
-        \     ]\n    },\n    \"properties\" : {\n      \"@osmId\" : \"node/6825308418\",\n
-        \     \"@validFrom\" : \"2020-04-05T13:15:56Z\",\n      \"@validTo\" : \"2020-06-29T00:00:00Z\"\n
         \   }\n  }]\n}\n"
     headers:
       Access-Control-Allow-Credentials:
@@ -1181,11 +1181,11 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Tue, 21 Jul 2026 09:41:45 GMT
+      - Fri, 16 Feb 2024 09:19:12 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:
@@ -1216,7 +1216,7 @@ interactions:
     body:
       string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
         \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
-        : \"1.10.4\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
+        : \"1.10.1\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
         \   \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\" : \"Point\",\n
         \     \"coordinates\" : [\n        8.6920206,\n        49.4145419\n      ]\n
         \   },\n    \"properties\" : {\n      \"@contributionChangesetId\" : 81843531,\n
@@ -1293,11 +1293,11 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Tue, 21 Jul 2026 09:41:46 GMT
+      - Fri, 16 Feb 2024 09:19:12 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:
@@ -1328,7 +1328,7 @@ interactions:
     body:
       string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
         \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
-        : \"1.10.4\",\n  \"groupByResult\" : [ {\n    \"groupByObject\" : \"boundary1\",\n
+        : \"1.10.1\",\n  \"groupByResult\" : [ {\n    \"groupByObject\" : \"boundary1\",\n
         \   \"result\" : [ {\n      \"timestamp\" : \"2008-01-01T00:00:00Z\",\n      \"value\"
         : 1.0\n    }, {\n      \"timestamp\" : \"2009-01-01T00:00:00Z\",\n      \"value\"
         : 10.0\n    }, {\n      \"timestamp\" : \"2010-01-01T00:00:00Z\",\n      \"value\"
@@ -1366,11 +1366,11 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 09:41:48 GMT
+      - Fri, 16 Feb 2024 09:19:13 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:
@@ -1401,7 +1401,7 @@ interactions:
     body:
       string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
         \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
-        : \"1.10.4\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
+        : \"1.10.1\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
         \   \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\" : \"Point\",\n
         \     \"coordinates\" : [\n        8.705272,\n        49.4128388\n      ]\n
         \   },\n    \"properties\" : {\n      \"@osmId\" : \"node/137863103\",\n      \"@snapshotTimestamp\"
@@ -5547,11 +5547,11 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Tue, 21 Jul 2026 09:41:50 GMT
+      - Fri, 16 Feb 2024 09:19:13 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:

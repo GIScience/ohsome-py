@@ -20,14 +20,14 @@ interactions:
     body:
       string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
         \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
-        : \"1.10.4\",\n  \"groupByBoundaryResult\" : [ {\n    \"groupByObject\" :
-        \"A\",\n    \"ratioResult\" : [ {\n      \"timestamp\" : \"2019-12-10T00:00:00Z\",\n
+        : \"1.10.1\",\n  \"groupByBoundaryResult\" : [ {\n    \"groupByObject\" :
+        \"A\",\n    \"ratioResult\" : [ {\n      \"timestamp\" : \"2019-12-10T00:00:00\",\n
         \     \"value\" : 0.0,\n      \"value2\" : 12.0,\n      \"ratio\" : \"Infinity\"\n
-        \   }, {\n      \"timestamp\" : \"2020-07-23T00:00:00Z\",\n      \"value\"
+        \   }, {\n      \"timestamp\" : \"2020-07-23T00:00:00\",\n      \"value\"
         : 0.0,\n      \"value2\" : 10.0,\n      \"ratio\" : \"Infinity\"\n    } ]\n
         \ }, {\n    \"groupByObject\" : \"B\",\n    \"ratioResult\" : [ {\n      \"timestamp\"
-        : \"2019-12-10T00:00:00Z\",\n      \"value\" : 0.0,\n      \"value2\" : 11.0,\n
-        \     \"ratio\" : \"Infinity\"\n    }, {\n      \"timestamp\" : \"2020-07-23T00:00:00Z\",\n
+        : \"2019-12-10T00:00:00\",\n      \"value\" : 0.0,\n      \"value2\" : 11.0,\n
+        \     \"ratio\" : \"Infinity\"\n    }, {\n      \"timestamp\" : \"2020-07-23T00:00:00\",\n
         \     \"value\" : 0.0,\n      \"value2\" : 12.0,\n      \"ratio\" : \"Infinity\"\n
         \   } ]\n  } ]\n}"
     headers:
@@ -50,11 +50,11 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 09:41:32 GMT
+      - Wed, 06 Dec 2023 08:19:41 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:

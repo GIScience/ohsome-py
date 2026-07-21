@@ -38,7 +38,7 @@ interactions:
       Content-Type:
       - text/html
       Date:
-      - Tue, 21 Jul 2026 09:41:15 GMT
+      - Wed, 06 Dec 2023 08:19:24 GMT
       ETag:
       - '"25c-5c7180820e5fc"'
       Keep-Alive:
@@ -46,7 +46,7 @@ interactions:
       Last-Modified:
       - Wed, 14 Jul 2021 16:41:53 GMT
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Upgrade:

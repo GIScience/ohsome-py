@@ -20,7 +20,7 @@ interactions:
     body:
       string: "{\n  \"attribution\" : {\n    \"url\" : \"https://ohsome.org/copyrights\",\n
         \   \"text\" : \"\xA9 OpenStreetMap contributors\"\n  },\n  \"apiVersion\"
-        : \"1.10.4\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
+        : \"1.10.1\",\n  \"type\" : \"FeatureCollection\",\n  \"features\" : [{\n
         \   \"type\" : \"Feature\",\n    \"geometry\" : {\n      \"type\" : \"Point\",\n
         \     \"coordinates\" : [\n        8.716229,\n        49.4102928\n      ]\n
         \   },\n    \"properties\" : {\n      \"@contributionChangesetId\" : 30687511,\n
@@ -46,11 +46,11 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Tue, 21 Jul 2026 09:41:36 GMT
+      - Wed, 06 Dec 2023 08:19:45 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:

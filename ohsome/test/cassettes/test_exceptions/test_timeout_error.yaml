@@ -18,7 +18,7 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/geometry
   response:
     body:
-      string: "{\n  \"timestamp\" : \"2026-07-21T09:41:15.379908306\",\n  \"status\"
+      string: "{\n  \"timestamp\" : \"2023-12-06T08:19:24.649051175\",\n  \"status\"
         : 413,\n  \"message\" : \"The given query is too large in respect to the given
         timeout. Please use a smaller region and/or coarser time period.\",\n  \"requestUrl\"
         : \"https://api.ohsome.org/v1/elements/geometry\"\n}"
@@ -44,9 +44,9 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Tue, 21 Jul 2026 09:41:14 GMT
+      - Wed, 06 Dec 2023 08:19:24 GMT
       Server:
-      - Apache/2.4.58 (Ubuntu)
+      - Apache
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Transfer-Encoding:
