@@ -5,7 +5,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate
+      - gzip, deflate, zstd
       Connection:
       - keep-alive
       Content-Length:
@@ -38,7 +38,7 @@ interactions:
       Content-Type:
       - text/html
       Date:
-      - Wed, 06 Dec 2023 08:19:24 GMT
+      - Tue, 21 Jul 2026 08:15:29 GMT
       ETag:
       - '"25c-5c7180820e5fc"'
       Keep-Alive:
@@ -46,7 +46,7 @@ interactions:
       Last-Modified:
       - Wed, 14 Jul 2021 16:41:53 GMT
       Server:
-      - Apache
+      - Apache/2.4.58 (Ubuntu)
       Strict-Transport-Security:
       - max-age=63072000; includeSubdomains;
       Upgrade:
