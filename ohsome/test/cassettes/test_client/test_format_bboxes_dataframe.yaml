@@ -5,7 +5,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate, zstd
+      - gzip, deflate
       Connection:
       - keep-alive
       Content-Length:
@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 08:15:20 GMT
+      - Tue, 21 Jul 2026 09:41:06 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:

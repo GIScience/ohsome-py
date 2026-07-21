@@ -5,7 +5,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate, zstd
+      - gzip, deflate
       Connection:
       - keep-alive
       Content-Length:
@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 08:15:21 GMT
+      - Tue, 21 Jul 2026 09:41:07 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -62,7 +62,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate, zstd
+      - gzip, deflate
       Connection:
       - keep-alive
       Content-Length:
@@ -99,7 +99,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 08:15:23 GMT
+      - Tue, 21 Jul 2026 09:41:09 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -119,7 +119,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate, zstd
+      - gzip, deflate
       Connection:
       - keep-alive
       Content-Length:
@@ -156,7 +156,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 08:15:24 GMT
+      - Tue, 21 Jul 2026 09:41:10 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -176,7 +176,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate, zstd
+      - gzip, deflate
       Connection:
       - keep-alive
       Content-Length:
@@ -213,7 +213,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 08:15:24 GMT
+      - Tue, 21 Jul 2026 09:41:11 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:
@@ -233,7 +233,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate, zstd
+      - gzip, deflate
       Connection:
       - keep-alive
       Content-Length:
@@ -270,7 +270,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 08:15:25 GMT
+      - Tue, 21 Jul 2026 09:41:12 GMT
       Keep-Alive:
       - timeout=5, max=100
       Server:

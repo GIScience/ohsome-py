@@ -5,7 +5,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate, zstd
+      - gzip, deflate
       Connection:
       - keep-alive
       Content-Length:
@@ -38,7 +38,7 @@ interactions:
       Content-Type:
       - text/html
       Date:
-      - Tue, 21 Jul 2026 08:15:29 GMT
+      - Tue, 21 Jul 2026 09:41:15 GMT
       ETag:
       - '"25c-5c7180820e5fc"'
       Keep-Alive:

@@ -5,7 +5,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate, zstd
+      - gzip, deflate
       Connection:
       - keep-alive
       Content-Length:
@@ -18,7 +18,7 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/count/groupBy/tag
   response:
     body:
-      string: "{\n  \"timestamp\" : \"2026-07-21T08:15:30.792819197\",\n  \"status\"
+      string: "{\n  \"timestamp\" : \"2026-07-21T09:41:17.656406992\",\n  \"status\"
         : 400,\n  \"message\" : \"You need to give one groupByKey parameter, if you
         want to use groupBy/tag.\",\n  \"requestUrl\" : \"https://api.ohsome.org/v1/elements/count/groupBy/tag\"\n}"
     headers:
@@ -41,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 21 Jul 2026 08:15:30 GMT
+      - Tue, 21 Jul 2026 09:41:17 GMT
       Server:
       - Apache/2.4.58 (Ubuntu)
       Strict-Transport-Security:

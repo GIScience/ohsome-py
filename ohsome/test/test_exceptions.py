@@ -200,7 +200,7 @@ def test_log_curl(base_client_without_log, tmpdir):
     with open(log_file[0]) as file:
         assert file.read() == (
             'curl -X POST -H "user-agent: ohsome-py/0.3.0" -H "Accept-Encoding: gzip, '
-            'deflate, zstd" -H "Accept: */*" -H "Connection: keep-alive" -H "Content-Length: 60" '
+            'deflate" -H "Accept: */*" -H "Connection: keep-alive" -H "Content-Length: 60" '
             '-H "Content-Type: application/x-www-form-urlencoded" '
             "-d 'bboxes=8.67555%2C49.39885%2C8.69637%2C49.41122&timeout=0.001' "
             "https://api.ohsome.org/v1/elements/count"

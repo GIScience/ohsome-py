@@ -5,7 +5,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate, zstd
+      - gzip, deflate
       Connection:
       - keep-alive
       Content-Length:
@@ -18,7 +18,7 @@ interactions:
     uri: https://api.ohsome.org/v1/elements/geometry
   response:
     body:
-      string: "{\n  \"timestamp\" : \"2026-07-21T08:15:29.260954149\",\n  \"status\"
+      string: "{\n  \"timestamp\" : \"2026-07-21T09:41:15.379908306\",\n  \"status\"
         : 413,\n  \"message\" : \"The given query is too large in respect to the given
         timeout. Please use a smaller region and/or coarser time period.\",\n  \"requestUrl\"
         : \"https://api.ohsome.org/v1/elements/geometry\"\n}"
@@ -44,7 +44,7 @@ interactions:
       Content-disposition:
       - attachment;filename=ohsome.geojson
       Date:
-      - Tue, 21 Jul 2026 08:15:29 GMT
+      - Tue, 21 Jul 2026 09:41:14 GMT
       Server:
       - Apache/2.4.58 (Ubuntu)
       Strict-Transport-Security:
