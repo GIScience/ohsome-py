@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Tests for ohsome API response"""
+
 import warnings
 from datetime import datetime
 

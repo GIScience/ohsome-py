@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Tests for ohsome client"""
+
 import datetime as dt
 import logging
 import os
