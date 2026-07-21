@@ -17,7 +17,7 @@ class OhsomeException(Exception):
         self, message=None, url=None, params=None, error_code=None, response=None
     ):
         """Initialize OhsomeException object"""
-        super(Exception, self).__init__(message)
+        super(Exception, self).__init__(message, url, params, error_code, response)
         self.message = message
         self.url = url
         if params:
