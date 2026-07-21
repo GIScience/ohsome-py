@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Constants and default values"""
+
 from pathlib import Path
 
 OHSOME_BASE_API_URL = "https://api.ohsome.org/v1/"

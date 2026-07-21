@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Tests for utility functions"""
+
 import datetime
 import json
 import logging
