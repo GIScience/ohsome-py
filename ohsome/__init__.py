@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Ohsome API client for Python"""
+
 import warnings
 
 # The order of imports here must remain to prevent circular imports
