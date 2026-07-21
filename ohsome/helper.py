@@ -85,7 +85,7 @@ def format_bcircles(
         dict,
         gpd.GeoDataFrame,
         pd.DataFrame,
-    ]
+    ],
 ) -> str:
     """
     Formats bcircles parameter to comply with ohsome API
@@ -152,7 +152,7 @@ def format_bboxes(
         List[float],
         List[List[str]],
         List[List[float]],
-    ]
+    ],
 ) -> str:
     """
     Formats bboxes parameter to comply with ohsome API
@@ -206,7 +206,7 @@ def format_bboxes(
 def format_bpolys(
     bpolys: Union[
         gpd.GeoDataFrame, gpd.GeoSeries, shapely.Polygon, shapely.MultiPolygon, str
-    ]
+    ],
 ) -> str:
     """
     Formats bpolys parameter to comply with ohsome API

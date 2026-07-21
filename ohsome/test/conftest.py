@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Conftest for shared pytest fixtures"""
+
 import logging
 from unittest.mock import patch, PropertyMock
 

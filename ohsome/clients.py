@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """OhsomeClient classes to build and handle requests to ohsome API"""
+
 import datetime as dt
 import json
 from functools import cached_property
