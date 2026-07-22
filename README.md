@@ -8,7 +8,7 @@
 > The ohsome-py library currently only supports ohsome API V1.
 > The fate of the ohsome-py library is not yet decided, a newer version MAY support ohsome-API V2.
 > To migrate independently of the `ohsome-py` library to the new ohsome API V2, please refer to the
-> [official documentation](https://docs.ohsome.org/ohsome-api/).
+> official documentation that will be made available at https://docs.ohsome.org/ohsome-api/.
 
 [![status: active](https://github.com/GIScience/badges/raw/master/status/active.svg)](https://github.com/GIScience/badges#active)
 

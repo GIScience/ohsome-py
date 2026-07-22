@@ -16,7 +16,7 @@ warnings.warn(
     "The ohsome-py library currently only supports ohsome API V1. "
     "The fate of the ohsome-py library is not yet decided, a newer version MAY support ohsome-API V2. "
     "To migrate independently of the `ohsome-py` library to the new ohsome API V2, please refer to the "
-    "official documentation at https://docs.ohsome.org/ohsome-api/.",
+    "official documentation that will be made available at https://docs.ohsome.org/ohsome-api/.",
     category=DeprecationWarning,
     stacklevel=1,
 )
