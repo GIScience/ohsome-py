@@ -1,14 +1,28 @@
 # Changelog
 
-## [Unreleased](https://github.com/GIScience/ohsome-py/compare/v0.3.3..master)
+## [Unreleased](https://github.com/GIScience/ohsome-py/compare/v0.5.0..master)
+
+## [0.5.0](https://github.com/GIScience/ohsome-py/releases/tag/v0.5.0) - 2026-07-24
+
+> [!CAUTION]
+> After October 2026, this version of `ohsome-py` will no longer work.
+>
+> The ohsome API V1 is reaching end-of-life in October 2026 and is replaced by V2.
+> The ohsome-py library currently only supports ohsome API V1.
+> The fate of the ohsome-py library is not yet decided, a newer version MAY support ohsome-API V2.
+> To migrate independently of the `ohsome-py` library to the new ohsome API V2, please refer to the
+> official documentation that will be made available at
+> [https://docs.ohsome.org/ohsome-api/](https://docs.ohsome.org/ohsome-api/v2).
 
 ### Removed
 
 - support for python 3.10 (it probably still works, we just don't assert it anymore)
+- support for pandas 2 (it probably still works, we just don't assert it anymore)
 
 ### Added
 
 - support for python 3.13
+- support for pandas 3
 
 ## [0.4.0](https://github.com/GIScience/ohsome-py/releases/tag/v0.4.0)
 
