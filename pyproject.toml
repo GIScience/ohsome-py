@@ -1,6 +1,6 @@
 [project]
 name = "ohsome"
-version = "0.4.0"
+version = "0.5.0"
 description = "A Python client for the ohsome API"
 authors = [
     { name = "HeiGIT ohsome team", email = "ohsome@heigit.org" },
